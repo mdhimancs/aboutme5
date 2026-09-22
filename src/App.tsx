@@ -79,7 +79,13 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('overview');
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  const [theme, setTheme] = useState<ThemeMode>('apple-light');
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    // Check system preference
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'apple-dark';
+    }
+    return 'apple-light';
+  });
   const [accent, setAccent] = useState<AccentColor>('blue');
   const [font, setFont] = useState<FontStyle>('inter');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {

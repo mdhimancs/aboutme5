@@ -239,6 +239,11 @@ async function startServer() {
     }
   });
 
+  // Catch-all for any other unmatched API routes
+  app.use(/^\/api\/.*/, (req, res) => {
+    res.status(404).json({ error: 'API route not found' });
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
