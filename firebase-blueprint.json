@@ -1,0 +1,145 @@
+{
+  "entities": {
+    "AllowlistItem": {
+      "title": "AllowlistItem",
+      "description": "Authorized email record for gated portfolio access with global or single-resource clearance",
+      "type": "object",
+      "properties": {
+        "authorized": {
+          "type": "boolean",
+          "description": "Whether the email is authorized to access gated artifacts"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["viewer", "admin"],
+          "description": "Access tier granted to the user"
+        },
+        "scope": {
+          "type": "string",
+          "enum": ["global", "specific"],
+          "description": "Whether the clearance is global or restricted to specific articles/resources"
+        },
+        "allowedItems": {
+          "type": "array",
+          "description": "Specific article and resource IDs that this user is explicitly permitted to access"
+        },
+        "allowedSections": {
+          "type": "array",
+          "description": "Specific sections (e.g. case-studies, publications, archives) permitted"
+        },
+        "addedBy": {
+          "type": "string",
+          "description": "Email or identifier of the administrative authorizer"
+        },
+        "addedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when authorization was provisioned"
+        }
+      },
+      "required": ["authorized", "role"]
+    },
+    "SecurityLocks": {
+      "title": "SecurityLocks",
+      "description": "Granular lock status configuration for sections and individual articles/resources",
+      "type": "object",
+      "properties": {
+        "lockedSections": {
+          "type": "array",
+          "description": "Sections currently locked (e.g., case-studies, publications, archives)"
+        },
+        "lockedItems": {
+          "type": "array",
+          "description": "Specific individual article and resource IDs explicitly locked"
+        },
+        "unlockedItems": {
+          "type": "array",
+          "description": "Specific individual article IDs explicitly unlocked even if parent section is locked"
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "Email of admin who updated lock configuration"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the lock configuration update"
+        }
+      },
+      "required": ["lockedSections"]
+    },
+    "PageStats": {
+      "title": "PageStats",
+      "description": "Analytics for each page, including read counts (stars)",
+      "type": "object",
+      "properties": {
+        "pageId": {
+          "type": "string",
+          "description": "Unique identifier for the page or section"
+        },
+        "stars": {
+          "type": "integer",
+          "description": "Number of stars/reads recorded for this page"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last time a star was added"
+        }
+      },
+      "required": ["pageId", "stars"]
+    },
+    "DenyListEntry": {
+      "title": "DenyListEntry",
+      "description": "Dynamic blacklist entry blocking specific intrusive individuals or IPs from accessing the portal",
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "Blocked IP address or email identifier"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["ip", "email", "domain"],
+          "description": "Type of identifier blocked"
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for dynamic blacklisting"
+        },
+        "blockedBy": {
+          "type": "string",
+          "description": "Admin who placed the block"
+        },
+        "blockedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when block was instituted"
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Whether block is actively enforced"
+        }
+      },
+      "required": ["value", "type", "active"]
+    }
+  },
+  "firestore": {
+    "/allowlist/{email}": {
+      "schema": "#/entities/AllowlistItem",
+      "description": "Collection storing allowlisted user emails with granted roles and granular resource clearance"
+    },
+    "/security_settings/{settingId}": {
+      "schema": "#/entities/SecurityLocks",
+      "description": "Configuration document storing section-level and item-level lock settings"
+    },
+    "/page_stats/{pageId}": {
+      "schema": "#/entities/PageStats",
+      "description": "Collection storing stars/read counts for each section"
+    },
+    "/denylist/{entryId}": {
+      "schema": "#/entities/DenyListEntry",
+      "description": "Dynamic deny list for real-time blocking of intrusive IPs and individuals"
+    }
+  }
+}
