@@ -716,7 +716,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   // Executive Passcode Validation list (Executive Passcode: 'C1$02026p@$$c0d3')
-  const VALID_PASSCODES = ['C1$02026p@$$c0d3', '739104', 'MUNISH2026', 'EXECUTIVE-VAULT', 'GS-EXECUTIVE', 'GOLDMAN-CISO', 'ADMIN2026'];
+  const VALID_PASSCODES = ['C1$02026p@$$c0d3'];
 
   // Sign in with Executive Passcode (Direct authorization for owners, search partners, and board reviewers)
   const signInWithPasscode = async (passcode: string, customEmail?: string) => {
@@ -731,7 +731,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     const email = (customEmail && customEmail.trim()) ? customEmail.trim().toLowerCase() : 'munish.world@gmail.com';
-    const isSuperAdmin = isSuperAdminEmail(email) || isExecutivePasscode || upperCode === 'MUNISH2026';
+    const isSuperAdmin = isSuperAdminEmail(email) || isExecutivePasscode;
 
     const executiveUser = {
       uid: 'exec-' + btoa(email).replace(/[^a-zA-Z0-9]/g, '').slice(0, 12),

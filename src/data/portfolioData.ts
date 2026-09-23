@@ -112,7 +112,7 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
       "Modernized authentication with Zero Trust, passwordless, FIDO2/Passkeys and adaptive authentication, strengthening digital trust and reducing authentication risk.",
       "Governed complex IAM integrations, onboarding, API/M2M authentication and certificate lifecycle, reducing IAM-related change incidents 25%.",
       "Strengthened identity threat controls across credentials, tokens, sessions, privileged access and NHI, improving detection, resilience and cyber defence.",
-      "Advised technology, cyber and risk leadership on architecture, GRC and regulatory controls, achieving 100% audit compliance and 3 consecutive years without high-severity findings.",
+      "Advised technology, cyber and risk leadership on architecture, GRC and regulatory controls, achieving audit compliance without high-severity findings.",
       "Led cloud, DevSecOps, AI Security, AI TRiSM and PQC/PKI initiatives, delivering 40% lower MTTR and 50% fewer critical incidents."
     ],
     technologies: ["Zero Trust", "IAM", "PAM", "MFA", "FIDO2 / Passkeys", "SSO / Federation", "PKI / RBAC", "AI Security", "DevSecOps", "PQC/PKI"]
