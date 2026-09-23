@@ -113,11 +113,29 @@ export default function App() {
       isTransitioningRef.current = true;
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setActiveSection(sectionId);
+      window.history.pushState(null, '', `#${sectionId}`);
       setTimeout(() => {
         isTransitioningRef.current = false;
       }, 700);
     }
   }, []);
+
+  // Handle initial hash on mount
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '') as SectionId;
+    if (hash && SECTIONS.includes(hash)) {
+      setTimeout(() => {
+        navigateToSection(hash);
+      }, 300);
+    }
+  }, [navigateToSection]);
+
+  // Sync activeSection with URL hash on scroll
+  useEffect(() => {
+    if (activeSection) {
+      window.history.replaceState(null, '', `#${activeSection}`);
+    }
+  }, [activeSection]);
 
   const navigateToIndex = useCallback((index: number) => {
     if (index >= 0 && index < SECTIONS.length) {
