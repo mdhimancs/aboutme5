@@ -238,7 +238,7 @@ export const UserTelemetry: React.FC<UserTelemetryProps> = ({
           </span>
         </div>
         {!isMobile && (
-          <span className="text-xs font-medium tracking-tight">Session Audit</span>
+          <span className="text-[9.5px] font-bold tracking-tight">Session Audit</span>
         )}
       </button>
 

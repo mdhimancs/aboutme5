@@ -11,7 +11,6 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
   const isLight = theme === 'apple-light';
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
   const [expandedId, setExpandedId] = useState<string | null>(CAREER_MILESTONES[0]?.id || null);
-  const [allExpanded, setAllExpanded] = useState<boolean>(false);
   const listContainerRef = useRef<HTMLDivElement>(null);
   const { scrollRef: careerScrollRef, onMouseMove: careerOnMouseMove, onMouseLeave: careerOnMouseLeave } = useHoverScroll();
 
@@ -23,6 +22,19 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
   };
 
   const careerGroups = [
+    {
+      company: 'Confidential',
+      period: '2025–2026',
+      roles: [
+        {
+          value: 'confidential-sr-dir',
+          role: 'Principal Architect | Sr. Director',
+          years: '2025–2026',
+          shortLabel: 'Principal Arch | Sr. Dir',
+          milestoneId: 'confidential-sr-dir'
+        }
+      ]
+    },
     {
       company: 'Goldman Sachs',
       period: '2011–2025 · 14 Yrs',
@@ -108,16 +120,6 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
     }
   };
 
-  const toggleExpandAll = () => {
-    if (allExpanded) {
-      setAllExpanded(false);
-      setExpandedId(null);
-    } else {
-      setAllExpanded(true);
-      setExpandedId('all');
-    }
-  };
-
   return (
     <section 
       id="career" 
@@ -148,28 +150,6 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
             <Briefcase className="w-3 h-3 text-blue-500" />
             <span>21-Year Executive Progression</span>
           </div>
-
-          {/* Quick Expand/Collapse Control */}
-          <button
-            onClick={toggleExpandAll}
-            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-xs font-medium border transition-all ${
-              isLight 
-                ? 'bg-white hover:bg-zinc-100 text-zinc-700 border-zinc-200 shadow-2xs' 
-                : 'bg-white/5 hover:bg-white/10 text-zinc-300 border-white/10'
-            }`}
-          >
-            {allExpanded ? (
-              <>
-                <ChevronUp className="w-3.5 h-3.5 text-blue-500" />
-                <span>Collapse All</span>
-              </>
-            ) : (
-              <>
-                <ChevronDown className="w-3.5 h-3.5 text-blue-500" />
-                <span>Expand All Details</span>
-              </>
-            )}
-          </button>
         </div>
 
         <h2 
@@ -268,7 +248,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
           {/* Timeline Vertical Track with generous left margin for Year Box */}
           <div className={`relative border-l-2 ${isLight ? 'border-blue-300' : 'border-blue-500/40'} ml-[76px] sm:ml-[88px] space-y-3.5 py-0.5`}>
             {filteredMilestones.map((milestone) => {
-              const isExpanded = allExpanded || expandedId === milestone.id || expandedId === 'all';
+              const isExpanded = expandedId === milestone.id;
               const isSelected = selectedFilter === milestone.id;
 
               return (
@@ -298,12 +278,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                   {/* Milestone Card - Compact Padding & Elegant Hierarchy */}
                   <div
                     onClick={() => {
-                      if (allExpanded) {
-                        setAllExpanded(false);
-                        setExpandedId(isExpanded ? null : milestone.id);
-                      } else {
-                        setExpandedId(isExpanded ? null : milestone.id);
-                      }
+                      setExpandedId(isExpanded ? null : milestone.id);
                     }}
                     className={`border rounded-xl p-3 sm:p-3.5 backdrop-blur-xl transition-all duration-200 cursor-pointer ${
                       isLight
@@ -338,7 +313,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                               <Building2 className="w-3 h-3 text-sky-500 shrink-0" />
                               <span>CA (Broadcom)</span>
                             </span>
-                          ) : (
+                          ) : milestone.company === 'Amrita Technologies' ? (
                             <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md ${
                               isLight 
                                 ? 'bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-900 border border-emerald-300 shadow-2xs' 
@@ -346,6 +321,15 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                             }`}>
                               <Building2 className="w-3 h-3 text-emerald-500 shrink-0" />
                               <span>Amrita Tech</span>
+                            </span>
+                          ) : (
+                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md ${
+                              isLight 
+                                ? 'bg-gradient-to-r from-purple-100 to-purple-50 text-purple-900 border border-purple-300 shadow-2xs' 
+                                : 'bg-gradient-to-r from-purple-500/20 to-purple-600/10 text-purple-300 border border-purple-500/40 shadow-xs'
+                            }`}>
+                              <Building2 className="w-3 h-3 text-purple-500 shrink-0" />
+                              <span>Confidential</span>
                             </span>
                           )}
 
