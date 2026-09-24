@@ -154,3 +154,371 @@ canvas {
 .theme-terminal .to-indigo-500 {
   --tw-gradient-to: #34d399 var(--tw-gradient-to-position) !important;
 }
+
+/* ==========================================================================
+   GLOBAL ACCENT COLOR PALETTE OVERRIDES (LIGHT & EXECUTIVE)
+   Dynamically overrides all primary interactive elements across the website
+   ========================================================================== */
+
+/* Swatch Immunity: Prevent global accent overrides from mutating palette swatches */
+.accent-swatch,
+button .accent-swatch,
+div .accent-swatch,
+span.accent-swatch {
+  background-color: inherit;
+}
+
+/* 0. Default Sapphire Blue Accent */
+.accent-blue .text-blue-400,
+.accent-blue .text-blue-500,
+.accent-blue .text-blue-600,
+.accent-blue .text-blue-700 { color: #0f52ba !important; }
+.accent-blue .bg-blue-500,
+.accent-blue .bg-blue-600,
+.accent-blue .bg-blue-700 { background-color: #0f52ba !important; }
+.accent-blue .hover\:bg-blue-500:hover,
+.accent-blue .hover\:bg-blue-600:hover { background-color: #0d47a1 !important; }
+.accent-blue .from-blue-500,
+.accent-blue .from-blue-600 { --tw-gradient-from: #0f52ba var(--tw-gradient-from-position) !important; }
+.accent-blue .to-blue-400,
+.accent-blue .to-blue-500,
+.accent-blue .to-blue-600 { --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position) !important; }
+
+/* 1. Executive Mint Accent */
+.accent-emerald .text-blue-400,
+.accent-emerald .text-blue-500,
+.accent-emerald .text-blue-600,
+.accent-emerald .text-blue-700 { color: #34d399 !important; }
+.accent-emerald .bg-blue-500,
+.accent-emerald .bg-blue-600,
+.accent-emerald .bg-blue-700 { background-color: #34d399 !important; }
+.accent-emerald .hover\:bg-blue-500:hover,
+.accent-emerald .hover\:bg-blue-600:hover { background-color: #10b981 !important; }
+.accent-emerald .bg-blue-50,
+.accent-emerald .bg-blue-500\/10,
+.accent-emerald .bg-blue-500\/20,
+.accent-emerald .bg-blue-900\/20,
+.accent-emerald .bg-blue-950\/85,
+.accent-emerald .bg-blue-950\/90 { background-color: rgba(52, 211, 153, 0.12) !important; }
+.accent-emerald .border-blue-400,
+.accent-emerald .border-blue-500,
+.accent-emerald .border-blue-600,
+.accent-emerald .border-blue-500\/20,
+.accent-emerald .border-blue-500\/30,
+.accent-emerald .border-blue-500\/40,
+.accent-emerald .border-blue-500\/50 { border-color: rgba(52, 211, 153, 0.35) !important; }
+.accent-emerald .from-blue-500,
+.accent-emerald .from-blue-600 { --tw-gradient-from: #34d399 var(--tw-gradient-from-position) !important; }
+.accent-emerald .to-blue-400,
+.accent-emerald .to-blue-500,
+.accent-emerald .to-blue-600 { --tw-gradient-to: #6ee7b7 var(--tw-gradient-to-position) !important; }
+
+/* 2. Soft Lavender Accent */
+.accent-violet .text-blue-400,
+.accent-violet .text-blue-500,
+.accent-violet .text-blue-600,
+.accent-violet .text-blue-700 { color: #a78bfa !important; }
+.accent-violet .bg-blue-500,
+.accent-violet .bg-blue-600,
+.accent-violet .bg-blue-700 { background-color: #a78bfa !important; }
+.accent-violet .hover\:bg-blue-500:hover,
+.accent-violet .hover\:bg-blue-600:hover { background-color: #8b5cf6 !important; }
+.accent-violet .bg-blue-50,
+.accent-violet .bg-blue-500\/10,
+.accent-violet .bg-blue-500\/20,
+.accent-violet .bg-blue-900\/20,
+.accent-violet .bg-blue-950\/85,
+.accent-violet .bg-blue-950\/90 { background-color: rgba(167, 139, 250, 0.12) !important; }
+.accent-violet .border-blue-400,
+.accent-violet .border-blue-500,
+.accent-violet .border-blue-600,
+.accent-violet .border-blue-500\/20,
+.accent-violet .border-blue-500\/30,
+.accent-violet .border-blue-500\/40,
+.accent-violet .border-blue-500\/50 { border-color: rgba(167, 139, 250, 0.35) !important; }
+.accent-violet .from-blue-500,
+.accent-violet .from-blue-600 { --tw-gradient-from: #a78bfa var(--tw-gradient-from-position) !important; }
+.accent-violet .to-blue-400,
+.accent-violet .to-blue-500,
+.accent-violet .to-blue-600 { --tw-gradient-to: #c084fc var(--tw-gradient-to-position) !important; }
+
+/* 0. Sky Blue Accent */
+.accent-skyblue .text-blue-400,
+.accent-skyblue .text-blue-500,
+.accent-skyblue .text-blue-600,
+.accent-skyblue .text-blue-700 { color: #38bdf8 !important; }
+.accent-skyblue .bg-blue-500,
+.accent-skyblue .bg-blue-600,
+.accent-skyblue .bg-blue-700 { background-color: #38bdf8 !important; }
+.accent-skyblue .hover\:bg-blue-500:hover,
+.accent-skyblue .hover\:bg-blue-600:hover { background-color: #0ea5e9 !important; }
+.accent-skyblue .bg-blue-50,
+.accent-skyblue .bg-blue-500\/10,
+.accent-skyblue .bg-blue-500\/20,
+.accent-skyblue .bg-blue-900\/20,
+.accent-skyblue .bg-blue-950\/85,
+.accent-skyblue .bg-blue-950\/90 { background-color: rgba(56, 189, 248, 0.12) !important; }
+.accent-skyblue .border-blue-400,
+.accent-skyblue .border-blue-500,
+.accent-skyblue .border-blue-600,
+.accent-skyblue .border-blue-500\/20,
+.accent-skyblue .border-blue-500\/30,
+.accent-skyblue .border-blue-500\/40,
+.accent-skyblue .border-blue-500\/50 { border-color: rgba(56, 189, 248, 0.35) !important; }
+.accent-skyblue .from-blue-500,
+.accent-skyblue .from-blue-600 { --tw-gradient-from: #38bdf8 var(--tw-gradient-from-position) !important; }
+.accent-skyblue .to-blue-400,
+.accent-skyblue .to-blue-500,
+.accent-skyblue .to-blue-600 { --tw-gradient-to: #7dd3fc var(--tw-gradient-to-position) !important; }
+
+/* 00. Navy Blue Accent */
+.accent-navy .text-blue-400,
+.accent-navy .text-blue-500,
+.accent-navy .text-blue-600,
+.accent-navy .text-blue-700 { color: #2563eb !important; }
+.accent-navy .bg-blue-500,
+.accent-navy .bg-blue-600,
+.accent-navy .bg-blue-700 { background-color: #1e40af !important; }
+.accent-navy .hover\:bg-blue-500:hover,
+.accent-navy .hover\:bg-blue-600:hover { background-color: #1e3a8a !important; }
+.accent-navy .bg-blue-50,
+.accent-navy .bg-blue-500\/10,
+.accent-navy .bg-blue-500\/20,
+.accent-navy .bg-blue-900\/20,
+.accent-navy .bg-blue-950\/85,
+.accent-navy .bg-blue-950\/90 { background-color: rgba(30, 64, 175, 0.12) !important; }
+.accent-navy .border-blue-400,
+.accent-navy .border-blue-500,
+.accent-navy .border-blue-600,
+.accent-navy .border-blue-500\/20,
+.accent-navy .border-blue-500\/30,
+.accent-navy .border-blue-500\/40,
+.accent-navy .border-blue-500\/50 { border-color: rgba(30, 64, 175, 0.35) !important; }
+.accent-navy .from-blue-500,
+.accent-navy .from-blue-600 { --tw-gradient-from: #1e40af var(--tw-gradient-from-position) !important; }
+.accent-navy .to-blue-400,
+.accent-navy .to-blue-500,
+.accent-navy .to-blue-600 { --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position) !important; }
+
+/* 3. Bright Brick Red Accent */
+.accent-amber .text-blue-400,
+.accent-amber .text-blue-500,
+.accent-amber .text-blue-600,
+.accent-amber .text-blue-700 { color: #ef4444 !important; }
+.accent-amber .bg-blue-500,
+.accent-amber .bg-blue-600,
+.accent-amber .bg-blue-700 { background-color: #ef4444 !important; }
+.accent-amber .hover\:bg-blue-500:hover,
+.accent-amber .hover\:bg-blue-600:hover { background-color: #dc2626 !important; }
+.accent-amber .bg-blue-50,
+.accent-amber .bg-blue-500\/10,
+.accent-amber .bg-blue-500\/20,
+.accent-amber .bg-blue-900\/20,
+.accent-amber .bg-blue-950\/85,
+.accent-amber .bg-blue-950\/90 { background-color: rgba(239, 68, 68, 0.12) !important; }
+.accent-amber .border-blue-400,
+.accent-amber .border-blue-500,
+.accent-amber .border-blue-600,
+.accent-amber .border-blue-500\/20,
+.accent-amber .border-blue-500\/30,
+.accent-amber .border-blue-500\/40,
+.accent-amber .border-blue-500\/50 { border-color: rgba(239, 68, 68, 0.35) !important; }
+.accent-amber .from-blue-500,
+.accent-amber .from-blue-600 { --tw-gradient-from: #ef4444 var(--tw-gradient-from-position) !important; }
+.accent-amber .to-blue-400,
+.accent-amber .to-blue-500,
+.accent-amber .to-blue-600 { --tw-gradient-to: #f87171 var(--tw-gradient-to-position) !important; }
+
+/* 4. Soft Rose Gold Accent (Lighter) */
+.accent-rose .text-blue-400,
+.accent-rose .text-blue-500,
+.accent-rose .text-blue-600,
+.accent-rose .text-blue-700 { color: #fda4af !important; }
+.accent-rose .bg-blue-500,
+.accent-rose .bg-blue-600,
+.accent-rose .bg-blue-700 { background-color: #fda4af !important; }
+.accent-rose .hover\:bg-blue-500:hover,
+.accent-rose .hover\:bg-blue-600:hover { background-color: #fb7185 !important; }
+.accent-rose .bg-blue-50,
+.accent-rose .bg-blue-500\/10,
+.accent-rose .bg-blue-500\/20,
+.accent-rose .bg-blue-900\/20,
+.accent-rose .bg-blue-950\/85,
+.accent-rose .bg-blue-950\/90 { background-color: rgba(253, 164, 175, 0.12) !important; }
+.accent-rose .border-blue-400,
+.accent-rose .border-blue-500,
+.accent-rose .border-blue-600,
+.accent-rose .border-blue-500\/20,
+.accent-rose .border-blue-500\/30,
+.accent-rose .border-blue-500\/40,
+.accent-rose .border-blue-500\/50 { border-color: rgba(253, 164, 175, 0.35) !important; }
+.accent-rose .from-blue-500,
+.accent-rose .from-blue-600 { --tw-gradient-from: #fda4af var(--tw-gradient-from-position) !important; }
+.accent-rose .to-blue-400,
+.accent-rose .to-blue-500,
+.accent-rose .to-blue-600 { --tw-gradient-to: #fecdd3 var(--tw-gradient-to-position) !important; }
+
+/* 5. Sky Cyan Accent */
+.accent-cyan .text-blue-400,
+.accent-cyan .text-blue-500,
+.accent-cyan .text-blue-600,
+.accent-cyan .text-blue-700 { color: #38bdf8 !important; }
+.accent-cyan .bg-blue-500,
+.accent-cyan .bg-blue-600,
+.accent-cyan .bg-blue-700 { background-color: #38bdf8 !important; }
+.accent-cyan .hover\:bg-blue-500:hover,
+.accent-cyan .hover\:bg-blue-600:hover { background-color: #0ea5e9 !important; }
+.accent-cyan .bg-blue-50,
+.accent-cyan .bg-blue-500\/10,
+.accent-cyan .bg-blue-500\/20,
+.accent-cyan .bg-blue-900\/20,
+.accent-cyan .bg-blue-950\/85,
+.accent-cyan .bg-blue-950\/90 { background-color: rgba(56, 189, 248, 0.12) !important; }
+.accent-cyan .border-blue-400,
+.accent-cyan .border-blue-500,
+.accent-cyan .border-blue-600,
+.accent-cyan .border-blue-500\/20,
+.accent-cyan .border-blue-500\/30,
+.accent-cyan .border-blue-500\/40,
+.accent-cyan .border-blue-500\/50 { border-color: rgba(56, 189, 248, 0.35) !important; }
+.accent-cyan .from-blue-500,
+.accent-cyan .from-blue-600 { --tw-gradient-from: #38bdf8 var(--tw-gradient-from-position) !important; }
+.accent-cyan .to-blue-400,
+.accent-cyan .to-blue-500,
+.accent-cyan .to-blue-600 { --tw-gradient-to: #7dd3fc var(--tw-gradient-to-position) !important; }
+
+/* 6. Bottle Green Accent */
+.accent-copper .text-blue-400,
+.accent-copper .text-blue-500,
+.accent-copper .text-blue-600,
+.accent-copper .text-blue-700 { color: #047857 !important; }
+.accent-copper .bg-blue-500,
+.accent-copper .bg-blue-600,
+.accent-copper .bg-blue-700 { background-color: #065f46 !important; }
+.accent-copper .hover\:bg-blue-500:hover,
+.accent-copper .hover\:bg-blue-600:hover { background-color: #064e3b !important; }
+.accent-copper .bg-blue-50,
+.accent-copper .bg-blue-500\/10,
+.accent-copper .bg-blue-500\/20,
+.accent-copper .bg-blue-900\/20,
+.accent-copper .bg-blue-950\/85,
+.accent-copper .bg-blue-950\/90 { background-color: rgba(6, 95, 70, 0.14) !important; }
+.accent-copper .border-blue-400,
+.accent-copper .border-blue-500,
+.accent-copper .border-blue-600,
+.accent-copper .border-blue-500\/20,
+.accent-copper .border-blue-500\/30,
+.accent-copper .border-blue-500\/40,
+.accent-copper .border-blue-500\/50 { border-color: rgba(6, 95, 70, 0.4) !important; }
+.accent-copper .from-blue-500,
+.accent-copper .from-blue-600 { --tw-gradient-from: #065f46 var(--tw-gradient-from-position) !important; }
+.accent-copper .to-blue-400,
+.accent-copper .to-blue-500,
+.accent-copper .to-blue-600 { --tw-gradient-to: #047857 var(--tw-gradient-to-position) !important; }
+
+/* 7. Silver Titanium Accent */
+.accent-platinum .text-blue-400,
+.accent-platinum .text-blue-500,
+.accent-platinum .text-blue-600,
+.accent-platinum .text-blue-700 { color: #94a3b8 !important; }
+.accent-platinum .bg-blue-500,
+.accent-platinum .bg-blue-600,
+.accent-platinum .bg-blue-700 { background-color: #94a3b8 !important; }
+.accent-platinum .hover\:bg-blue-500:hover,
+.accent-platinum .hover\:bg-blue-600:hover { background-color: #64748b !important; }
+.accent-platinum .bg-blue-50,
+.accent-platinum .bg-blue-500\/10,
+.accent-platinum .bg-blue-500\/20,
+.accent-platinum .bg-blue-900\/20,
+.accent-platinum .bg-blue-950\/85,
+.accent-platinum .bg-blue-950\/90 { background-color: rgba(148, 163, 184, 0.12) !important; }
+.accent-platinum .border-blue-400,
+.accent-platinum .border-blue-500,
+.accent-platinum .border-blue-600,
+.accent-platinum .border-blue-500\/20,
+.accent-platinum .border-blue-500\/30,
+.accent-platinum .border-blue-500\/40,
+.accent-platinum .border-blue-500\/50 { border-color: rgba(148, 163, 184, 0.35) !important; }
+.accent-platinum .from-blue-500,
+.accent-platinum .from-blue-600 { --tw-gradient-from: #94a3b8 var(--tw-gradient-from-position) !important; }
+.accent-platinum .to-blue-400,
+.accent-platinum .to-blue-500,
+.accent-platinum .to-blue-600 { --tw-gradient-to: #cbd5e1 var(--tw-gradient-to-position) !important; }
+
+/* ==========================================================================
+   ENTERPRISE PURPOSEFUL MICRO-ANIMATIONS & FLUID MOTION SUITE
+   ========================================================================== */
+
+/* 1. Subtle Elevation & Card Scale Hover Transitions */
+.interactive-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease, background-color 0.28s ease;
+  will-change: transform, box-shadow;
+}
+.interactive-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(59, 130, 246, 0.15);
+}
+
+/* 2. Smooth Tab & Content Pane Fade-In-Up */
+@keyframes fadeInSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.tab-pane-animate {
+  animation: fadeInSlideUp 0.24s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 3. Ambient Live Indicator Pulse & Ring */
+@keyframes liveRingPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+.live-indicator-ring {
+  animation: liveRingPulse 2.2s infinite ease-in-out;
+}
+
+/* 4. Fluid Progress Bar Shimmer & Ease */
+@keyframes progressShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.shimmer-track {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  animation: progressShimmer 2.4s infinite linear;
+}
+
+/* 5. Smooth Glassmorphic Theme & Backdrop Transitions */
+.glass-surface {
+  transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+}
+

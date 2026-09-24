@@ -92,7 +92,7 @@ export async function generateExecutiveJwt(options: {
   expiresInHours?: number; // Defaults to 8 hours per spec
 }): Promise<string> {
   const now = Math.floor(Date.now() / 1000);
-  const hours = options.expiresInHours ?? 8; // 8 hours lifetime
+  const hours = options.expiresInHours ?? 2; // 2 hours default lifetime
   const exp = now + hours * 3600;
 
   const header = {
@@ -171,7 +171,7 @@ export async function verifyExecutiveJwt(token: string): Promise<JwtVerification
         valid: false, 
         expired: true, 
         payload,
-        error: `Executive access link expired ${expiredAgoHours > 0 ? expiredAgoHours + ' hour(s) ago' : 'recently'}. Links are strictly valid for 8 hours.` 
+        error: `Executive access link expired ${expiredAgoHours > 0 ? expiredAgoHours + ' hour(s) ago' : 'recently'}. Secure JWT sessions are valid for 2 hours (up to 4 hours maximum) and auto-expire. Access must be requested again.` 
       };
     }
 

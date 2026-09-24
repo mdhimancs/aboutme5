@@ -20,6 +20,8 @@ import { ExecutiveVaultGateModal } from './components/ExecutiveVaultGateModal';
 import { DenyListBlockScreen } from './components/DenyListBlockScreen';
 import { useAuth } from './context/AuthContext';
 import { InterfaceOptionsModal, ThemeMode, AccentColor, FontStyle } from './components/InterfaceOptionsModal';
+import { SuperAdminConsoleModal } from './components/SuperAdminConsoleModal';
+import { ExecutiveFontsShowcaseModal, TOP_56_EXECUTIVE_FONTS } from './components/ExecutiveFontsShowcaseModal';
 import { ChevronUp, ChevronDown, Clock, AlertTriangle, X } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -76,6 +78,9 @@ export default function App() {
 
   const [contactOpen, setContactOpen] = useState(false);
   const [interfaceModalOpen, setInterfaceModalOpen] = useState(false);
+  const [fontsShowcaseOpen, setFontsShowcaseOpen] = useState(false);
+  const [customFontFamily, setCustomFontFamily] = useState<string | null>(null);
+  const [superAdminOpen, setSuperAdminOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>('overview');
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -323,11 +328,92 @@ export default function App() {
     touchStartYRef.current = null;
   };
 
+  // Apply dynamic accent color variables and font families to document root
+  useEffect(() => {
+    const root = document.documentElement;
+    if (accent === 'skyblue') { // Radiant Sky Blue
+      root.style.setProperty('--accent-color', '#38bdf8');
+      root.style.setProperty('--accent-hover', '#0ea5e9');
+      root.style.setProperty('--accent-bg', '#f0f9ff');
+      root.style.setProperty('--accent-border', '#bae6fd');
+      root.style.setProperty('--accent-text', '#0284c7');
+    } else if (accent === 'navy') { // Imperial Navy Blue
+      root.style.setProperty('--accent-color', '#2563eb');
+      root.style.setProperty('--accent-hover', '#1e40af');
+      root.style.setProperty('--accent-bg', '#eff6ff');
+      root.style.setProperty('--accent-border', '#93c5fd');
+      root.style.setProperty('--accent-text', '#1e3a8a');
+    } else if (accent === 'emerald') { // Executive Mint
+      root.style.setProperty('--accent-color', '#34d399');
+      root.style.setProperty('--accent-hover', '#10b981');
+      root.style.setProperty('--accent-bg', '#ecfdf5');
+      root.style.setProperty('--accent-border', '#a7f3d0');
+      root.style.setProperty('--accent-text', '#059669');
+    } else if (accent === 'violet') { // Soft Lavender
+      root.style.setProperty('--accent-color', '#a78bfa');
+      root.style.setProperty('--accent-hover', '#8b5cf6');
+      root.style.setProperty('--accent-bg', '#f5f3ff');
+      root.style.setProperty('--accent-border', '#ddd6fe');
+      root.style.setProperty('--accent-text', '#7c3aed');
+    } else if (accent === 'amber') { // Bright Brick Red
+      root.style.setProperty('--accent-color', '#ef4444');
+      root.style.setProperty('--accent-hover', '#dc2626');
+      root.style.setProperty('--accent-bg', '#fef2f2');
+      root.style.setProperty('--accent-border', '#fecaca');
+      root.style.setProperty('--accent-text', '#b91c1c');
+    } else if (accent === 'rose') { // Soft Rose Gold (1 shade lighter)
+      root.style.setProperty('--accent-color', '#fda4af');
+      root.style.setProperty('--accent-hover', '#fb7185');
+      root.style.setProperty('--accent-bg', '#fff1f2');
+      root.style.setProperty('--accent-border', '#fecdd3');
+      root.style.setProperty('--accent-text', '#e11d48');
+    } else if (accent === 'cyan') { // Sky Cyan
+      root.style.setProperty('--accent-color', '#38bdf8');
+      root.style.setProperty('--accent-hover', '#0ea5e9');
+      root.style.setProperty('--accent-bg', '#f0f9ff');
+      root.style.setProperty('--accent-border', '#bae6fd');
+      root.style.setProperty('--accent-text', '#0284c7');
+    } else if (accent === 'copper') { // Bottle Green
+      root.style.setProperty('--accent-color', '#065f46');
+      root.style.setProperty('--accent-hover', '#064e3b');
+      root.style.setProperty('--accent-bg', '#ecfdf5');
+      root.style.setProperty('--accent-border', '#6ee7b7');
+      root.style.setProperty('--accent-text', '#047857');
+    } else if (accent === 'platinum') { // Silver Titanium
+      root.style.setProperty('--accent-color', '#94a3b8');
+      root.style.setProperty('--accent-hover', '#64748b');
+      root.style.setProperty('--accent-bg', '#f8fafc');
+      root.style.setProperty('--accent-border', '#e2e8f0');
+      root.style.setProperty('--accent-text', '#475569');
+    } else { // Sapphire Blue default
+      root.style.setProperty('--accent-color', '#0f52ba');
+      root.style.setProperty('--accent-hover', '#0d47a1');
+      root.style.setProperty('--accent-bg', '#eff6ff');
+      root.style.setProperty('--accent-border', '#93c5fd');
+      root.style.setProperty('--accent-text', '#0f52ba');
+    }
+  }, [accent]);
+
+  // Auto-collapse customizer modal after 30 seconds
+  useEffect(() => {
+    if (!interfaceModalOpen) return;
+
+    const timer = setTimeout(() => {
+      setInterfaceModalOpen(false);
+    }, 30000);
+
+    return () => clearTimeout(timer);
+  }, [interfaceModalOpen]);
+
   // Compute theme background & text styles
   const getThemeClass = () => {
     switch (theme) {
       case 'apple-light':
-        return 'bg-[#fcfcfd] text-black';
+        return 'bg-[#fcfcfd] text-zinc-900';
+      case 'solarized':
+        return 'bg-[#fbf7ee] text-zinc-900';
+      case 'emerald-matrix':
+        return 'bg-[#041210] text-[#a7f3d0]';
       case 'obsidian':
         return 'bg-[#06030d] text-[#e2d9fc]';
       case 'terminal':
@@ -338,7 +424,24 @@ export default function App() {
     }
   };
 
-  const isLight = theme === 'apple-light';
+  const getFontClass = () => {
+    if (customFontFamily) return '';
+    switch (font) {
+      case 'jakarta':
+        return 'font-["Plus_Jakarta_Sans",sans-serif]';
+      case 'outfit':
+        return 'font-["Outfit",sans-serif]';
+      case 'serif':
+        return 'font-["Playfair_Display",serif]';
+      case 'mono':
+        return 'font-["JetBrains_Mono",monospace]';
+      case 'inter':
+      default:
+        return 'font-["Inter",sans-serif]';
+    }
+  };
+
+  const isLight = theme === 'apple-light' || theme === 'solarized';
 
   if (isDenied) {
     return (
@@ -351,10 +454,14 @@ export default function App() {
   }
 
   return (
-    <div className={`h-screen w-screen overflow-hidden transition-colors duration-500 theme-${theme} ${getThemeClass()} ${font === 'mono' ? 'font-mono' : 'font-sans'}`}>
+    <div 
+      style={{ fontFamily: customFontFamily || undefined }}
+      className={`h-screen w-screen overflow-hidden transition-colors duration-500 theme-${theme} accent-${accent} ${getThemeClass()} ${getFontClass()}`}
+    >
       <Navbar
         onOpenContact={() => setContactOpen(true)}
         onOpenInterfaceOptions={() => setInterfaceModalOpen(true)}
+        onOpenSuperAdmin={() => setSuperAdminOpen(true)}
         activeSection={activeSection}
         theme={theme}
         onNavigate={(id) => navigateToSection(id as SectionId)}
@@ -368,6 +475,9 @@ export default function App() {
         id="main-scroll-container"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
+        onClick={() => {
+          if (interfaceModalOpen) setInterfaceModalOpen(false);
+        }}
         style={{ marginLeft: isSidebarCollapsed ? '72px' : '295px' }}
         className="h-screen overflow-y-auto scroll-container select-text transition-[margin] duration-300 ease-in-out relative"
       >
@@ -534,12 +644,20 @@ export default function App() {
         </div>
       )}
 
-      {/* 8-Hour Active Session Indicator */}
+      {/* Secure 2-Hour JWT Active Session Indicator */}
       {jwtSessionInfo?.active && (
-        <div className="fixed top-3.5 left-4 sm:left-auto sm:right-28 z-40 flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-950/85 border border-blue-500/40 text-blue-200 shadow-xl backdrop-blur-md text-[11px] font-mono">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <Clock className="w-3.5 h-3.5 text-blue-400" />
-          <span>Search Partner Access ({jwtSessionInfo.hoursRemaining || 8}h left)</span>
+        <div className="fixed top-3.5 left-4 sm:left-auto sm:right-28 z-40 max-w-md flex flex-col gap-1 px-3.5 py-2 rounded-2xl bg-blue-950/90 border border-blue-500/40 text-blue-200 shadow-2xl backdrop-blur-md text-[11px] font-mono">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <Clock className="w-3.5 h-3.5 text-blue-400" />
+              <span className="font-bold text-white">Partner Access ({jwtSessionInfo.hoursRemaining ?? 2}h left)</span>
+            </div>
+            <span className="text-[10px] bg-blue-500/20 px-2 py-0.5 rounded text-blue-300 font-bold border border-blue-400/30">JWT 2-Hour</span>
+          </div>
+          <p className="text-[10px] text-blue-300 leading-tight">
+            Note: Current session is valid for 2 hours (up to 4 hours maximum) and will auto expire. Access needs to be requested again after expiration.
+          </p>
         </div>
       )}
 
@@ -563,7 +681,25 @@ export default function App() {
         currentAccent={accent}
         onAccentChange={setAccent}
         currentFont={font}
-        onFontChange={setFont}
+        onFontChange={(f) => { setFont(f); setCustomFontFamily(null); }}
+        onOpenFontShowcase={() => {
+          setInterfaceModalOpen(false);
+          setFontsShowcaseOpen(true);
+        }}
+      />
+      <ExecutiveFontsShowcaseModal
+        isOpen={fontsShowcaseOpen}
+        onClose={() => setFontsShowcaseOpen(false)}
+        currentFont={customFontFamily || font}
+        onSelectFont={(fontFamily) => {
+          setCustomFontFamily(fontFamily);
+          setFontsShowcaseOpen(false);
+        }}
+      />
+      <SuperAdminConsoleModal
+        isOpen={superAdminOpen}
+        onClose={() => setSuperAdminOpen(false)}
+        theme={theme}
       />
     </div>
   );

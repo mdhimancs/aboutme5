@@ -36,6 +36,7 @@ import { ARCHIVE_ITEMS, PERSONAL_INFO } from '../data/portfolioData';
 import { useHoverScroll } from '../lib/utils';
 import { trackAssetInteraction } from '../lib/analytics';
 import { useAuth } from '../context/AuthContext';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface ArchiveProps {
   theme?: string;
@@ -455,33 +456,17 @@ export const Archive: React.FC<ArchiveProps> = ({
   return (
     <section 
       id="archive" 
-      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-0 pb-3 sm:pb-4 lg:pb-5 px-6 sm:px-10 lg:px-14 max-w-7xl mx-auto border-t ${
-        isLight ? 'border-zinc-200 bg-[#fcfcfd]' : 'border-white/10 bg-[#000000]'
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
+        isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Background Aura Effects */}
-      <div 
-        className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[320px] sm:h-[450px] rounded-full blur-[90px] sm:blur-[130px] pointer-events-none transition-all duration-700 ${
-          isLight 
-            ? 'bg-gradient-to-tr from-blue-400/15 via-indigo-300/12 to-sky-300/10' 
-            : 'bg-gradient-to-tr from-blue-600/16 via-indigo-500/12 to-cyan-500/10'
-        }`} 
-      />
-        <div 
-          className={`absolute -bottom-20 -right-20 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-[80px] sm:blur-[110px] pointer-events-none ${
-            isLight ? 'bg-indigo-300/10' : 'bg-blue-600/12'
-          }`} 
-        />
-        <div 
-          className={`absolute -top-12 -left-12 w-72 sm:w-80 h-72 sm:h-80 rounded-full blur-[70px] sm:blur-[100px] pointer-events-none ${
-            isLight ? 'bg-sky-300/10' : 'bg-indigo-600/10'
-          }`} 
-        />
+      <SectionBackgroundAura theme={theme} auraLevel={3} />
 
       <div className="relative flex-1 flex flex-col justify-center min-h-0">
         
         {/* Section Header */}
-        <div className="relative w-full space-y-0.5 mb-3 shrink-0 text-left">
+        <div className="relative w-full space-y-0.5 mb-3 shrink-0 text-left -mt-4">
           {/* Luminous aura behind heading */}
           <div 
             className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-24 sm:h-28 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -491,7 +476,9 @@ export const Archive: React.FC<ArchiveProps> = ({
             }`} 
           />
 
-          <div className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
+          <div 
+            style={{ fontSize: '11px' }}
+            className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
             isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-sm' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
           }`}>
             <Award className="w-3.5 h-3.5 text-blue-500" />
@@ -535,14 +522,13 @@ export const Archive: React.FC<ArchiveProps> = ({
             </div>
           </div>
           <p 
-            style={{ fontSize: '14px' }}
-            className={`relative max-w-3xl text-[14px] font-normal text-left leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}
+            style={{ fontSize: '11px' }}
+            className={`relative max-w-3xl text-[11px] font-normal text-left leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}
           >
             Granted intellectual property, institutional reference architectures, and standardized CISO operational blueprints.
           </p>
 
-          {/* Primary View Switcher */}
-          <div className="flex flex-wrap items-center justify-start pt-1.5 gap-1.5 pb-0" style={{ paddingTop: '6px', paddingBottom: '0px', marginBottom: '1px' }}>
+          <div className="flex flex-wrap items-center justify-start pt-1.5 gap-1.5 pb-0 -mt-2 sm:-mt-3" style={{ paddingTop: '6px', paddingBottom: '0px', marginBottom: '1px' }}>
             <button
               onClick={() => setActiveTab('blueprints')}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all ${

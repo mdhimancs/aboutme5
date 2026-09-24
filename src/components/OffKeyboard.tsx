@@ -4,6 +4,7 @@ import { CURATED_VIDEOS } from '../data/curatedVideos';
 import { useHoverScroll } from '../lib/utils';
 import { StarsCounter } from './StarsCounter';
 import { incrementStars } from '../lib/stars';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface OffKeyboardProps {
   theme?: string;
@@ -113,33 +114,17 @@ export const OffKeyboard: React.FC<OffKeyboardProps> = ({ theme = 'apple-dark' }
   return (
     <section 
       id="offkeyboard" 
-      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-center pt-5 sm:pt-6 pb-8 sm:pb-12 lg:pb-14 px-6 sm:px-10 lg:px-14 max-w-6xl lg:max-w-7xl mx-auto border-t ${
-        isLight ? 'border-zinc-200 bg-[#fcfcfd]' : 'border-white/10 bg-[#000000]'
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
+        isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Background Aura Effects */}
-      <div 
-        className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] sm:w-[850px] h-[320px] sm:h-[450px] rounded-full blur-[90px] sm:blur-[130px] pointer-events-none transition-all duration-700 ${
-          isLight 
-            ? 'bg-gradient-to-tr from-blue-400/15 via-indigo-300/12 to-sky-300/10' 
-            : 'bg-gradient-to-tr from-blue-600/16 via-indigo-500/12 to-cyan-500/10'
-        }`} 
-      />
-      <div 
-        className={`absolute -bottom-20 -right-20 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-[80px] sm:blur-[110px] pointer-events-none ${
-          isLight ? 'bg-indigo-300/10' : 'bg-blue-600/12'
-        }`} 
-      />
-      <div 
-        className={`absolute -top-12 -left-12 w-72 sm:w-80 h-72 sm:h-80 rounded-full blur-[70px] sm:blur-[100px] pointer-events-none ${
-          isLight ? 'bg-sky-300/10' : 'bg-indigo-600/10'
-        }`} 
-      />
+      <SectionBackgroundAura theme={theme} auraLevel={3} />
 
-      <div className="relative w-full max-w-5xl lg:max-w-6xl mx-auto flex flex-col flex-1 min-h-0 justify-center space-y-2 sm:space-y-2.5">
+      <div className="relative w-full max-w-5xl lg:max-w-[1400px] mx-auto flex flex-col flex-1 min-h-0 justify-center space-y-2 sm:space-y-2.5">
         
         {/* Header & Sub-Navigation */}
-        <div className="relative text-left space-y-0.5 mb-1.5 shrink-0">
+        <div className="relative text-left space-y-0.5 mb-1.5 shrink-0 -mt-4">
           {/* Luminous aura behind heading */}
           <div 
             className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-20 sm:h-24 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -149,7 +134,9 @@ export const OffKeyboard: React.FC<OffKeyboardProps> = ({ theme = 'apple-dark' }
             }`} 
           />
 
-          <div className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
+          <div 
+            style={{ fontSize: '11px' }}
+            className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
             isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-sm' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
           }`}>
             <Compass className="w-3.5 h-3.5 text-blue-500" />
@@ -163,14 +150,13 @@ export const OffKeyboard: React.FC<OffKeyboardProps> = ({ theme = 'apple-dark' }
             Off Keyboard: Interests & Pursuits
           </h2>
           <p 
-            style={{ fontSize: '14px', paddingBottom: '12px' }}
-            className={`relative max-w-4xl text-[14px] font-normal leading-relaxed text-left ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
+            style={{ fontSize: '11px', paddingBottom: '12px' }}
+            className={`relative max-w-4xl text-[11px] font-normal leading-relaxed text-left ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
           >
             Exploring the intersection of technology, humanities, and the physical world through curated interests and lifelong learning.
           </p>
 
-          {/* Sub-Tabs: Interests vs Curated Videos */}
-          <div className="flex items-center justify-start pt-0.5 gap-2 pb-0.5" style={{ paddingBottom: '1px', marginBottom: '3px' }}>
+          <div className="flex items-center justify-start pt-0.5 gap-2 pb-0.5 -mt-2 sm:-mt-3" style={{ paddingBottom: '1px', marginBottom: '3px' }}>
             <button
               onClick={() => setActiveTab('interests')}
               className={`flex items-center gap-1.5 px-3 py-0.5 sm:py-1 rounded-xl text-[10px] sm:text-[11px] font-semibold transition-all ${
@@ -205,8 +191,7 @@ export const OffKeyboard: React.FC<OffKeyboardProps> = ({ theme = 'apple-dark' }
         {/* Tab Content: Interests */}
         {activeTab === 'interests' && (
           <div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-2.5 lg:gap-3 pb-1 animate-in fade-in duration-300"
-            style={{ paddingBottom: '2px', width: '1135.41px', height: '442.366px' }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 pb-1 animate-in fade-in duration-300"
           >
             {interestsList.map((item, index) => (
               <div

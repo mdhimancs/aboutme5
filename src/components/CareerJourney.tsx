@@ -2,6 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Briefcase, Calendar, MapPin, ChevronRight, CheckCircle2, Award, ChevronDown, ChevronUp, Layers, Building2 } from 'lucide-react';
 import { CAREER_MILESTONES } from '../data/portfolioData';
 import { useHoverScroll } from '../lib/utils';
+import { motion, AnimatePresence } from 'motion/react';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface CareerJourneyProps {
   theme?: string;
@@ -28,9 +30,9 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       roles: [
         {
           value: 'confidential-sr-dir',
-          role: 'Principal Architect | Sr. Director',
+          role: 'Principal Architect | Director',
           years: '2025–2026',
-          shortLabel: 'Principal Arch | Sr. Dir',
+          shortLabel: 'Principal Arch | Director',
           milestoneId: 'confidential-sr-dir'
         }
       ]
@@ -43,28 +45,28 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
           value: 'gs-svp',
           role: 'Principal Architect | SVP',
           years: '2020–2025',
-          shortLabel: 'Principal | SVP',
+          shortLabel: 'Principal Architect | SVP',
           milestoneId: 'gs-svp'
         },
         {
           value: 'gs-vp',
           role: 'Lead Architect | VP',
           years: '2016–2020',
-          shortLabel: 'Lead Arch | VP',
+          shortLabel: 'Lead Architect | VP',
           milestoneId: 'gs-vp'
         },
         {
           value: 'gs-sr-assoc',
           role: 'Tech Lead Architect | Sr. Assoc',
           years: '2013–2015',
-          shortLabel: 'Tech Lead | Sr. Assoc',
+          shortLabel: 'Tech Lead Architect | Sr. Assoc',
           milestoneId: 'gs-sr-assoc'
         },
         {
           value: 'gs-tech-analyst',
           role: 'Sr. Staff Architect | Analyst/Assoc',
           years: '2011–2013',
-          shortLabel: 'Sr. Staff | Analyst',
+          shortLabel: 'Sr. Staff Architect | Analyst/Assoc',
           milestoneId: 'gs-tech-analyst'
         }
       ]
@@ -77,7 +79,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
           value: 'ca-tech-sol',
           role: 'Technical Solutions Engineer',
           years: '2009–2011',
-          shortLabel: 'CA (Broadcom)',
+          shortLabel: 'Technical Solutions Engineer',
           milestoneId: 'ca-tech-sol'
         }
       ]
@@ -90,7 +92,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
           value: 'amrita-tech-assoc',
           role: 'Technical Associate',
           years: '2005–2009',
-          shortLabel: 'Amrita Tech',
+          shortLabel: 'Technical Associate',
           milestoneId: 'amrita-tech-assoc'
         }
       ]
@@ -123,28 +125,28 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
   return (
     <section 
       id="career" 
-      className={`relative overflow-hidden min-h-screen w-full flex flex-col justify-start pt-3 sm:pt-4 pb-4 sm:pb-6 px-3 sm:px-6 lg:px-10 max-w-7xl mx-auto border-t transition-colors duration-300 ${
-        isLight ? 'border-zinc-200 bg-[#fcfcfd]' : 'border-white/10 bg-[#000000]'
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t transition-colors duration-300 ${
+        isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Background Ambient Glows */}
-      <div 
-        className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[300px] sm:h-[400px] rounded-full blur-[100px] sm:blur-[140px] pointer-events-none transition-all duration-700 ${
-          isLight 
-            ? 'bg-gradient-to-tr from-blue-400/15 via-indigo-300/12 to-sky-300/10' 
-            : 'bg-gradient-to-tr from-blue-600/16 via-indigo-500/12 to-cyan-500/10'
-        }`} 
-      />
-      <div 
-        className={`absolute -bottom-24 -right-24 w-72 sm:w-80 h-72 sm:h-80 rounded-full blur-[80px] pointer-events-none ${
-          isLight ? 'bg-indigo-300/10' : 'bg-blue-600/10'
-        }`} 
-      />
+      <SectionBackgroundAura theme={theme} auraLevel={3} />
 
       {/* Section Header - Compact Padding */}
-      <div className="relative text-left space-y-0.5 shrink-0 mb-2.5">
+      <div className="relative text-left space-y-0.5 shrink-0 -mt-4">
+        {/* Luminous aura behind heading */}
+        <div 
+          className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-24 sm:h-28 rounded-full blur-2xl pointer-events-none transition-all ${
+            isLight 
+              ? 'bg-gradient-to-r from-blue-400/25 via-sky-300/20 to-indigo-300/20 opacity-80' 
+              : 'bg-gradient-to-r from-blue-500/30 via-cyan-400/20 to-indigo-500/25 opacity-90'
+          }`} 
+        />
+
         <div className="flex items-center justify-between flex-wrap gap-2 mb-0.5">
-          <div className={`relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-semibold tracking-wider uppercase border backdrop-blur-md ${
+          <div 
+            style={{ fontSize: '11px' }}
+            className={`relative inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md ${
             isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-2xs' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
           }`}>
             <Briefcase className="w-3 h-3 text-blue-500" />
@@ -161,18 +163,17 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
           Career Journey & Milestones
         </h2>
         <p 
-          className={`relative max-w-4xl text-[11px] sm:text-[12.5px] font-normal leading-normal ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}
+          className={`relative max-w-none text-[11px] font-normal leading-normal whitespace-nowrap ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}
         >
           Directing global cybersecurity, Zero Trust IAM, risk governance, and AI defense across leading Banking & Financial Services and Fortune 100 institutions.
         </p>
       </div>
 
-      {/* CISO Executive Impact Rollup Bar - Ultra sleek compact layout */}
       <div 
-        className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2 mb-3 shrink-0 w-full`}
+        className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2 mb-[3pt] shrink-0 w-full mt-1 sm:mt-1.5`}
       >
         <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white/90 border-zinc-200/90 shadow-2xs' : 'bg-white/[0.03] border-white/10'
+          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
         }`}>
           <div className="text-[10px] sm:text-[10.5px] font-bold text-amber-500 uppercase tracking-wider">Goldman Sachs Tenure</div>
           <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>14 Yrs · 4 Promotions</div>
@@ -180,7 +181,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
         </div>
 
         <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white/90 border-zinc-200/90 shadow-2xs' : 'bg-white/[0.03] border-white/10'
+          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
         }`}>
           <div className="text-[10px] sm:text-[10.5px] font-bold text-blue-500 uppercase tracking-wider">Leadership Scale</div>
           <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>30+ Global Engineers</div>
@@ -188,7 +189,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
         </div>
 
         <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white/90 border-zinc-200/90 shadow-2xs' : 'bg-white/[0.03] border-white/10'
+          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
         }`}>
           <div className="text-[10px] sm:text-[10.5px] font-bold text-emerald-500 uppercase tracking-wider">Audit & Compliance</div>
           <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>100% Clean Attestations</div>
@@ -196,7 +197,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
         </div>
 
         <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white/90 border-zinc-200/90 shadow-2xs' : 'bg-white/[0.03] border-white/10'
+          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
         }`}>
           <div className="text-[10px] sm:text-[10.5px] font-bold text-indigo-500 uppercase tracking-wider">Transaction Defense</div>
           <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>$100B–$500B+ Flow</div>
@@ -204,7 +205,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
         </div>
 
         <div className={`col-span-2 sm:col-span-1 py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white/90 border-zinc-200/90 shadow-2xs' : 'bg-white/[0.03] border-white/10'
+          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
         }`}>
           <div className="text-[10px] sm:text-[10.5px] font-bold text-purple-500 uppercase tracking-wider">Privilege Exposure</div>
           <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>-98.4% Zero Standing</div>
@@ -226,10 +227,10 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
               onClick={() => handleFilterChange(opt.value)}
               className={`px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider whitespace-nowrap transition-all border shrink-0 ${
                 selectedFilter === opt.value
-                  ? 'bg-blue-600 text-white border-blue-500 shadow-2xs'
+                  ? 'bg-zinc-600 text-white border-zinc-500 shadow-2xs'
                   : (isLight 
-                      ? 'bg-white text-zinc-700 hover:text-zinc-900 border-zinc-200' 
-                      : 'bg-white/5 text-zinc-400 hover:text-white border-white/10')
+                      ? 'bg-zinc-200 text-zinc-700 hover:text-zinc-900 border-zinc-300' 
+                      : 'bg-zinc-800 text-zinc-400 hover:text-white border-zinc-700')
               }`}
             >
               {opt.shortLabel}
@@ -239,7 +240,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       </div>
 
       {/* Main Dual-Column Content: Milestones on Left (8 cols), Career Eras on Right (4 cols) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-5 items-start flex-1 min-h-0">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start flex-1 min-h-0">
         {/* Left Column: Timeline Milestone Cards */}
         <div 
           ref={listContainerRef}
@@ -280,7 +281,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     onClick={() => {
                       setExpandedId(isExpanded ? null : milestone.id);
                     }}
-                    className={`border rounded-xl p-3 sm:p-3.5 backdrop-blur-xl transition-all duration-200 cursor-pointer ${
+                    className={`border rounded-xl p-3 sm:p-3.5 backdrop-blur-xl transition-all duration-200 cursor-pointer interactive-card ${
                       isLight
                         ? (isExpanded 
                             ? 'border-blue-500 bg-white shadow-sm ring-1 ring-blue-500/20' 
@@ -386,30 +387,38 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     </p>
 
                     {/* Collapsible Tech Stack */}
-                    {isExpanded && (
-                      <div className={`space-y-2 pt-2 border-t ${isLight ? 'border-zinc-100' : 'border-white/10'} animate-in fade-in duration-300`}>
-                        {/* Tech Stack Chips */}
-                        <div className="pt-1">
-                          <div className={`text-[9.5px] font-semibold uppercase tracking-wider mb-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
-                            Technology & Governance Frameworks:
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div 
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                          className={`space-y-2 pt-2 border-t overflow-hidden ${isLight ? 'border-zinc-100' : 'border-white/10'}`}
+                        >
+                          {/* Tech Stack Chips */}
+                          <div className="pt-1">
+                            <div className={`text-[9.5px] font-semibold uppercase tracking-wider mb-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                              Technology & Governance Frameworks:
+                            </div>
+                            <div className="flex flex-wrap gap-1">
+                              {milestone.technologies.map((tech, tIdx) => (
+                                <span
+                                  key={tIdx}
+                                  className={`text-[9px] font-medium px-1.5 py-0.5 rounded border ${
+                                    isLight 
+                                      ? 'bg-zinc-100 border-zinc-200 text-zinc-800' 
+                                      : 'bg-white/[0.04] border-white/10 text-zinc-300'
+                                  }`}
+                                >
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
                           </div>
-                          <div className="flex flex-wrap gap-1">
-                            {milestone.technologies.map((tech, tIdx) => (
-                              <span
-                                key={tIdx}
-                                className={`text-[9px] font-medium px-1.5 py-0.5 rounded border ${
-                                  isLight 
-                                    ? 'bg-zinc-100 border-zinc-200 text-zinc-800' 
-                                    : 'bg-white/[0.04] border-white/10 text-zinc-300'
-                                }`}
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
 
                     {/* Expand/Collapse Footer Toggle */}
                     <div className="flex items-center justify-between pt-1.5 text-[11px] font-semibold text-blue-500 hover:text-blue-600 transition-colors">

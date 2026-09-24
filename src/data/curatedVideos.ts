@@ -106,7 +106,7 @@ export const CURATED_VIDEOS: CuratedVideo[] = [
     institution: "Harvard University",
     professor: "Prof. Michael Sandel",
     category: "Behaviour",
-    thumbnail: "https://img.youtube.com/vi/kBdfcNV60L8/hqdefault.jpg",
+    thumbnail: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=800&auto=format&fit=crop",
     link: "https://www.youtube.com/playlist?list=PL30CFeMCI1l9S49Wz9iL79fKLSigInYWG",
     description: "The most famous course in Harvard's history, exploring the philosophical architecture of human morality, ethics, and leadership."
   },

@@ -99,7 +99,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 export const CAREER_MILESTONES: CareerMilestone[] = [
   {
     id: "confidential-sr-dir",
-    role: "Principal Architect & Cybersecurity Advisor - Identity, Auth & Digital Trust | Sr. Director",
+    role: "Principal Cybersecurity Design Architect - Identity, Auth & Digital Trust | Director",
     company: "Confidential",
     location: "Bengaluru, India",
     period: "2025 — 2026",
@@ -113,7 +113,9 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
       "Governed complex IAM integrations, onboarding, API/M2M authentication and certificate lifecycle, reducing IAM-related change incidents 25%.",
       "Strengthened identity threat controls across credentials, tokens, sessions, privileged access and NHI, improving detection, resilience and cyber defence.",
       "Advised technology, cyber and risk leadership on architecture, GRC and regulatory controls, achieving audit compliance without high-severity findings.",
-      "Led cloud, DevSecOps, AI Security, AI TRiSM and PQC/PKI initiatives, delivering 40% lower MTTR and 50% fewer critical incidents."
+      "Led cloud, DevSecOps, AI Security, AI TRiSM and PQC/PKI initiatives, delivering 40% lower MTTR and 50% fewer critical incidents.",
+      "Authored comprehensive High-Level Designs (HLD) and Low-Level Designs (LLD) for multi-region zero-trust authentication fabrics.",
+      "Established rigorous metrics of value (MOV) and point of view (POV) evaluation models for enterprise identity modernization."
     ],
     technologies: ["Zero Trust", "IAM", "PAM", "MFA", "FIDO2 / Passkeys", "SSO / Federation", "PKI / RBAC", "AI Security", "DevSecOps", "PQC/PKI"]
   },
@@ -123,21 +125,18 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Nov 2020 — Dec 2025",
-    category: "AI, ZTNA, Cloud Security, Platform Engineering",
-    summary: "Directed enterprise-wide Cybersecurity, Zero Trust IAM, and Data Security architecture across global infrastructures, overseeing an $18.5M modernization initiative and securing Tier-1 capital markets ($1T+ daily volume) and electronic trading enclaves.",
+    category: "Solution Architecture, Security Design & Cloud ZTNA",
+    summary: "Directed enterprise-wide Security Architecture, Solution Design, and Zero Trust IAM modernization across global infrastructures, overseeing an $18.5M modernization initiative and securing Tier-1 capital markets ($1T+ daily volume).",
     achievements: [
-      "Led a global organization of 30+ cybersecurity engineers, SOC analysts, and IAM architects across Bengaluru, New York, London, and Tokyo.",
-      "Spearheaded enterprise-wide Zero Trust Identity fabric modernization across hybrid multi-cloud perimeters, consolidating 5M+ identities under automated SailPoint IGA and CyberArk PAM.",
-      "Eliminated 98.4% of static standing administrative privileges firmwide through Just-In-Time (JIT) ephemeral credential elevation and automated session vaulting.",
-      "Optimized $18.5M modernization budget, reducing vendor licensing run-rate by 22% ($3.4M annualized savings) through strategic stack consolidation.",
-      "Delivered 100% clean SOX 404, SOC 2 Type II, and Federal Reserve/PRA supervisory inspection records with zero material audit deficiencies over 5 consecutive annual cycles.",
-      "Served as Institutional Incident Command Lead for high-severity industry zero-days (Log4j, Spring4Shell, OpenSSL), executing global telemetry quarantine in sub-90 minutes.",
-      "Architected multi-region Zero Trust authorization and cloud-native IAM safeguards protecting $100B–$500B+ daily electronic trading enclaves and $1T+ firmwide capital clearing volume.",
-      "Rolled out hardware-backed FIDO2 / WebAuthn passwordless authentication across 50,000+ global workforce endpoints, driving credential-stuffing and MFA fatigue attacks to zero.",
-      "Established Goldman Sachs AI Risk Posture programs aligned with NIST AI RMF 1.0 and OWASP Top 10 for LLMs, deploying real-time DLP tokenization across 140+ GenAI models.",
-      "Embedded automated DevSecOps pipelines and threat-modeling guardrails into core CI/CD workflows, intercepting 3,000+ code control vulnerabilities prior to production release."
+      "Architected enterprise-wide Solution Architecture and Security Design frameworks for hybrid multi-cloud perimeters, consolidating 5M+ identities under automated SailPoint IGA and CyberArk PAM.",
+      "Authored High-Level Designs (HLD) and Low-Level Designs (LLD) for Just-In-Time (JIT) ephemeral privilege elevation, eliminating 98.4% of static standing administrative privileges firmwide.",
+      "Optimized $18.5M modernization budget through rigorous Proof of Value (POV) evaluations and stack consolidation, generating $3.4M annualized savings.",
+      "Delivered 100% clean SOX 404, SOC 2 Type II, and Federal Reserve supervisory inspection records with zero material audit deficiencies over 5 consecutive annual cycles.",
+      "Designed multi-region Zero Trust authorization and cloud-native security architecture protecting $100B–$500B+ daily electronic trading enclaves and $1T+ capital clearing volume.",
+      "Established enterprise Architecture Review Board (ARB) governance framework for cloud transformation initiatives.",
+      "Optimized multi-cloud resilience via automated disaster recovery and zero-trust perimeter segmentation."
     ],
-    technologies: ["Zero Trust", "SailPoint IGA", "CyberArk PAM", "FIDO2 / WebAuthn", "AWS / Azure Cloud Security", "PKI & HSM Cryptography", "Enterprise Risk Strategy", "SOX 404 & NIST CSF 2.0", "NIST AI RMF 1.0", "TOGAF®"]
+    technologies: ["Enterprise Solution Architecture", "Security Architecture", "Security Design", "HLD / LLD", "SailPoint IGA", "CyberArk PAM", "Zero Trust", "AWS/Azure Cloud", "SOX 404 & NIST CSF"]
   },
   {
     id: "gs-vp",
@@ -145,19 +144,18 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Sep 2016 — Nov 2020",
-    category: "Cloud Security, IAM, Security Platform Engineering",
-    summary: "Led Cybersecurity and IAM Engineering Programs across Cloud, Network, and Identity domains, authoring firmwide security standards and securing hybrid multi-cloud perimeters.",
+    category: "Security Architecture, Solution Design & Cloud Security",
+    summary: "Led Security Architecture, Solution Design, and Cloud Security Engineering Programs across global banking infrastructures, authoring firmwide security reference architectures and IaC guardrails.",
     achievements: [
-      "Directed cross-functional engineering pods securing hybrid multi-cloud perimeters across AWS, Azure, and private datacenter fabrics.",
-      "Authored 40+ enterprise security reference architectures and Infrastructure-as-Code (IaC) guardrails adopted across global business divisions.",
-      "Designed firmwide Privileged Access Reviews and software-defined micro-segmentation across Tier-0 banking compute nodes, cutting lateral attack surfaces by 85%.",
-      "Engineered automated SOAR workflows and high-throughput NGFW/WAF pipelines ingesting 2B+ events per quarter, cutting Mean Time to Respond (MTTR) by 65%.",
-      "Led STRIDE and PASTA threat-modeling reviews across 120+ mission-critical banking applications, preemptively neutralizing 250+ architectural control gaps.",
-      "Embedded automated DLP, cryptographic tokenization, and Data Security Posture Management (DSPM) protections into core developer workflows.",
-      "Maintained 100% on-time remediation of Internal Audit (2LOD/3LOD) and Third-Party Risk findings with zero supervisory escalations.",
-      "Governed enterprise Public Key Infrastructure (PKI), TLS 1.3 transition, and hardware security module (HSM) lifecycle protecting core inter-datacenter transit."
+      "Directed cross-functional Solution Architecture teams securing hybrid multi-cloud perimeters across AWS, Azure, and private datacenter fabrics.",
+      "Authored 40+ enterprise security reference architectures, Security Design patterns, and Terraform Infrastructure-as-Code (IaC) guardrails.",
+      "Designed software-defined micro-segmentation, Privileged Access Reviews, and Tier-0 security architecture, cutting lateral attack surfaces by 85%.",
+      "Executed STRIDE threat modeling and formal architectural reviews across 120+ mission-critical banking applications, preemptively neutralizing 250+ architectural control gaps.",
+      "Engineered automated SOAR workflows and high-throughput security architecture pipelines ingesting 2B+ events per quarter, cutting MTTR by 65%.",
+      "Authored High-Level Designs (HLD) and Low-Level Designs (LLD) for software-defined perimeter enclaves.",
+      "Established rigorous metrics of value (MOV) for security tool consolidation and risk mitigation."
     ],
-    technologies: ["Cloud Security", "Zero Trust", "DevSecOps", "Terraform IaC", "WAF / NGFW", "XSOAR / NDR", "PKI / TLS 1.3 / HSM", "NIST CSF", "STRIDE / PASTA", "MITRE ATT&CK"]
+    technologies: ["Security Architecture", "Solution Design", "Cloud Architecture", "Micro-segmentation HLD/LLD", "Terraform IaC", "STRIDE/PASTA", "PKI / TLS 1.3", "NIST CSF"]
   },
   {
     id: "gs-sr-assoc",
@@ -165,21 +163,21 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Dec 2013 — Dec 2015",
-    category: "IRC, CTH/CTI, VAPT, SOC",
-    summary: "Led incident detection, cyber defense operations, and vulnerability management across critical Banking & trading infrastructure.",
+    category: "Security Architecture, Design & Threat Engineering",
+    summary: "Architected secure solutions, threat detection frameworks, and vulnerability management systems across critical banking and trading infrastructure.",
     achievements: [
-      "Directed the 24/7 Incident Response Center (IRC) managing high-severity security events across global PCI DSS Cardholder Data Environments (CDE) and trading enclaves.",
-      "Implemented enterprise Data Loss Prevention (DLP) across 40,000+ endpoints and email gateways, safeguarding proprietary trading models and client financial data.",
-      "Directed institutional VAPT programs covering 1,200+ internal and external applications, achieving a 99% SLA remediation rate for critical findings.",
-      "Pioneered the Cyber Threat Intelligence (CTI) program, integrating FS-ISAC, NCFTA, and commercial intelligence feeds to deliver actionable IOCs and proactive threat advisories.",
-      "Conducted firmwide cyber crisis simulations and executive tabletop exercises to validate SOC incident playbooks, BCP failovers, and executive escalation protocols.",
-      "Architected Single Sign-On (SSO) and SAML 2.0 federation for corporate banking portals, cutting user login friction and password reset tickets by 45%."
+      "Designed high-performance security architecture and threat detection systems for 24/7 Incident Response Center (IRC) and PCI DSS Cardholder Data Environments (CDE).",
+      "Engineered enterprise Data Loss Prevention (DLP) solution architecture across 40,000+ endpoints and email gateways, safeguarding proprietary trading models.",
+      "Directed institutional VAPT programs covering 1,200+ applications, establishing rigorous metrics of verification (MOV) and achieving 99% SLA remediation rates.",
+      "Architected enterprise Single Sign-On (SSO) and SAML 2.0 federation solutions for corporate banking portals, cutting user login friction and password reset tickets by 45%.",
+      "Designed resilient identity federation and single sign-on architecture supporting high-availability banking portals.",
+      "Implemented comprehensive threat-modeling reviews adhering to NIST and OWASP guidelines."
     ],
-    technologies: ["Incident Response Center", "Enterprise DLP", "VAPT", "Cyber Threat Intelligence", "FS-ISAC", "Crisis Management", "PCI DSS", "SSO / SAML 2.0"]
+    technologies: ["Security Architecture", "Security Design", "Solution Architecture", "Enterprise DLP", "VAPT", "Cyber Threat Intelligence", "PCI DSS", "SSO / SAML 2.0"]
   },
   {
     id: "gs-tech-analyst",
-    role: "Sr Tech. Analyst / Associate - Critical Infra Engg",
+    role: "Critical Infra Security Engg | Sr Tech. Analyst / Associate",
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Oct 2011 — Dec 2013",
@@ -191,7 +189,9 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
       "Produced 100+ actionable CTI intelligence reports integrating OSINT, FS-ISAC, FireEye, and commercial dark-web intel to counter financial cyber syndicates.",
       "Orchestrated automated vulnerability discovery and remediation for 500+ critical Unix/Windows server clusters via CVSS risk-score prioritization.",
       "Executed STRIDE threat modeling for critical electronic trading, clearing, and SWIFT settlement infrastructure.",
-      "Hardened core network routing, DNS/DHCP infrastructure, and remote access VPNs against distributed denial-of-service (DDoS) and intrusion attempts."
+      "Hardened core network routing, DNS/DHCP infrastructure, and remote access VPNs against distributed denial-of-service (DDoS) and intrusion attempts.",
+      "Architected secure firewall enclaves and low-latency transit routing for high-frequency trading platforms.",
+      "Engineered automated vulnerability management pipelines achieving 99% SLA remediation compliance."
     ],
     technologies: ["Micro-segmentation", "BCP/DR (99.99% SLA)", "High-Frequency Trading", "Threat Intelligence", "OSINT", "FS-ISAC", "FireEye", "CVSS Risk Prioritization", "STRIDE", "Network Enclave Defense"]
   },

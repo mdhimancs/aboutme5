@@ -31,6 +31,7 @@ import { useHoverScroll } from '../lib/utils';
 import { trackAssetInteraction } from '../lib/analytics';
 import { useAuth } from '../context/AuthContext';
 import { StarsCounter } from './StarsCounter';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface ProjectsProps {
   theme?: string;
@@ -183,26 +184,15 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
   return (
     <section 
       id="projects" 
-      className={`relative overflow-hidden min-h-screen w-full flex flex-col justify-center pt-8 sm:pt-10 pb-12 sm:pb-16 px-3.5 sm:px-6 lg:px-8 max-w-6xl lg:max-w-7xl mx-auto border-t transition-colors ${
-        isLight ? 'border-zinc-200 bg-[#fcfcfd]' : 'border-white/10 bg-[#000000]'
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t transition-colors ${
+        isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Dynamic Background Aura */}
-      <div 
-        className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[340px] sm:h-[480px] rounded-full blur-[100px] sm:blur-[140px] pointer-events-none transition-all duration-700 ${
-          isLight 
-            ? 'bg-gradient-to-tr from-blue-400/15 via-indigo-300/12 to-cyan-300/10' 
-            : 'bg-gradient-to-tr from-blue-600/18 via-indigo-500/14 to-cyan-500/10'
-        }`} 
-      />
-      <div 
-        className={`absolute -bottom-24 -right-24 w-80 sm:w-[420px] h-80 sm:h-[420px] rounded-full blur-[90px] sm:blur-[120px] pointer-events-none ${
-          isLight ? 'bg-indigo-300/12' : 'bg-blue-600/14'
-        }`} 
-      />
+      <SectionBackgroundAura theme={theme} auraLevel={3} />
 
       {/* Header Section */}
-      <div className="relative w-full space-y-1 mb-5 sm:mb-6 shrink-0 text-left">
+      <div className="relative w-full space-y-1 mb-5 sm:mb-6 shrink-0 text-left -mt-4">
         {/* Luminous aura behind heading */}
         <div 
           className={`absolute -top-4 -left-3 sm:-left-5 w-80 sm:w-[480px] h-24 sm:h-30 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -212,7 +202,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
           }`} 
         />
 
-        <div className={`relative inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
+        <div 
+          style={{ fontSize: '11px' }}
+          className={`relative inline-flex items-center gap-2 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
           isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-xs' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_14px_rgba(59,130,246,0.18)]'
         }`}>
           <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
@@ -262,15 +254,14 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
           </div>
         </div>
 
-        <p className={`relative max-w-3xl text-xs sm:text-[13px] font-normal leading-relaxed ${
+        <p className={`relative max-w-3xl text-[11px] font-normal leading-relaxed ${
           isLight ? 'text-zinc-600' : 'text-zinc-400'
         }`}>
           Battle-tested enterprise cybersecurity and IAM transformations delivering Zero Standing Privileges, autonomous SOC resilience, and zero audit weaknesses across Fortune 100 environments.
         </p>
       </div>
 
-      {/* High-Tech Executive Command Dock: Category Pills, Search & View Switcher */}
-      <div className="flex flex-col gap-2.5 mb-4 shrink-0">
+      <div className="flex flex-col gap-2.5 mb-4 shrink-0 -mt-2 sm:-mt-3">
         <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2.5">
           {/* Executive Category Filter Strip */}
           <div 
@@ -289,11 +280,11 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                     isSelected
                       ? isLight
-                        ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/25 ring-1 ring-blue-500'
-                        : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-[0_0_16px_rgba(59,130,246,0.35)] ring-1 ring-blue-400/40'
+                        ? 'bg-zinc-600 text-white shadow-sm shadow-zinc-500/25 ring-1 ring-zinc-500'
+                        : 'bg-zinc-700 text-white shadow-[0_0_16px_rgba(113,113,122,0.35)] ring-1 ring-zinc-500/40'
                       : isLight
-                        ? 'bg-zinc-100/90 text-zinc-700 hover:bg-zinc-200/90 hover:text-zinc-950 border border-zinc-200/60'
-                        : 'bg-white/[0.04] text-zinc-400 hover:bg-white/[0.08] hover:text-white border border-white/5'
+                        ? 'bg-zinc-200 text-zinc-700 hover:bg-zinc-300 hover:text-zinc-950 border border-zinc-300/60'
+                        : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white border border-zinc-700'
                   }`}
                 >
                   {config ? config.icon : <Layers className="w-3.5 h-3.5 text-blue-500" />}
@@ -401,7 +392,8 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
       </div>
 
       {/* Main Content Area: Slider, Dossiers, Grid, or Board Matrix */}
-      {viewMode === 'slider' ? (
+      <div className="mt-[5pt] flex-1 min-h-0">
+        {viewMode === 'slider' ? (
         <CaseStudySlider
           caseStudies={filteredCaseStudies}
           isLight={isLight}
@@ -690,6 +682,8 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
           </button>
         </div>
       )}
+
+      </div>
 
       {/* Case Study Deep-Dive Modal */}
       <CaseStudyModal

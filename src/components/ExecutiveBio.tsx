@@ -21,6 +21,7 @@ import {
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { useHoverScroll } from '../lib/utils';
 import { StarsCounter } from './StarsCounter';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface ExecutiveBioProps {
   theme?: string;
@@ -35,32 +36,16 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
   return (
     <section 
       id="bio" 
-      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-center pt-8 sm:pt-10 pb-10 sm:pb-14 lg:pb-16 px-6 sm:px-10 lg:px-14 max-w-6xl lg:max-w-7xl mx-auto border-t ${
-        isLight ? 'border-zinc-200 bg-[#fcfcfd]' : 'border-white/10 bg-[#000000]'
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
+        isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Background Aura Effects */}
-      <div 
-        className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] sm:w-[850px] h-[320px] sm:h-[450px] rounded-full blur-[90px] sm:blur-[130px] pointer-events-none transition-all duration-700 ${
-          isLight 
-            ? 'bg-gradient-to-tr from-blue-400/15 via-indigo-300/12 to-sky-300/10' 
-            : 'bg-gradient-to-tr from-blue-600/16 via-indigo-500/12 to-cyan-500/10'
-        }`} 
-      />
-      <div 
-        className={`absolute -bottom-20 -right-20 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-[80px] sm:blur-[110px] pointer-events-none ${
-          isLight ? 'bg-indigo-300/10' : 'bg-blue-600/12'
-        }`} 
-      />
-      <div 
-        className={`absolute -top-12 -left-12 w-72 sm:w-80 h-72 sm:h-80 rounded-full blur-[70px] sm:blur-[100px] pointer-events-none ${
-          isLight ? 'bg-sky-300/10' : 'bg-indigo-600/10'
-        }`} 
-      />
+      <SectionBackgroundAura theme={theme} auraLevel={3} />
       
       {/* 1. Section Header with Aura Glow */}
       <div 
-        className="relative text-left space-y-0.5 shrink-0 mb-6"
+        className="relative text-left space-y-0.5 shrink-0 mb-6 -mt-4"
       >
         {/* Subtle luminous aura behind the heading */}
         <div 
@@ -71,7 +56,9 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
           }`} 
         />
 
-        <div className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
+        <div 
+          style={{ fontSize: '11px' }}
+          className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
           isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-sm' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
         }`}>
           <UserCheck className="w-3.5 h-3.5 text-blue-500" />
@@ -88,15 +75,14 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
         </h2>
         
         <p 
-          className={`relative max-w-4xl text-[14px] font-normal leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
+          className={`relative max-w-4xl text-[11px] font-normal leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
         >
           21+ years directing enterprise Cybersecurity, Zero Trust IAM architecture, and enterprise risk governance.
         </p>
       </div>
 
-      {/* 2. Full-Width Executive Dossier Card */}
       <div 
-        className={`rounded-3xl backdrop-blur-xl shadow-xl transition-all border shrink-0 w-full pt-3 sm:pt-4 pb-2 sm:pb-3 px-4 sm:px-5 lg:px-6 flex flex-col justify-start overflow-y-auto ${
+        className={`rounded-3xl backdrop-blur-xl shadow-xl transition-all border flex-1 min-h-0 w-full pt-3 sm:pt-4 pb-2 sm:pb-3 px-4 sm:px-5 lg:px-6 flex flex-col justify-start overflow-y-auto -mt-3 sm:-mt-4 ${
           isLight ? 'bg-white border-zinc-200 shadow-sm' : 'bg-white/[0.02] border-white/10 shadow-2xl'
         }`}
       >
@@ -124,8 +110,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               onClick={() => setActiveBioTab('philosophy')}
               className={`px-2 py-1 rounded-lg text-[10px] sm:text-[11.5px] font-medium whitespace-nowrap transition-all ${
                 activeBioTab === 'philosophy'
-                  ? (isLight ? 'bg-white text-zinc-900 shadow-sm font-semibold' : 'bg-white text-black shadow-sm font-semibold')
-                  : (isLight ? 'text-zinc-600 hover:text-black' : 'text-zinc-400 hover:text-white')
+                  ? (isLight ? 'bg-zinc-300 text-zinc-900 shadow-sm font-semibold' : 'bg-zinc-700 text-white shadow-sm font-semibold')
+                  : (isLight ? 'text-zinc-600 hover:text-black bg-zinc-200' : 'text-zinc-400 hover:text-white bg-zinc-800')
               }`}
             >
               Executive philosophy
@@ -134,8 +120,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               onClick={() => setActiveBioTab('summary')}
               className={`px-2 py-1 rounded-lg text-[10px] sm:text-[11.5px] font-medium whitespace-nowrap transition-all ${
                 activeBioTab === 'summary'
-                  ? (isLight ? 'bg-white text-zinc-900 shadow-sm font-semibold' : 'bg-white text-black shadow-sm font-semibold')
-                  : (isLight ? 'text-zinc-600 hover:text-black' : 'text-zinc-400 hover:text-white')
+                  ? (isLight ? 'bg-zinc-300 text-zinc-900 shadow-sm font-semibold' : 'bg-zinc-700 text-white shadow-sm font-semibold')
+                  : (isLight ? 'text-zinc-600 hover:text-black bg-zinc-200' : 'text-zinc-400 hover:text-white bg-zinc-800')
               }`}
             >
               Leadership Pillars
@@ -144,8 +130,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               onClick={() => setActiveBioTab('credentials')}
               className={`px-2 py-1 rounded-lg text-[10px] sm:text-[11.5px] font-medium whitespace-nowrap transition-all ${
                 activeBioTab === 'credentials'
-                  ? (isLight ? 'bg-white text-zinc-900 shadow-sm font-semibold' : 'bg-white text-black shadow-sm font-semibold')
-                  : (isLight ? 'text-zinc-600 hover:text-black' : 'text-zinc-400 hover:text-white')
+                  ? (isLight ? 'bg-zinc-300 text-zinc-900 shadow-sm font-semibold' : 'bg-zinc-700 text-white shadow-sm font-semibold')
+                  : (isLight ? 'text-zinc-600 hover:text-black bg-zinc-200' : 'text-zinc-400 hover:text-white bg-zinc-800')
               }`}
             >
               Credentials
@@ -155,7 +141,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
         {/* Tab 1: Executive Summary & Leadership Pillars */}
         {activeBioTab === 'summary' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="space-y-4 tab-pane-animate">
             <div className="space-y-3">
               <p className={`text-sm sm:text-base lg:text-md font-semibold leading-relaxed ${isLight ? 'text-zinc-950' : 'text-zinc-50'}`}>
                 Cybersecurity Executive & Enterprise Architect with <span className="text-blue-500 font-bold">21+ years</span> protecting Fortune 100 infrastructures across Goldman Sachs and global tech leaders.
@@ -163,7 +149,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               
               {/* Horizontal 3 Points Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className={`py-1.5 px-3 rounded-2xl border ${isLight ? 'bg-blue-50/40 border-blue-100' : 'bg-blue-950/10 border-blue-900/20'}`}>
+                <div className={`py-1.5 px-3 rounded-2xl border interactive-card ${isLight ? 'bg-blue-50/40 border-blue-100' : 'bg-blue-950/10 border-blue-900/20'}`}>
                   <div className="flex items-start gap-2">
                     <span className="text-blue-500 font-bold text-lg leading-none shrink-0">•</span>
                     <div>
@@ -175,7 +161,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   </div>
                 </div>
 
-                <div className={`py-1.5 px-3 rounded-2xl border ${isLight ? 'bg-indigo-50/40 border-indigo-100' : 'bg-indigo-950/10 border-indigo-900/20'}`}>
+                <div className={`py-1.5 px-3 rounded-2xl border interactive-card ${isLight ? 'bg-indigo-50/40 border-indigo-100' : 'bg-indigo-950/10 border-indigo-900/20'}`}>
                   <div className="flex items-start gap-2">
                     <span className="text-indigo-500 font-bold text-lg leading-none shrink-0">•</span>
                     <div>
@@ -187,7 +173,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   </div>
                 </div>
 
-                <div className={`py-1.5 px-3 rounded-2xl border ${isLight ? 'bg-emerald-50/40 border-emerald-100' : 'bg-emerald-950/10 border-emerald-900/20'}`}>
+                <div className={`py-1.5 px-3 rounded-2xl border interactive-card ${isLight ? 'bg-emerald-50/40 border-emerald-100' : 'bg-emerald-950/10 border-emerald-900/20'}`}>
                   <div className="flex items-start gap-2">
                     <span className="text-emerald-500 font-bold text-lg leading-none shrink-0">•</span>
                     <div>
@@ -202,50 +188,58 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
-              <div className={`p-2.5 rounded-2xl border transition-all ${
-                isLight ? 'bg-zinc-50/80 border-zinc-200 hover:border-blue-300' : 'bg-white/[0.03] border-white/5 hover:border-white/15'
+              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+                isLight 
+                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
+                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
                 <div className="flex items-center space-x-2 mb-0.5">
                   <Scale className="w-4 h-4 text-blue-500 shrink-0" />
-                  <div className={`font-bold text-[11px] sm:text-[13px] truncate ${isLight ? 'text-zinc-900' : 'text-white'}`}>Executive Risk & GRC</div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Executive Risk & GRC</div>
                 </div>
-                <div className={`text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Executive Risk Strategy, Audit Committee reporting, SOX 404 zero-deficiency governance, and Cyber Disclosure Readiness.
                 </div>
               </div>
 
-              <div className={`p-2.5 rounded-2xl border transition-all ${
-                isLight ? 'bg-zinc-50/80 border-zinc-200 hover:border-indigo-300' : 'bg-white/[0.03] border-white/5 hover:border-white/15'
+              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+                isLight 
+                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
+                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
                 <div className="flex items-center space-x-2 mb-0.5">
                   <Shield className="w-4 h-4 text-indigo-500 shrink-0" />
-                  <div className={`font-bold text-[11px] sm:text-[13px] truncate ${isLight ? 'text-zinc-900' : 'text-white'}`}>Zero Trust Identity Fabric</div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Zero Trust Identity Fabric</div>
                 </div>
-                <div className={`text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Consolidating multi-forest Active Directory environments into SailPoint IGA, CyberArk PAM, and Identity Security workload federation.
                 </div>
               </div>
 
-              <div className={`p-2.5 rounded-2xl border transition-all ${
-                isLight ? 'bg-zinc-50/80 border-zinc-200 hover:border-purple-300' : 'bg-white/[0.03] border-white/5 hover:border-white/15'
+              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+                isLight 
+                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
+                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
                 <div className="flex items-center space-x-2 mb-0.5">
                   <Brain className="w-4 h-4 text-purple-500 shrink-0" />
-                  <div className={`font-bold text-[11px] sm:text-[13px] truncate ${isLight ? 'text-zinc-900' : 'text-white'}`}>AI Threat Defense</div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>AI Threat Defense</div>
                 </div>
-                <div className={`text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Enterprise AI security reverse-proxies, real-time tokenization DLP, contextual RAG ACLs, and automated SOAR threat containment.
                 </div>
               </div>
 
-              <div className={`p-2.5 rounded-2xl border transition-all ${
-                isLight ? 'bg-zinc-50/80 border-zinc-200 hover:border-emerald-300' : 'bg-white/[0.03] border-white/5 hover:border-white/15'
+              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+                isLight 
+                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
+                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
                 <div className="flex items-center space-x-2 mb-0.5">
                   <Users className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <div className={`font-bold text-[11px] sm:text-[13px] truncate ${isLight ? 'text-zinc-900' : 'text-white'}`}>Team & Budget Scale</div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Team & Budget Scale</div>
                 </div>
-                <div className={`text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Orchestrating 30+ security engineering, SOC, and IAM personnel; managing $18.5M CapEx/OpEx modernization and Tier-1 vendor governance.
                 </div>
               </div>
@@ -328,7 +322,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
                 <div className={`p-2 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
                   <div className="flex items-center justify-between text-[10px] font-semibold mb-0.5">
-                    <span className="text-purple-500 font-bold">Sr. Analyst / Assoc.</span>
+                    <span className="text-blue-500 font-bold">Sr. Analyst / Assoc.</span>
                     <span className="text-zinc-400 font-mono">2011–2013</span>
                   </div>
                   <div className={`text-[11px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
@@ -345,7 +339,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
         {/* Tab 2: Executive philosophy & Defense Doctrine */}
         {activeBioTab === 'philosophy' && (
-          <div className="space-y-4 animate-in fade-in duration-300">
+          <div className="space-y-4 tab-pane-animate">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pb-2 border-b border-zinc-100 dark:border-white/5">
               <div>
                 <h4 className={`text-xs sm:text-sm font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
@@ -364,9 +358,9 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {/* Axiom 1: Identity & ZSP */}
-              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all ${
+              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
                 isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-blue-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
               }`}>
                 <div>
@@ -374,19 +368,19 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     <div className="w-6 h-6 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
                       <Shield className="w-3.5 h-3.5 text-blue-500" />
                     </div>
-                    <strong className={`text-[11px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>1. Identity is the Sole Perimeter</strong>
+                    <strong className={`text-[10px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>1. Identity is the Sole Perimeter</strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[9px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Static administrative credentials are an unacceptable systemic risk. All elevated access must be ephemeral, Just-In-Time (JIT), cryptographically attested, and zero-standing (ZSP).
                   </p>
                 </div>
-                <div className={`text-[10px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
+                <div className={`text-[9px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
                   Enforcement: SailPoint IGA + CyberArk PAM
                 </div>
               </div>
 
               {/* Axiom 2: Adaptive Defense Doctrine */}
-              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all ${
+              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
                 isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-emerald-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
               }`}>
                 <div>
@@ -394,19 +388,19 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     <div className="w-6 h-6 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
                       <Scale className="w-3.5 h-3.5 text-emerald-500" />
                     </div>
-                    <strong className={`text-[11px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>2. Defense-in-Depth Architecture</strong>
+                    <strong className={`text-[10px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>2. Defense-in-Depth Architecture</strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[9px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Security must be layered across every layer of the tech stack—from network to endpoint to application. One control failure should never result in a complete breach.
                   </p>
                 </div>
-                <div className={`text-[10px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
+                <div className={`text-[9px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
                   Enforcement: Micro-segmentation + WAF/NGFW
                 </div>
               </div>
 
               {/* Axiom 3: Continuous Verification & Zero Trust */}
-              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all ${
+              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
                 isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-indigo-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
               }`}>
                 <div>
@@ -414,19 +408,19 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     <div className="w-6 h-6 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0">
                       <Lock className="w-3.5 h-3.5 text-indigo-500" />
                     </div>
-                    <strong className={`text-[11px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>3. Continuous Verification</strong>
+                    <strong className={`text-[10px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>3. Continuous Verification</strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[9px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Never trust, always verify every human identity, non-human workload (Identity), API call, and inter-service token across micro-segmented cloud boundaries.
                   </p>
                 </div>
-                <div className={`text-[10px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
+                <div className={`text-[9px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
                   Enforcement: mTLS + Identity Federation
                 </div>
               </div>
 
               {/* Axiom 4: Defensive AI Asymmetry */}
-              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all ${
+              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
                 isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-purple-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
               }`}>
                 <div>
@@ -434,19 +428,19 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     <div className="w-6 h-6 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0">
                       <Brain className="w-3.5 h-3.5 text-purple-500" />
                     </div>
-                    <strong className={`text-[11px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>4. Defensive AI Asymmetry (AISP)</strong>
+                    <strong className={`text-[10px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>4. Defensive AI Asymmetry (AISP)</strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[9px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Leverage machine intelligence to automate SOC containment and detect behavioral anomalies, while hardening enterprise LLM pipelines against prompt exfiltration.
                   </p>
                 </div>
-                <div className={`text-[10px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
+                <div className={`text-[9px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
                   Enforcement: NIST AI RMF + Tokenization DLP
                 </div>
               </div>
 
               {/* Axiom 5: High-Agency Culture & Guardrails */}
-              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all ${
+              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
                 isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-amber-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
               }`}>
                 <div>
@@ -454,19 +448,19 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     <div className="w-6 h-6 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
                     </div>
-                    <strong className={`text-[11px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>5. Guardrails Over Gates</strong>
+                    <strong className={`text-[10px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>5. Guardrails Over Gates</strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[9px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Security leadership succeeds by empowering business velocity through intuitive developer guardrails and automated CI/CD security gates, paired with blameless post-mortems.
                   </p>
                 </div>
-                <div className={`text-[10px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
+                <div className={`text-[9px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
                   Enforcement: Shift-Left Policy-as-Code
                 </div>
               </div>
 
               {/* Axiom 6: Post-Quantum Cryptographic Agility */}
-              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all ${
+              <div className={`p-2.5 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
                 isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-rose-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
               }`}>
                 <div>
@@ -474,13 +468,13 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     <div className="w-6 h-6 rounded-lg bg-rose-500/10 flex items-center justify-center shrink-0">
                       <Key className="w-3.5 h-3.5 text-rose-500" />
                     </div>
-                    <strong className={`text-[11px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>6. Post-Quantum Cryptographic Agility</strong>
+                    <strong className={`text-[10px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>6. Post-Quantum Cryptographic Agility</strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[9px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Future-proofing enterprise PKI and HSM key management against quantum decryption threats through algorithm agility, hybrid crypto transitions, and automated inventory.
                   </p>
                 </div>
-                <div className={`text-[10px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
+                <div className={`text-[9px] font-mono mt-1 pt-1.5 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
                   Enforcement: NIST PQC Standards + HSM Rotation
                 </div>
               </div>
@@ -490,70 +484,112 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
         {/* Tab 3: Edu & Credentials */}
         {activeBioTab === 'credentials' && (
-          <div className="space-y-3 animate-in fade-in duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className={`p-3 rounded-2xl border flex items-start justify-between ${isLight ? 'bg-zinc-50/80 border-zinc-200' : 'bg-white/[0.03] border-white/5'}`}>
+          <div className="space-y-3 tab-pane-animate">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className={`p-3 rounded-2xl border flex flex-col justify-between interactive-card ${isLight ? 'bg-zinc-50/80 border-zinc-200' : 'bg-white/[0.03] border-white/5'}`}>
                 <div className="space-y-1">
-                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-blue-500/10 text-blue-500 mb-0.5">
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-500/10 text-blue-500 mb-0.5">
                     <BookOpen className="w-3 h-3" />
                     <span>Postgraduate Degree</span>
                   </div>
-                  <div className={`font-semibold text-[11px] sm:text-[13px] ${isLight ? 'text-zinc-900' : 'text-white'}`}>
+                  <div className={`font-semibold text-[10.5px] sm:text-[12px] ${isLight ? 'text-zinc-900' : 'text-white'}`}>
                     Masters of Computer Applications (Computer Science)
                   </div>
-                  <div className={`text-[11px] ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>Central University of Jammu (NAAC A++) • 2002 – 2005</div>
+                  <div className={`text-[10px] ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>Central University of Jammu • 2002 – 2005</div>
                 </div>
               </div>
 
-              <div className={`p-3 rounded-2xl border flex items-start justify-between ${isLight ? 'bg-zinc-50/80 border-zinc-200' : 'bg-white/[0.03] border-white/5'}`}>
+              <div className={`p-3 rounded-2xl border flex flex-col justify-between interactive-card ${isLight ? 'bg-zinc-50/80 border-zinc-200' : 'bg-white/[0.03] border-white/5'}`}>
                 <div className="space-y-1">
-                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-purple-500/10 text-purple-500 mb-0.5">
+                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-500/10 text-purple-500 mb-0.5">
                     <Brain className="w-3 h-3" />
                     <span>Advanced Specialization</span>
                   </div>
-                  <div className={`font-semibold text-[11px] sm:text-[13px] ${isLight ? 'text-zinc-900' : 'text-white'}`}>
-                    Data Science & Machine Learning (Intermediate & Advanced)
+                  <div className={`font-semibold text-[10.5px] sm:text-[12px] ${isLight ? 'text-zinc-900' : 'text-white'}`}>
+                    Data Science & Machine Learning
                   </div>
-                  <div className={`text-[11px] ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>IIT Madras • 2022 & 2023</div>
+                  <div className={`text-[10px] ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>IIT Madras • 2022 & 2023</div>
                 </div>
               </div>
 
-              <div className={`p-3 rounded-2xl border md:col-span-2 ${isLight ? 'bg-zinc-50/80 border-zinc-200' : 'bg-white/[0.03] border-white/5'}`}>
-                <div className="space-y-2.5">
-                  <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/10 text-emerald-500">
-                    <BadgeCheck className="w-3 h-3" />
-                    <span>Industrial Trainings</span>
+              <div className={`p-3 rounded-2xl border interactive-card ${isLight ? 'bg-zinc-50/80 border-zinc-200' : 'bg-white/[0.03] border-white/5'}`}>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/10 text-emerald-500">
+                      <BadgeCheck className="w-3 h-3" />
+                      <span>Professional Certifications & Specialized Training</span>
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {[
-                      "CISSP",
-                      "ISACA CISM",
-                      "ISACA CRISC",
-                      "ISACA CGEIT",
-                      "ISACA CISA",
-                      "ISACA CDPSE (Data Privacy)",
-                      "ISO 42001 Lead Auditor (AI)",
-                      "ISO 27001 Lead Auditor (ISMS)",
-                      "ISO 22301 Lead Auditor (BCMS)",
-                      "SC-100 Cybersecurity Architect Expert",
-                      "SC-300 Identity & Access Administrator",
-                      "AZ-500 Azure Security Engineer",
-                      "AWS Certified Security – Specialty",
-                      "AWS Certified Solutions Architect",
-                      "CCSP (Cloud Security Professional)",
-                      "TOGAF® Enterprise Architecture",
-                      "NIST CSF 2.0 Lead Implementer",
-                      "FAIR™ Quantitative Cyber Risk Analysis",
-                      "MITRE ATT&CK (CTI & SOC Assessments)",
-                      "CISO Executive Leadership Program",
-                      "PMP® (Project Management Professional)"
-                    ].map((cert, i) => (
-                      <span key={i} className={`px-2 py-1 text-[9px] sm:text-[10px] font-medium rounded-md border ${
-                        isLight ? 'bg-white border-zinc-200 text-zinc-700 hover:border-zinc-300' : 'bg-white/5 border-white/10 text-zinc-300 hover:border-white/20'
-                      }`}>
-                        {cert}
-                      </span>
-                    ))}
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+                    <div>
+                      <h5 className={`text-[10px] font-bold uppercase tracking-wider mb-1.5 ${isLight ? 'text-zinc-500' : 'text-zinc-500'}`}>Core Infosec & Governance</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {[
+                          { name: "CISSP", desc: "Certified Information Systems Security Professional (ISC)²" },
+                          { name: "CISM", desc: "Certified Information Security Manager (ISACA)" },
+                          { name: "CRISC", desc: "Certified in Risk and Information Systems Control" },
+                          { name: "CGEIT", desc: "Certified in the Governance of Enterprise IT" },
+                          { name: "CISA", desc: "Certified Information Systems Auditor" },
+                          { name: "CDPSE", desc: "Certified Data Privacy Solutions Engineer" }
+                        ].map((cert, i) => (
+                          <div key={i} className={`group relative px-1.5 py-0.5 text-[8.5px] font-medium rounded border transition-all ${
+                            isLight ? 'bg-white border-zinc-200 text-zinc-700 hover:border-blue-300' : 'bg-white/5 border-white/10 text-zinc-300 hover:border-blue-500/40'
+                          }`}>
+                            {cert.name}
+                            <span className="absolute bottom-full left-0 mb-1 hidden group-hover:block w-32 p-1 bg-zinc-900 text-white text-[7px] rounded shadow-lg z-50">
+                              {cert.desc}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h5 className={`text-[10px] font-bold uppercase tracking-wider mb-1.5 ${isLight ? 'text-zinc-500' : 'text-zinc-500'}`}>Cloud & Architecture</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {[
+                          { name: "SC-100", desc: "Microsoft Cybersecurity Architect Expert" },
+                          { name: "AZ-500", desc: "Azure Security Engineer" },
+                          { name: "AWS Sec", desc: "AWS Certified Security – Specialty" },
+                          { name: "AWS Arch", desc: "AWS Solutions Architect" },
+                          { name: "CCSP", desc: "Certified Cloud Security Professional" },
+                          { name: "TOGAF", desc: "Enterprise Architecture Framework" }
+                        ].map((cert, i) => (
+                          <div key={i} className={`group relative px-1.5 py-0.5 text-[8.5px] font-medium rounded border transition-all ${
+                            isLight ? 'bg-white border-zinc-200 text-zinc-700 hover:border-blue-300' : 'bg-white/5 border-white/10 text-zinc-300 hover:border-blue-500/40'
+                          }`}>
+                            {cert.name}
+                            <span className="absolute bottom-full left-0 mb-1 hidden group-hover:block w-32 p-1 bg-zinc-900 text-white text-[7px] rounded shadow-lg z-50">
+                              {cert.desc}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="sm:col-span-2 border-t border-white/5 pt-2">
+                      <h5 className={`text-[10px] font-bold uppercase tracking-wider mb-1.5 ${isLight ? 'text-zinc-500' : 'text-zinc-500'}`}>Standards & Leadership</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {[
+                          { name: "ISO 42001", desc: "Lead Auditor - Artificial Intelligence Management" },
+                          { name: "ISO 27001", desc: "Lead Auditor - Information Security" },
+                          { name: "NIST CSF", desc: "NIST Cybersecurity Framework Implementer" },
+                          { name: "FAIR™", desc: "Quantitative Cyber Risk Analysis" },
+                          { name: "MITRE", desc: "ATT&CK Threat Hunting & SOC Assessments" },
+                          { name: "PMP®", desc: "Project Management Professional" }
+                        ].map((cert, i) => (
+                          <div key={i} className={`group relative px-1.5 py-0.5 text-[8.5px] font-medium rounded border transition-all ${
+                            isLight ? 'bg-white border-zinc-200 text-zinc-700 hover:border-blue-300' : 'bg-white/5 border-white/10 text-zinc-300 hover:border-blue-500/40'
+                          }`}>
+                            {cert.name}
+                            <span className="absolute bottom-full left-0 mb-1 hidden group-hover:block w-32 p-1 bg-zinc-900 text-white text-[7px] rounded shadow-lg z-50">
+                              {cert.desc}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

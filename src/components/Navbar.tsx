@@ -8,6 +8,7 @@ import { useAuth } from '../context/AuthContext';
 interface NavbarProps {
   onOpenContact: () => void;
   onOpenInterfaceOptions: () => void;
+  onOpenSuperAdmin: () => void;
   activeSection: string;
   theme?: string;
   onNavigate?: (sectionId: string) => void;
@@ -18,6 +19,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ 
   onOpenContact, 
   onOpenInterfaceOptions, 
+  onOpenSuperAdmin,
   activeSection, 
   theme = 'apple-light',
   onNavigate,
@@ -232,6 +234,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               >
                 <Mail className="w-4 h-4 text-red-500 flex-shrink-0" aria-hidden="true" />
                 {!isSidebarCollapsed && <span className="whitespace-nowrap">Get in Touch</span>}
+              </button>
+              <button
+                onClick={onOpenSuperAdmin}
+                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-150 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%] text-left'
+                } ${
+                  isLight ? 'text-blue-700 hover:text-blue-900 bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200' : 'text-blue-300 hover:text-white bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20'
+                }`}
+                title="Super Admin Console"
+                aria-label="Open Super Admin Console"
+              >
+                <ShieldCheck className="w-4 h-4 text-blue-600 flex-shrink-0" aria-hidden="true" />
+                {!isSidebarCollapsed && <span className="whitespace-nowrap font-bold">Admin Console</span>}
               </button>
             </div>
           </div>

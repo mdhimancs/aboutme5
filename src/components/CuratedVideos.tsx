@@ -91,7 +91,7 @@ export const CuratedVideos: React.FC<CuratedVideosProps> = ({ theme = 'apple-dar
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => incrementStars(`video-${video.id}`)}
-              className={`group flex flex-col rounded-2xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+              className={`group flex flex-col rounded-2xl overflow-hidden border transition-all duration-300 interactive-card ${
                 isLight 
                   ? 'bg-zinc-50/80 border-zinc-200 hover:border-blue-500/50 hover:bg-white hover:shadow-blue-500/5' 
                   : 'bg-white/[0.02] border-white/10 hover:border-blue-500/50 hover:bg-white/[0.04] hover:shadow-blue-500/10'
@@ -102,6 +102,9 @@ export const CuratedVideos: React.FC<CuratedVideosProps> = ({ theme = 'apple-dar
                 <img
                   src={video.thumbnail}
                   alt={video.title}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop';
+                  }}
                   className="w-full h-full object-cover opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-500"
                   referrerPolicy="no-referrer"
                 />

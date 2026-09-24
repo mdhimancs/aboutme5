@@ -1,6 +1,7 @@
 import React from 'react';
 import { BookOpen, Heart, Users, Quote } from 'lucide-react';
 import { StarsCounter } from './StarsCounter';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface PhilosophyProps {
   theme?: string;
@@ -13,33 +14,17 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
   return (
     <section 
       id="philosophy" 
-      className={`relative min-h-screen w-full flex flex-col justify-center pt-5 sm:pt-6 pb-10 sm:pb-14 px-5 sm:px-8 lg:px-12 max-w-6xl mx-auto border-t transition-colors duration-500 ${
-        isLight ? 'border-zinc-200/80 bg-[#fbfbfe]' : 'border-white/10 bg-[#030305]'
+      className={`relative min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t transition-colors duration-500 ${
+        isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Soothing Ambient Atmospheric Aura Effects */}
-      <div 
-        className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[340px] sm:h-[480px] rounded-full blur-[110px] sm:blur-[140px] pointer-events-none transition-all duration-1000 ${
-          isLight 
-            ? 'bg-gradient-to-tr from-blue-300/20 via-indigo-200/15 to-sky-200/20' 
-            : 'bg-gradient-to-tr from-blue-600/18 via-indigo-600/14 to-cyan-500/12'
-        }`} 
-      />
-      <div 
-        className={`absolute -bottom-16 -right-16 w-80 sm:w-[420px] h-80 sm:h-[420px] rounded-full blur-[90px] sm:blur-[130px] pointer-events-none ${
-          isLight ? 'bg-indigo-200/15' : 'bg-blue-600/12'
-        }`} 
-      />
-      <div 
-        className={`absolute -top-16 -left-16 w-72 sm:w-96 h-72 sm:h-96 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none ${
-          isLight ? 'bg-sky-200/15' : 'bg-indigo-600/12'
-        }`} 
-      />
+      <SectionBackgroundAura theme={theme} auraLevel={3} />
 
-      <div className="relative w-full max-w-5xl mx-auto flex flex-col flex-1 justify-center space-y-4 sm:space-y-5">
+      <div className="relative w-full max-w-[1400px] mx-auto flex flex-col flex-1 justify-center space-y-4 sm:space-y-5">
         
         {/* Header */}
-        <div className="relative text-left space-y-1.5 shrink-0">
+        <div className="relative text-left space-y-1.5 shrink-0 -mt-4">
           {/* Luminous aura behind heading */}
           <div 
             className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-24 sm:h-28 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -49,7 +34,9 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
             }`} 
           />
 
-          <div className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 shadow-xs ${
+          <div 
+            style={{ fontSize: '11px' }}
+            className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 shadow-xs ${
             isLight 
               ? 'bg-blue-50/90 border-blue-200 text-blue-700' 
               : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_14px_rgba(59,130,246,0.18)]'
@@ -66,15 +53,14 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
             Philosophy & Gratitude
           </h2>
           <p 
-            style={{ fontSize: '16px', paddingBottom: '6px' }}
-            className={`relative max-w-3xl font-normal text-left leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}
+            style={{ fontSize: '11px', paddingBottom: '6px' }}
+            className={`relative max-w-3xl font-normal text-left text-[11px] leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}
           >
             An executive journey grounded in intellectual humility, relentless curiosity and profound gratitude.
           </p>
         </div>
 
-        {/* Soothing Buddha Quote Banner */}
-        <div className={`py-2 px-3.5 sm:py-2.5 sm:px-4 rounded-xl border flex items-center gap-3 shrink-0 transition-all duration-300 backdrop-blur-sm ${
+        <div className={`py-2 px-3.5 sm:py-2.5 sm:px-4 rounded-xl border flex items-center gap-3 shrink-0 transition-all duration-300 backdrop-blur-sm -mt-2 sm:-mt-3 ${
           isLight 
             ? 'bg-gradient-to-r from-blue-50/80 via-indigo-50/50 to-white/90 border-blue-200/80 text-zinc-900 shadow-xs' 
             : 'bg-gradient-to-r from-blue-950/25 via-zinc-900/60 to-indigo-950/20 border-white/10 text-zinc-100 shadow-[0_4px_20px_rgba(0,0,0,0.3)]'

@@ -7,6 +7,7 @@ import { useHoverScroll } from '../lib/utils';
 import { trackAssetInteraction } from '../lib/analytics';
 import { useAuth } from '../context/AuthContext';
 import { StarsCounter } from './StarsCounter';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface TechnicalBlogProps {
   theme?: string;
@@ -14,6 +15,7 @@ interface TechnicalBlogProps {
 
 const CATEGORIES = [
   { id: 'all', label: 'All Publications' },
+  { id: 'PQC & Cryptography', label: 'PQC & Cryptography' },
   { id: 'Executive Risk & GRC', label: 'Executive Risk & GRC' },
   { id: 'engineering', label: 'Architects & Engineering' },
   { id: 'AI Security Governance', label: 'AI Security Governance' },
@@ -61,7 +63,8 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
     
     const matchesCategory = selectedCategory === 'all' || 
                             post.category.toLowerCase() === selectedCategory.toLowerCase() ||
-                            (selectedCategory === 'engineering' && (['IAM & Zero Trust', 'AI Security Governance', 'Cloud'].includes(post.category) || post.tags.some(t => ['Identity Federation', 'Tokenization', 'FIDO2'].includes(t)))) ||
+                            (selectedCategory === 'PQC & Cryptography' && (post.category === 'PQC & Cryptography' || post.tags.some(t => ['PQC', 'Quantum', 'Cryptography', 'NIST FIPS 203'].includes(t)))) ||
+                            (selectedCategory === 'engineering' && (['IAM & Zero Trust', 'AI Security Governance', 'Cloud', 'PQC & Cryptography'].includes(post.category) || post.tags.some(t => ['Identity Federation', 'Tokenization', 'FIDO2', 'PQC'].includes(t)))) ||
                             (selectedCategory === 'Cloud' && (post.category.toLowerCase().includes('cloud') || post.category === 'Azure')) ||
                             (selectedCategory === 'IAM & Zero Trust' && (post.category === 'IAM' || post.category === 'IAM & Zero Trust'));
 
@@ -71,31 +74,15 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
   return (
     <section 
       id="blog" 
-      className={`relative overflow-hidden min-h-screen w-full flex flex-col justify-start pt-8 sm:pt-10 pb-10 sm:pb-14 lg:pb-16 px-6 sm:px-10 lg:px-14 max-w-6xl lg:max-w-7xl mx-auto border-t ${
-        isLight ? 'border-zinc-200 bg-[#fcfcfd]' : 'border-white/10 bg-[#000000]'
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
+        isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Background Aura Effects */}
-      <div 
-        className={`absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] sm:w-[850px] h-[320px] sm:h-[450px] rounded-full blur-[90px] sm:blur-[130px] pointer-events-none transition-all duration-700 ${
-          isLight 
-              ? 'bg-gradient-to-tr from-blue-400/15 via-indigo-300/12 to-sky-300/10' 
-              : 'bg-gradient-to-tr from-blue-600/16 via-indigo-500/12 to-cyan-500/10'
-          }`} 
-        />
-        <div 
-          className={`absolute -bottom-20 -right-20 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-[80px] sm:blur-[110px] pointer-events-none ${
-            isLight ? 'bg-indigo-300/10' : 'bg-blue-600/12'
-          }`} 
-        />
-        <div 
-          className={`absolute -top-12 -left-12 w-72 sm:w-80 h-72 sm:h-80 rounded-full blur-[70px] sm:blur-[100px] pointer-events-none ${
-            isLight ? 'bg-sky-300/10' : 'bg-indigo-600/10'
-          }`} 
-        />
+      <SectionBackgroundAura theme={theme} auraLevel={3} />
 
       {/* Section Header */}
-      <div className="relative w-full space-y-0.5 mb-2 sm:mb-2.5 shrink-0 text-left">
+      <div className="relative w-full space-y-0.5 mb-2 sm:mb-2.5 shrink-0 text-left -mt-4">
         {/* Luminous aura behind heading */}
         <div 
           className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-24 sm:h-28 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -105,7 +92,9 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           }`} 
         />
 
-        <div className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
+        <div 
+          style={{ fontSize: '11px' }}
+          className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
           isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-sm' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
         }`}>
           <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
@@ -117,7 +106,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
               ? 'text-zinc-900 drop-shadow-[0_2px_16px_rgba(59,130,246,0.22)]' 
               : 'text-white drop-shadow-[0_0_24px_rgba(96,165,250,0.40)]'
           }`}>
-            Publications
+            Publications - Solution Design & Architecture
           </h2>
           <div className="inline-flex items-center gap-2">
             <span 
@@ -149,15 +138,14 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           </div>
         </div>
         <p 
-          style={{ fontSize: '14px' }}
-          className={`relative max-w-4xl text-[14px] font-normal leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
+          style={{ fontSize: '11px' }}
+          className={`relative max-w-4xl text-[11px] font-normal leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
         >
           Playbooks on Cyber Risk, Identity Architecture, AI Security and Regulatory Disclosure.
         </p>
       </div>
 
-      {/* Featured CISO Executive Briefings Spotlight */}
-      <div className="mb-2.5 sm:mb-3 w-full">
+      <div className="mb-2.5 sm:mb-3 w-full -mt-2 sm:-mt-3">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-blue-400" />
@@ -189,7 +177,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
                     trackAssetInteraction(post.id, post.title, 'Whitepaper');
                   });
                 }}
-                className={`group relative flex flex-col justify-between p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                className={`group relative flex flex-col justify-between p-3.5 rounded-2xl border transition-all duration-300 cursor-pointer interactive-card ${
                   isLight
                     ? 'bg-white border-zinc-200/80 hover:border-blue-500 hover:shadow-lg shadow-sm'
                     : 'bg-zinc-950/60 border-white/10 hover:border-blue-400/50 hover:bg-zinc-900/60 shadow-lg'
@@ -291,7 +279,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
             ref={scrollRef}
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
-            className="flex items-center gap-1.5 overflow-x-auto pb-1.5 lg:pb-0 scrollbar-none cursor-ew-resize select-none"
+            className="flex items-center gap-1.5 overflow-x-auto pb-1.5 lg:pb-0 scrollbar-none cursor-ew-resize select-none ml-0 w-[326px]"
           >
             {CATEGORIES.map((cat) => (
               <button
@@ -311,7 +299,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           </div>
 
           {/* Search Box */}
-          <div className="relative w-full lg:w-80 shrink-0">
+          <div className="relative w-[334px] ml-[155px] shrink-0">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
             <input
               type="text"

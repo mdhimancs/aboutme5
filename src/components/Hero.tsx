@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ShieldCheck, CheckCircle2, ChevronRight, Sparkles, Github, Linkedin, Mail, Shield, Award, Cpu, BarChart3 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { SectionBackgroundAura } from './SectionBackgroundAura';
 
 interface HeroProps {
   onOpenContact: () => void;
@@ -98,28 +99,12 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
   return (
     <section 
       id="overview" 
-      className={`relative min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-6 sm:px-12 lg:px-16 max-w-5xl lg:max-w-6xl mx-auto overflow-hidden border-t ${
+      className={`relative min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
         isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Background Aura Effects */}
-      <div 
-        className={`absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[900px] h-[350px] sm:h-[500px] rounded-full blur-[100px] sm:blur-[140px] pointer-events-none transition-all duration-700 ${
-          isLight 
-            ? 'bg-gradient-to-tr from-blue-400/18 via-indigo-300/14 to-sky-300/12' 
-            : 'bg-gradient-to-tr from-blue-600/20 via-indigo-500/15 to-cyan-500/12'
-        }`} 
-      />
-      <div 
-        className={`absolute -bottom-24 -right-24 w-80 sm:w-96 h-80 sm:h-96 rounded-full blur-[90px] sm:blur-[120px] pointer-events-none ${
-          isLight ? 'bg-indigo-300/12' : 'bg-blue-600/15'
-        }`} 
-      />
-      <div 
-        className={`absolute -top-16 -left-16 w-72 sm:w-88 h-72 sm:h-88 rounded-full blur-[80px] sm:blur-[110px] pointer-events-none ${
-          isLight ? 'bg-sky-300/12' : 'bg-indigo-600/12'
-        }`} 
-      />
+      <SectionBackgroundAura theme={theme} />
 
       {/* 1. Static Executive Header */}
       <div 
@@ -135,10 +120,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
         />
 
         <div 
-          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider border backdrop-blur-md ${
+          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold uppercase tracking-wider border backdrop-blur-md ${
             isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-sm' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
           }`}
-          style={{ height: '22.8171px' }}
+          style={{ fontSize: '11px', height: '22.8171px' }}
         >
           <Sparkles className="w-3.5 h-3.5 animate-pulse text-blue-500" />
           <span>Strategic Executive Overview</span>
@@ -146,7 +131,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
       </div>
 
       {/* 2. Main Centered Content */}
-      <div className="relative w-full mx-auto text-center space-y-4 sm:space-y-5 px-2 sm:px-4 my-auto shrink-0 py-2 sm:py-3">
+      <div className="relative w-full mx-auto text-center space-y-1 sm:space-y-1.5 px-2 sm:px-4 my-auto shrink-0 py-2 sm:py-3">
 
         {/* Aura behind main headline */}
         <div 
@@ -166,11 +151,11 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
                 : 'text-white drop-shadow-[0_0_28px_rgba(96,165,250,0.40)]'
             }`}
           >
-            <span className="block">Enterprise Cyber Defense, <span className={`text-transparent bg-clip-text ${isLight ? 'bg-gradient-to-r from-blue-600 via-indigo-600 to-zinc-900' : 'bg-gradient-to-r from-blue-400 via-indigo-300 to-white'}`}>Zero Trust IAM</span></span>
+            <span className="block">Enterprise Cyber Defense, <span className={`text-transparent bg-clip-text font-extrabold ${isLight ? 'bg-gradient-to-r from-blue-700 via-indigo-600 to-zinc-950 drop-shadow-[0_1px_2px_rgba(59,130,246,0.3)]' : 'bg-gradient-to-r from-sky-300 via-blue-200 to-white drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]'}`}>Zero Trust IAM</span></span>
             <span className="block mt-1 sm:mt-1.5">& AI Risk Resilience.</span>
           </h1>
           <p 
-            className={`w-full max-w-4xl mx-auto text-xs sm:text-sm md:text-[15px] font-medium leading-relaxed px-1 sm:px-2 ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
+            className={`w-full max-w-4xl mx-auto text-[11px] font-medium leading-relaxed px-1 sm:px-2 ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
           >
             {PERSONAL_INFO.tagline}
           </p>
@@ -250,24 +235,38 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
 
         {/* Dynamic Highlight Stats Grid */}
         <div 
-          className="pt-1.5 sm:pt-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full max-w-5xl mx-auto px-1 sm:px-2"
+          className="relative pt-1.5 sm:pt-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full max-w-5xl mx-auto px-1 sm:px-2"
         >
+          {/* Luminous Glow Aura directly behind the stats boxes */}
+          <div 
+            className={`absolute -inset-2 rounded-3xl blur-xl sm:blur-2xl pointer-events-none transition-all duration-700 ${
+              isLight 
+                ? 'bg-gradient-to-r from-blue-400/10 via-cyan-300/8 to-indigo-400/10 opacity-25' 
+                : 'bg-gradient-to-r from-blue-600/12 via-indigo-500/10 to-cyan-500/12 opacity-30'
+            }`} 
+          />
+
           {currentPreset.stats.map((stat, idx) => (
             <div
               key={idx}
-              className={`px-3 py-2 sm:py-2.5 rounded-xl backdrop-blur-sm transition-all group border flex flex-col justify-center items-center text-center ${
+              className={`relative z-10 px-3 py-2.5 sm:py-3 rounded-2xl backdrop-blur-md transition-all duration-300 group border flex flex-col justify-center items-center text-center shadow-lg ${
                 isLight 
-                  ? 'bg-white/90 border-zinc-200/80 shadow-2xs hover:border-blue-300' 
-                  : 'bg-white/[0.03] border-white/[0.08] hover:border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.3)]'
+                  ? 'bg-white/95 border-blue-200/90 hover:border-blue-500/80 shadow-blue-500/10 hover:shadow-blue-500/25 hover:scale-[1.03] hover:-translate-y-0.5' 
+                  : 'bg-zinc-950/80 border-white/15 hover:border-cyan-400/60 shadow-[0_8px_24px_rgba(0,0,0,0.6)] hover:shadow-[0_0_24px_rgba(56,189,248,0.35)] hover:scale-[1.03] hover:-translate-y-0.5'
               }`}
             >
-              <div className={`text-sm sm:text-base lg:text-lg font-extrabold tracking-tight transition-colors truncate w-full ${isLight ? 'text-zinc-900 group-hover:text-blue-600' : 'text-white group-hover:text-blue-400'}`}>
+              {/* Individual Box Inner Hover Glow */}
+              <div className={`absolute -inset-0.5 rounded-2xl blur-md opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none ${
+                isLight ? 'bg-gradient-to-tr from-blue-400/25 via-indigo-300/20 to-sky-400/25' : 'bg-gradient-to-tr from-blue-500/35 via-cyan-400/25 to-indigo-500/35'
+              }`} />
+
+              <div className={`relative z-10 text-sm sm:text-base lg:text-lg font-extrabold tracking-tight transition-colors truncate w-full ${isLight ? 'text-zinc-900 group-hover:text-blue-600' : 'text-white group-hover:text-cyan-300'}`}>
                 {stat.value}
               </div>
-              <div className={`text-[10px] sm:text-[10.5px] font-semibold mt-0.5 leading-snug line-clamp-1 ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
+              <div className={`relative z-10 text-[10px] sm:text-[10.5px] font-semibold mt-0.5 leading-snug line-clamp-1 ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
                 {stat.label}
               </div>
-              <div className={`text-[9px] font-medium leading-tight opacity-75 mt-0.5 line-clamp-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+              <div className={`relative z-10 text-[9px] font-medium leading-tight opacity-75 mt-0.5 line-clamp-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
                 {stat.sublabel}
               </div>
             </div>
