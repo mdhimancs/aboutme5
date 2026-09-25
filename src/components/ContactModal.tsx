@@ -104,7 +104,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, the
     try {
       // Logic for GitHub Pages / Static Hosting: 
       // Prefer Formspree (or similar) over the non-existent /api/send-email endpoint
-      const formspreeId = (import.meta as any).env.VITE_FORMSPREE_ID;
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+      
+      // Determine if we are likely on a static host (GitHub Pages, etc.)
+      const isStaticHost = window.location.hostname.endsWith('github.io') || window.location.hostname.includes('pages.dev');
+
+      if (isStaticHost && !formspreeId) {
+        throw new Error('Static Hosting Configuration Error: VITE_FORMSPREE_ID is not set in repository variables. Unable to send email without a backend.');
+      }
+
       const endpoint = formspreeId 
         ? `https://formspree.io/f/${formspreeId}`
         : '/api/send-email';
@@ -125,9 +133,21 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, the
         }),
       });
 
+      // Attempt to parse response as JSON, but handle HTML error pages from static hosts
+      let result;
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        // If we got HTML back, the endpoint likely doesn't exist (404 redirected to index.html)
+        if (!response.ok) {
+          throw new Error('Endpoint configuration mismatch. If you are on GitHub Pages, ensure VITE_FORMSPREE_ID is correctly set in your Variables.');
+        }
+        result = { success: true };
+      }
+
       if (!response.ok) {
-        const result = await response.json();
-        throw new Error(result.error || result.errors?.[0]?.message || 'Failed to send message. If you are on GitHub Pages, ensure VITE_FORMSPREE_ID is set.');
+        throw new Error(result?.error || result?.errors?.[0]?.message || 'Failed to send message.');
       }
 
       // Record timestamp to enforce 5-minute quota protection

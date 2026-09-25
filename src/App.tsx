@@ -219,7 +219,7 @@ export default function App() {
         }
       };
 
-      const formspreeId = (import.meta as any).env.VITE_FORMSPREE_ID;
+      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
       const endpoint = formspreeId 
         ? `https://formspree.io/f/${formspreeId}`
         : '/api/access-alert';
