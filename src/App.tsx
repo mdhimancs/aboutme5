@@ -166,14 +166,63 @@ export default function App() {
     const hasSentAlert = sessionStorage.getItem('executive_portfolio_access_alert_sent');
     
     if (!hasSentAlert) {
+      // Collect advanced client details
+      const getGpuInfo = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
+          if (!gl) return { vendor: 'Unknown', renderer: 'Unknown' };
+          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+          return debugInfo ? {
+            vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
+            renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
+          } : { vendor: 'Unknown', renderer: 'Unknown' };
+        } catch (e) {
+          return { vendor: 'Error', renderer: 'Error' };
+        }
+      };
+
+      const gpu = getGpuInfo();
+      const nav = navigator as any;
+      const conn = nav.connection || nav.mozConnection || nav.webkitConnection;
+
+      const payload = {
+        screen: {
+          width: window.screen.width,
+          height: window.screen.height,
+          availWidth: window.screen.availWidth,
+          availHeight: window.screen.availHeight,
+          colorDepth: window.screen.colorDepth,
+          pixelRatio: window.devicePixelRatio
+        },
+        device: {
+          memory: nav.deviceMemory || 'Unknown',
+          cpuCores: nav.hardwareConcurrency || 'Unknown',
+          platform: nav.platform || 'Unknown',
+          vendor: nav.vendor || 'Unknown',
+          maxTouchPoints: nav.maxTouchPoints || 0,
+          language: nav.language,
+          languages: nav.languages?.join(', '),
+          doNotTrack: nav.doNotTrack || 'Unknown',
+          gpu: gpu
+        },
+        context: {
+          referrer: document.referrer || 'Direct',
+          href: window.location.href,
+          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          connection: conn ? {
+            type: conn.effectiveType,
+            downlink: conn.downlink,
+            rtt: conn.rtt,
+            saveData: conn.saveData
+          } : 'Unknown'
+        }
+      };
+
       fetch('/api/access-alert', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          screenResolution: `${window.screen.width}x${window.screen.height}`,
-          language: navigator.language,
-          referrer: document.referrer || 'Direct'
-        })
+        body: JSON.stringify(payload)
       })
       .then(res => res.json())
       .then(data => {

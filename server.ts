@@ -170,25 +170,107 @@ async function startServer() {
 
     const clientIp = getClientIp(req);
     const userAgent = req.headers['user-agent'] || 'Unknown';
-    const { screenResolution, language, referrer } = req.body;
+    const { screen, device, context } = req.body;
+
+    const formatGpu = (gpu: any) => {
+      if (!gpu || typeof gpu !== 'object') return 'Unknown';
+      return `${gpu.vendor} | ${gpu.renderer}`;
+    };
+
+    const formatConn = (conn: any) => {
+      if (!conn || typeof conn !== 'object') return 'Unknown';
+      return `${conn.type || 'N/A'} (DL: ${conn.downlink || 'N/A'} Mbps, RTT: ${conn.rtt || 'N/A'} ms)`;
+    };
 
     try {
       await resend.emails.send({
         from: 'Access Alert <onboarding@resend.dev>',
         to: ['munish.world@gmail.com'],
-        subject: `[ACCESS ALERT] New Visit detected from ${clientIp}`,
+        subject: `[DETAILED ACCESS ALERT] New Visit from ${clientIp}`,
         html: `
-          <h3>Executive Portfolio Access Alert</h3>
-          <p>A new visitor has accessed your portfolio.</p>
-          <hr />
-          <p><strong>IP Address:</strong> ${clientIp}</p>
-          <p><strong>User Agent:</strong> ${userAgent}</p>
-          <p><strong>Screen Resolution:</strong> ${screenResolution || 'Unknown'}</p>
-          <p><strong>Language:</strong> ${language || 'Unknown'}</p>
-          <p><strong>Referrer:</strong> ${referrer || 'Direct'}</p>
-          <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
-          <hr />
-          <p style="font-size: 10px; color: #666;">Automated security telemetry from Munish Dhiman's Executive Portfolio.</p>
+          <div style="font-family: sans-serif; color: #333; max-width: 600px;">
+            <h2 style="color: #2563eb; border-bottom: 2px solid #eee; padding-bottom: 10px;">Executive Portfolio: Detailed Access Alert</h2>
+            <p>A new visitor session has been initiated with high-fidelity telemetry.</p>
+            
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">IP Address</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${clientIp}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Timestamp (UTC)</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${new Date().toISOString()}</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Location/Timezone</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${context?.timezone || 'Unknown'}</td>
+              </tr>
+            </table>
+
+            <h3 style="color: #475569; margin-top: 25px;">Device & Hardware</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">Platform / OS</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${device?.platform || 'Unknown'}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">CPU Cores</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${device?.cpuCores || 'Unknown'} logical cores</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Device Memory</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">~${device?.memory || 'Unknown'} GB RAM</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">GPU Architecture</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${formatGpu(device?.gpu)}</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Touch Support</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${device?.maxTouchPoints > 0 ? `Yes (${device.maxTouchPoints} pts)` : 'No'}</td>
+              </tr>
+            </table>
+
+            <h3 style="color: #475569; margin-top: 25px;">Display & Browser</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">Resolution</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${screen?.width}x${screen?.height} (@${screen?.pixelRatio}x)</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Viewport Size</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${screen?.availWidth}x${screen?.availHeight}</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Language(s)</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">Primary: ${device?.language} <br/> <small>${device?.languages}</small></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">User Agent</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-size: 11px; font-family: monospace;">${userAgent}</td>
+              </tr>
+            </table>
+
+            <h3 style="color: #475569; margin-top: 25px;">Network & Context</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">Connection Type</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${formatConn(context?.connection)}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Referrer</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0;">${context?.referrer || 'Direct Entry'}</td>
+              </tr>
+              <tr style="background: #f8fafc;">
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Landing URL</td>
+                <td style="padding: 8px; border: 1px solid #e2e8f0; font-size: 11px;">${context?.href || 'Unknown'}</td>
+              </tr>
+            </table>
+
+            <div style="margin-top: 30px; padding: 15px; background: #f1f5f9; border-radius: 8px; font-size: 11px; color: #64748b;">
+              <strong>Security Protocol:</strong> This alert is generated once per unique browser session. Telemetry is collected via standard Web APIs for executive situational awareness.
+            </div>
+          </div>
         `,
       });
 
