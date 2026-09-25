@@ -527,6 +527,7 @@ export const Archive: React.FC<ArchiveProps> = ({
           >
             Granted intellectual property, institutional reference architectures, and standardized CISO operational blueprints.
           </p>
+          <div style={{ height: '2pt', width: '100%' }} />
 
           <div className="flex flex-wrap items-center justify-start pt-1.5 gap-1.5 pb-0 -mt-2 sm:-mt-3" style={{ paddingTop: '6px', paddingBottom: '0px', marginBottom: '1px' }}>
             <button

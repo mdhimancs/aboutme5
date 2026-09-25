@@ -62,7 +62,7 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
       <SectionBackgroundAura theme={theme} auraLevel={3} />
 
       {/* 1. Header with Badge & Aura */}
-      <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 shrink-0 -mt-4">
+      <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2.5 shrink-0 -mt-4">
         {/* Luminous aura behind heading */}
         <div 
           className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-24 sm:h-28 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -101,6 +101,7 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
           6 Strategic Pillars
         </div>
       </div>
+      <div style={{ height: '50%', width: '100%' }} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 shrink-0 w-full mt-1 sm:mt-1.5">
         {filteredCategories.map((cat, idx) => {

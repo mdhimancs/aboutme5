@@ -143,6 +143,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
         >
           Playbooks on Cyber Risk, Identity Architecture, AI Security and Regulatory Disclosure.
         </p>
+        <div style={{ height: '2pt', width: '100%' }} />
       </div>
 
       <div className="mb-2.5 sm:mb-3 w-full -mt-2 sm:-mt-3">
@@ -279,7 +280,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
             ref={scrollRef}
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
-            className="flex items-center gap-1.5 overflow-x-auto pb-1.5 lg:pb-0 scrollbar-none cursor-ew-resize select-none ml-0 w-[326px]"
+            className="flex items-center gap-3 overflow-x-auto pb-1.5 lg:pb-0 scrollbar-none cursor-ew-resize select-none ml-0 w-full"
           >
             {CATEGORIES.map((cat) => (
               <button

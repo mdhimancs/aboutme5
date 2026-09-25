@@ -151,7 +151,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
                 : 'text-white drop-shadow-[0_0_28px_rgba(96,165,250,0.40)]'
             }`}
           >
-            <span className="block">Enterprise Cyber Defense, <span className={`text-transparent bg-clip-text font-extrabold ${isLight ? 'bg-gradient-to-r from-blue-700 via-indigo-600 to-zinc-950 drop-shadow-[0_1px_2px_rgba(59,130,246,0.3)]' : 'bg-gradient-to-r from-sky-300 via-blue-200 to-white drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]'}`}>Zero Trust IAM</span></span>
+            <span className="block"><span className={`text-transparent bg-clip-text ${isLight ? 'bg-gradient-to-r from-blue-700 via-cyan-700 to-indigo-800' : 'bg-gradient-to-r from-cyan-300 via-blue-200 to-indigo-300'}`}>Enterprise Cyber Defense</span>, <span className={`text-transparent bg-clip-text font-extrabold ${isLight ? 'bg-gradient-to-r from-blue-700 via-indigo-600 to-zinc-950 drop-shadow-[0_1px_2px_rgba(59,130,246,0.3)]' : 'bg-gradient-to-r from-sky-300 via-blue-200 to-white drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]'}`}>Zero Trust IAM</span></span>
             <span className="block mt-1 sm:mt-1.5">& AI Risk Resilience.</span>
           </h1>
           <p 
