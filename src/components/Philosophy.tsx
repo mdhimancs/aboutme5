@@ -96,7 +96,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
                 </div>
                 <StarsCounter pageId="philosophy-pillar-1" isLight={isLight} compact />
               </div>
-              <p className={`text-[13.5px] sm:text-[15px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-[12px] sm:text-[12.5px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 True wisdom lies in acknowledging our knowledge is but a drop in an infinite ocean. Inspired by Stoic equanimity and existential inquiry, growth thrives at the intersection of disciplined action and radical curiosity.
               </p>
             </div>
@@ -105,7 +105,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
               <span className="text-[9px] uppercase opacity-75">Pillar I</span>
             </div>
           </div>
- 
+
           {/* Pillar 2 */}
           <div className={`p-4 sm:p-4.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
@@ -124,7 +124,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
                 </div>
                 <StarsCounter pageId="philosophy-pillar-2" isLight={isLight} compact />
               </div>
-              <p className={`text-[13.5px] sm:text-[15px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-[12px] sm:text-[12.5px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 Deepest gratitude to near and extended family—elders, young ones, and contemporaries spanning 5 overlapping generations for their enduring foundation, unconditional love, and companionship through all tides.
               </p>
             </div>
@@ -133,7 +133,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
               <span className="text-[9px] uppercase opacity-75">Pillar II</span>
             </div>
           </div>
- 
+
           {/* Pillar 3 */}
           <div className={`p-4 sm:p-4.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
@@ -152,7 +152,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
                 </div>
                 <StarsCounter pageId="philosophy-pillar-3" isLight={isLight} compact />
               </div>
-              <p className={`text-[13.5px] sm:text-[15px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-[12px] sm:text-[12.5px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 Enduring appreciation to academic guides, institutional leaders at Goldman Sachs, and the global cybersecurity open-source research community whose collective brilliance illuminates the defense craft.
               </p>
             </div>
