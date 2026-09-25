@@ -219,20 +219,40 @@ export default function App() {
         }
       };
 
-      fetch('/api/access-alert', {
+      const formspreeId = (import.meta as any).env.VITE_FORMSPREE_ID;
+      const endpoint = formspreeId 
+        ? `https://formspree.io/f/${formspreeId}`
+        : '/api/access-alert';
+
+      fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          ...payload,
+          _subject: `[ACCESS ALERT] New Visit from ${payload.context.href}` // Formspree subject
+        })
       })
-      .then(res => res.json())
+      .then(res => {
+        // Handle potential HTML response from static hosts
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          return res.json();
+        } else {
+          return { success: res.ok };
+        }
+      })
       .then(data => {
-        if (data.success) {
+        if (data.success || data.ok) {
           sessionStorage.setItem('executive_portfolio_access_alert_sent', 'true');
         }
       })
       .catch(err => {
         // Silently log error to prevent console clutter for visitors
-        console.warn('Telemetry transmission delayed or restricted.');
+        // On static hosts like GitHub Pages, this will fail if VITE_FORMSPREE_ID is not set
+        console.warn('Telemetry transmission restricted on static host.');
       });
     }
   }, []);

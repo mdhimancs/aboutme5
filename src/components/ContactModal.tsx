@@ -102,24 +102,32 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, the
     setError(null);
 
     try {
-      const response = await fetch('/api/send-email', {
+      // Logic for GitHub Pages / Static Hosting: 
+      // Prefer Formspree (or similar) over the non-existent /api/send-email endpoint
+      const formspreeId = (import.meta as any).env.VITE_FORMSPREE_ID;
+      const endpoint = formspreeId 
+        ? `https://formspree.io/f/${formspreeId}`
+        : '/api/send-email';
+
+      const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
           name,
           email,
           cc,
-          subject,
-          message
+          subject: subject || 'Portfolio Inquiry',
+          message,
+          _subject: `[Portfolio Inquiry] ${subject || 'New Message'}` // Formspree specific subject
         }),
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message');
+        const result = await response.json();
+        throw new Error(result.error || result.errors?.[0]?.message || 'Failed to send message. If you are on GitHub Pages, ensure VITE_FORMSPREE_ID is set.');
       }
 
       // Record timestamp to enforce 5-minute quota protection
