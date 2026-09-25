@@ -43,6 +43,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [activePost, setActivePost] = useState<BlogPost | null>(null);
+  const [scrollRange, setScrollRange] = useState({ start: 1, end: 4 });
   const { scrollRef, onMouseMove, onMouseLeave } = useHoverScroll();
 
   const isSectionGated = isSectionLocked('publications');
@@ -100,7 +101,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
           <span>Enterprise Cyber Strategy & Risk Governance · WHITEPAPERS & Playbooks</span>
         </div>
-        <div className="relative flex items-center gap-3">
+        <div className="relative flex flex-wrap items-center gap-3">
           <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight transition-all ${
             isLight 
               ? 'text-zinc-900 drop-shadow-[0_2px_16px_rgba(59,130,246,0.22)]' 
@@ -108,6 +109,12 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           }`}>
             Publications - Solution Design & Architecture
           </h2>
+          <span className={`px-2.5 py-1 rounded-lg text-xs font-extrabold border inline-flex items-center gap-1.5 shadow-2xs ${
+            isLight ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-blue-500/10 text-blue-400 border-blue-500/25'
+          }`}>
+            <FileText className="w-3.5 h-3.5 text-blue-500" />
+            <span>{BLOG_POSTS.length} Articles Available</span>
+          </span>
           <div className="inline-flex items-center gap-2">
             <span 
               onClick={isSectionGated ? () => setGateModalOpen(true) : undefined}
@@ -319,7 +326,32 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
 
         {/* Scrollable Timeline Publications with Fading Mask */}
         <div className="relative w-full">
-          <div className="pl-2 sm:pl-3 pr-2 sm:pr-3 space-y-4 pb-12 max-h-[220px] sm:max-h-[235px] lg:max-h-[245px] overflow-y-auto scrollbar-thin">
+          <div className="flex items-center justify-between px-2 mb-2 text-[11px] font-mono text-zinc-500">
+            <span>Showing items <strong className={isLight ? "text-zinc-900" : "text-white"}>{Math.min(scrollRange.start, filteredPosts.length)}–{Math.min(scrollRange.end, filteredPosts.length)}</strong> of <strong className={isLight ? "text-zinc-900" : "text-white"}>{filteredPosts.length}</strong> Publications (Total: {BLOG_POSTS.length})</span>
+            {selectedCategory !== 'all' && (
+              <button 
+                onClick={() => setSelectedCategory('all')}
+                className="text-blue-600 hover:underline text-[10.5px] cursor-pointer"
+              >
+                Clear filter "{selectedCategory}" ✕
+              </button>
+            )}
+          </div>
+          <div 
+            onScroll={(e) => {
+              const target = e.currentTarget;
+              const scrollTop = target.scrollTop;
+              const clientHeight = target.clientHeight;
+              const total = filteredPosts.length;
+              if (total === 0) return;
+              const itemHeight = 95;
+              const start = Math.min(total, Math.max(1, Math.floor(scrollTop / itemHeight) + 1));
+              const count = Math.max(1, Math.round(clientHeight / itemHeight));
+              const end = Math.min(total, start + count - 1);
+              setScrollRange({ start, end });
+            }}
+            className="pl-2 sm:pl-3 pr-2 sm:pr-3 space-y-4 pb-12 max-h-[220px] sm:max-h-[235px] lg:max-h-[245px] overflow-y-auto scrollbar-thin"
+          >
             <div className="w-full">
               {Array.from(new Set(filteredPosts.map(p => new Date(p.date).getFullYear()))).sort((a, b) => b - a).map(year => (
                 <div key={year} className="relative pb-4">

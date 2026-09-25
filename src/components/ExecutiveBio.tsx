@@ -149,36 +149,36 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               
               {/* Horizontal 3 Points Grid */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className={`py-1.5 px-3 rounded-2xl border interactive-card ${isLight ? 'bg-blue-50/40 border-blue-100' : 'bg-blue-950/10 border-blue-900/20'}`}>
+                <div className={`py-2 px-3.5 rounded-2xl border interactive-card ${isLight ? 'bg-blue-50/40 border-blue-100' : 'bg-blue-950/10 border-blue-900/20'}`}>
                   <div className="flex items-start gap-2">
-                    <span className="text-blue-500 font-bold text-lg leading-none shrink-0">•</span>
+                    <span className="text-blue-500 font-bold text-xl leading-none shrink-0">•</span>
                     <div>
-                      <span className={`font-bold text-[11px] uppercase tracking-wider block mb-1.5 ${isLight ? 'text-blue-700' : 'text-blue-400'}`}>Enterprise Strategy</span>
-                      <span className={`text-[12px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
+                      <span className={`font-bold text-[13px] uppercase tracking-wider block mb-1.5 ${isLight ? 'text-blue-700' : 'text-blue-400'}`}>Enterprise Strategy</span>
+                      <span className={`text-[14px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
                         Directed Zero Trust IAM, AI risk governance, and Tier-1 capital market defense perimeters.
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className={`py-1.5 px-3 rounded-2xl border interactive-card ${isLight ? 'bg-indigo-50/40 border-indigo-100' : 'bg-indigo-950/10 border-indigo-900/20'}`}>
+                <div className={`py-2 px-3.5 rounded-2xl border interactive-card ${isLight ? 'bg-indigo-50/40 border-indigo-100' : 'bg-indigo-950/10 border-indigo-900/20'}`}>
                   <div className="flex items-start gap-2">
-                    <span className="text-indigo-500 font-bold text-lg leading-none shrink-0">•</span>
+                    <span className="text-indigo-500 font-bold text-xl leading-none shrink-0">•</span>
                     <div>
-                      <span className={`font-bold text-[11px] uppercase tracking-wider block mb-1.5 ${isLight ? 'text-indigo-700' : 'text-indigo-400'}`}>Global Leadership</span>
-                      <span className={`text-[12px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
+                      <span className={`font-bold text-[13px] uppercase tracking-wider block mb-1.5 ${isLight ? 'text-indigo-700' : 'text-indigo-400'}`}>Global Leadership</span>
+                      <span className={`text-[14px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
                         Spearheaded multi-million-dollar defense programs and high-performing engineering squads.
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className={`py-1.5 px-3 rounded-2xl border interactive-card ${isLight ? 'bg-emerald-50/40 border-emerald-100' : 'bg-emerald-950/10 border-emerald-900/20'}`}>
+                <div className={`py-2 px-3.5 rounded-2xl border interactive-card ${isLight ? 'bg-emerald-50/40 border-emerald-100' : 'bg-emerald-950/10 border-emerald-900/20'}`}>
                   <div className="flex items-start gap-2">
-                    <span className="text-emerald-500 font-bold text-lg leading-none shrink-0">•</span>
+                    <span className="text-emerald-500 font-bold text-xl leading-none shrink-0">•</span>
                     <div>
-                      <span className={`font-bold text-[11px] uppercase tracking-wider block mb-1.5 ${isLight ? 'text-emerald-700' : 'text-emerald-400'}`}>Regulatory Assurance</span>
-                      <span className={`text-[12px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
+                      <span className={`font-bold text-[13px] uppercase tracking-wider block mb-1.5 ${isLight ? 'text-emerald-700' : 'text-emerald-400'}`}>Regulatory Assurance</span>
+                      <span className={`text-[14px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}>
                         Maintained an unblemished 100% clean audit track record under rigorous supervision.
                       </span>
                     </div>
@@ -188,68 +188,68 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
-              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+              <div className={`p-3 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
                   ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
                   : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
+                <div className="flex items-center space-x-2 mb-1">
                   <Scale className="w-4 h-4 text-blue-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Executive Risk & GRC</div>
+                  <div className={`font-bold text-[12.5px] sm:text-[14px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Executive Risk & GRC</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[12px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Executive Risk Strategy, Audit Committee reporting, SOX 404 zero-deficiency governance, and Cyber Disclosure Readiness.
                 </div>
               </div>
 
-              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+              <div className={`p-3 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
                   ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
                   : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
+                <div className="flex items-center space-x-2 mb-1">
                   <Shield className="w-4 h-4 text-indigo-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Zero Trust Identity Fabric</div>
+                  <div className={`font-bold text-[12.5px] sm:text-[14px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Zero Trust Identity Fabric</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[12px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Consolidating multi-forest Active Directory environments into SailPoint IGA, CyberArk PAM, and Identity Security workload federation.
                 </div>
               </div>
 
-              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+              <div className={`p-3 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
                   ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
                   : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
+                <div className="flex items-center space-x-2 mb-1">
                   <Brain className="w-4 h-4 text-purple-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>AI Threat Defense</div>
+                  <div className={`font-bold text-[12.5px] sm:text-[14px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>AI Threat Defense</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[12px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Enterprise AI security reverse-proxies, real-time tokenization DLP, contextual RAG ACLs, and automated SOAR threat containment.
                 </div>
               </div>
 
-              <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
+              <div className={`p-3 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
                   ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
                   : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
+                <div className="flex items-center space-x-2 mb-1">
                   <Users className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Team & Budget Scale</div>
+                  <div className={`font-bold text-[12.5px] sm:text-[14px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Team & Budget Scale</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[12px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
                   Orchestrating 30+ security engineering, SOC, and IAM personnel; managing $18.5M CapEx/OpEx modernization and Tier-1 vendor governance.
                 </div>
               </div>
             </div>
 
             {/* Goldman Sachs 14-Year Institutional Track Record */}
-            <div className={`p-3 rounded-2xl border transition-all ${
+            <div className={`p-3.5 rounded-2xl border transition-all ${
               isLight ? 'bg-gradient-to-r from-amber-500/5 via-blue-500/5 to-transparent border-amber-200/80' : 'bg-gradient-to-r from-amber-500/10 via-blue-500/10 to-transparent border-amber-500/20'
             }`}>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pb-1.5 mb-2 border-b border-zinc-200/60 dark:border-white/10">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pb-2 mb-2 border-b border-zinc-200/60 dark:border-white/10">
                 <div className="flex items-center gap-2">
                   <div className="w-6 h-6 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
                     <Building2 className="w-3.5 h-3.5 text-amber-500" />
@@ -259,18 +259,18 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                       <h4 className={`text-xs sm:text-sm font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'}`}>
                         Goldman Sachs Institutional Track Record
                       </h4>
-                      <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full border ${
+                      <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${
                         isLight ? 'bg-amber-100 border-amber-200 text-amber-900' : 'bg-amber-500/20 border-amber-500/30 text-amber-300'
                       }`}>
                         14-Year Tenure · 2011–2025
                       </span>
                     </div>
-                    <p className={`text-[10.5px] ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                    <p className={`text-[12px] ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                       4 Progressive Executive Promotions across Global Investment Banking, Capital Markets & Enterprise Defense
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-mono text-zinc-500 shrink-0">
+                <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-500 shrink-0">
                   <span className="flex items-center gap-1">
                     <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                     Zero SOX 404 Deficiencies
@@ -281,54 +281,54 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                <div className={`p-2 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
-                  <div className="flex items-center justify-between text-[10px] font-semibold mb-0.5">
+                <div className={`p-2.5 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
+                  <div className="flex items-center justify-between text-[11px] font-semibold mb-1">
                     <span className="text-amber-500 font-bold">Sr. Vice President</span>
                     <span className="text-zinc-400 font-mono">2020–2025</span>
                   </div>
-                  <div className={`text-[11px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
+                  <div className={`text-[13px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
                     Principal Architect & CISO Track
                   </div>
-                  <p className={`text-[9.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                  <p className={`text-[11.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                     $18.5M budget, 30+ global engineers, 5M+ identities protected, -98.4% standing privileges, and sub-90m zero-day containment.
                   </p>
                 </div>
 
-                <div className={`p-2 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
-                  <div className="flex items-center justify-between text-[10px] font-semibold mb-0.5">
+                <div className={`p-2.5 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
+                  <div className="flex items-center justify-between text-[11px] font-semibold mb-1">
                     <span className="text-blue-500 font-bold">Vice President</span>
                     <span className="text-zinc-400 font-mono">2016–2020</span>
                   </div>
-                  <div className={`text-[11px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
+                  <div className={`text-[13px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
                     Lead Cybersecurity & IAM Architect
                   </div>
-                  <p className={`text-[9.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                  <p className={`text-[11.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                     Secured AWS/Azure hybrid perimeters, 2B+ events/quarter SIEM/SOAR pipelines, and cut lateral attack surfaces by 85%.
                   </p>
                 </div>
 
-                <div className={`p-2 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
-                  <div className="flex items-center justify-between text-[10px] font-semibold mb-0.5">
+                <div className={`p-2.5 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
+                  <div className="flex items-center justify-between text-[11px] font-semibold mb-1">
                     <span className="text-indigo-500 font-bold">Sr. Associate</span>
                     <span className="text-zinc-400 font-mono">2013–2015</span>
                   </div>
-                  <div className={`text-[11px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
+                  <div className={`text-[13px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
                     Tech Lead Cyber Defense & IR
                   </div>
-                  <p className={`text-[9.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                  <p className={`text-[11.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                     Directed 24/7 Incident Response Center, deployed enterprise DLP across 40k+ nodes, and led institutional FS-ISAC CTI.
                   </p>
                 </div>
 
-                <div className={`p-2 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
-                  <div className="flex items-center justify-between text-[10px] font-semibold mb-0.5">
+                <div className={`p-2.5 rounded-xl border ${isLight ? 'bg-white/80 border-zinc-200/80' : 'bg-white/[0.02] border-white/5'}`}>
+                  <div className="flex items-center justify-between text-[11px] font-semibold mb-1">
                     <span className="text-blue-500 font-bold">Sr. Analyst / Assoc.</span>
                     <span className="text-zinc-400 font-mono">2011–2013</span>
                   </div>
-                  <div className={`text-[11px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
+                  <div className={`text-[13px] font-bold ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
                     Critical Infrastructure & HFT Security
                   </div>
-                  <p className={`text-[9.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                  <p className={`text-[11.5px] mt-1 leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                     Protected $100B–$500B+ daily trading perimeters & $1T+ clearing scale, engineered 99.99% SLA BCP/DR, and executed STRIDE models.
                   </p>
                 </div>
