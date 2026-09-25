@@ -102,12 +102,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, the
     setError(null);
 
     try {
-      const functionUrl = (import.meta as any).env.VITE_FIREBASE_FUNCTION_URL;
-      if (!functionUrl) {
-        throw new Error('API configuration missing');
-      }
-
-      const response = await fetch(functionUrl, {
+      const response = await fetch('/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
