@@ -54,7 +54,7 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
   return (
     <section 
       id="competencies" 
-      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-start pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
         isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
@@ -62,7 +62,7 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
       <SectionBackgroundAura theme={theme} auraLevel={3} />
 
       {/* 1. Header with Badge & Aura */}
-      <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2.5 shrink-0 -mt-4">
+      <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 mb-1 shrink-0 -mt-4">
         {/* Luminous aura behind heading */}
         <div 
           className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-24 sm:h-28 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -72,10 +72,10 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
           }`} 
         />
 
-        <div className="relative space-y-0.5 max-w-3xl flex-1">
+        <div className="relative space-y-0 max-w-3xl flex-1">
           <div 
             style={{ fontSize: '11px' }}
-            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 ${
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-0.5 ${
             isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-sm' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
           }`}>
             <Target className="w-3.5 h-3.5 text-blue-500" />
@@ -101,9 +101,8 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
           6 Strategic Pillars
         </div>
       </div>
-      <div style={{ height: '50%', width: '100%' }} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 shrink-0 w-full mt-1 sm:mt-1.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 shrink-0 w-full mt-1.5 sm:mt-2">
         {filteredCategories.map((cat, idx) => {
           // Sort skills strictly descending by proficiency % (highest on top to lowest at bottom)
           const sortedSkills = [...cat.skills].sort((a, b) => b.level - a.level);

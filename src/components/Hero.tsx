@@ -108,7 +108,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
 
       {/* 1. Static Executive Header */}
       <div 
-        className="relative flex items-center justify-start shrink-0 mb-6 sm:mb-8"
+        className="relative flex items-center justify-start shrink-0 mb-4 sm:mb-5.5"
       >
         {/* Subtle luminous aura behind header */}
         <div 
@@ -119,6 +119,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
           }`} 
         />
 
+        {/* Strategic Overview Pill */}
         <div 
           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold uppercase tracking-wider border backdrop-blur-md ${
             isLight ? 'bg-blue-50/90 border-blue-200 text-blue-700 shadow-sm' : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.15)]'
@@ -143,7 +144,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
         />
 
         {/* Main Headline */}
-        <div className="relative space-y-2.5 max-w-5xl mx-auto -translate-y-[4%]">
+        <div className="relative space-y-[7px] max-w-5xl mx-auto -translate-y-[4%]">
           <h1 
             className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.14] transition-all ${
               isLight 
@@ -152,9 +153,10 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
             }`}
           >
             <span className="block"><span className={`text-transparent bg-clip-text ${isLight ? 'bg-gradient-to-r from-blue-700 via-cyan-700 to-indigo-800' : 'bg-gradient-to-r from-cyan-300 via-blue-200 to-indigo-300'}`}>Enterprise Cyber Defense</span>, <span className={`text-transparent bg-clip-text font-extrabold ${isLight ? 'bg-gradient-to-r from-blue-700 via-indigo-600 to-zinc-950 drop-shadow-[0_1px_2px_rgba(59,130,246,0.3)]' : 'bg-gradient-to-r from-sky-300 via-blue-200 to-white drop-shadow-[0_0_20px_rgba(56,189,248,0.5)]'}`}>Zero Trust IAM</span></span>
-            <span className="block mt-1 sm:mt-1.5">& AI Risk Resilience.</span>
+            <span className="block mt-[2.8px] sm:mt-[4px]">& AI Risk Resilience.</span>
           </h1>
           <p 
+            style={{ paddingBottom: '49px' }}
             className={`w-full max-w-4xl mx-auto text-[11px] font-medium leading-relaxed px-1 sm:px-2 ${isLight ? 'text-zinc-700' : 'text-zinc-400'}`}
           >
             {PERSONAL_INFO.tagline}
@@ -165,7 +167,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 lg:gap-8 pt-0.5">
           <a
             href="#projects"
-            className={`w-full sm:w-auto flex items-center justify-center space-x-2 px-5 sm:px-6 py-2 rounded-full text-xs font-semibold tracking-wide transition-all shadow-md hover:scale-[1.02] active:scale-[0.98] ${
+            className={`w-full sm:w-auto flex items-center justify-center space-x-2 px-5 sm:px-6 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all shadow-md hover:scale-[1.02] active:scale-[0.98] ${
               isLight ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20' : 'bg-white text-black hover:bg-zinc-200 shadow-white/10'
             }`}
           >
@@ -175,7 +177,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
 
           <a
             href="#career"
-            className={`w-full sm:w-auto flex items-center justify-center space-x-2 px-5 sm:px-6 py-2 rounded-full text-xs font-semibold tracking-wide backdrop-blur-md transition-all ${
+            className={`w-full sm:w-auto flex items-center justify-center space-x-2 px-5 sm:px-6 py-1.5 rounded-full text-xs font-semibold tracking-wide backdrop-blur-md transition-all ${
               isLight ? 'bg-white hover:bg-zinc-100 text-zinc-900 border border-zinc-200 shadow-sm' : 'bg-white/[0.06] hover:bg-white/[0.1] text-white border border-white/10 hover:border-white/25'
             }`}
           >
@@ -185,17 +187,17 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
         </div>
 
         {/* High-Tech Executive Highlight Preset Command Bar */}
-        <div className="pt-2 sm:pt-3 flex flex-col items-center justify-center">
-          <div className={`inline-flex flex-wrap items-center justify-center p-1 sm:p-1.5 rounded-2xl sm:rounded-full border backdrop-blur-2xl transition-all shadow-md ${
+        <div className="pt-2 sm:pt-2.5 flex flex-col items-center justify-center">
+          <div className={`inline-flex flex-wrap items-center justify-center p-0.5 sm:p-1 rounded-2xl sm:rounded-full border backdrop-blur-2xl transition-all shadow-md ${
             isLight 
               ? 'bg-zinc-100/95 border-zinc-200/90 shadow-zinc-200/60' 
               : 'bg-zinc-950/90 border-white/15 shadow-[0_6px_28px_rgba(0,0,0,0.65)] ring-1 ring-white/5'
           }`}>
             {/* Hi-Tech Status Pip */}
-            <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1 mr-1 text-[10px] font-mono tracking-widest uppercase font-bold text-blue-500 border-r border-zinc-300/80 dark:border-white/15 select-none">
-              <span className="relative flex h-2 w-2">
+            <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-0.5 mr-1 text-[9px] font-mono tracking-widest uppercase font-bold text-blue-500 border-r border-zinc-300/80 dark:border-white/15 select-none">
+              <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
               </span>
               <span>EXECUTIVE LENS</span>
             </div>
@@ -208,7 +210,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
                   <button
                     key={preset.id}
                     onClick={() => setActiveHighlightId(preset.id)}
-                    className={`inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-xl sm:rounded-full text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 rounded-xl sm:rounded-full text-[11px] sm:text-xs font-bold tracking-tight transition-all duration-200 cursor-pointer ${
                       isSelected
                         ? isLight
                           ? 'bg-blue-600 text-white shadow-md shadow-blue-600/35 ring-1 ring-blue-500'
@@ -235,6 +237,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
 
         {/* Dynamic Highlight Stats Grid */}
         <div 
+          style={{ paddingBottom: '3pt' }}
           className="relative pt-1.5 sm:pt-2 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full max-w-5xl mx-auto px-1 sm:px-2"
         >
           {/* Luminous Glow Aura directly behind the stats boxes */}
@@ -272,6 +275,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
             </div>
           ))}
         </div>
+        <div style={{ height: '3pt', width: '100%' }} />
 
         {/* Dynamic Executive Footprint Line */}
         <div 

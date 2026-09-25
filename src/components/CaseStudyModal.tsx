@@ -257,10 +257,10 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudy, onClo
                     </li>
                   ),
                   strong: ({ node, ...props }) => <strong className="font-semibold text-zinc-900 bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100" {...props} />,
-                  blockquote: ({ node, ...props }) => (
-                    <blockquote className="my-6 p-4 rounded-2xl bg-gradient-to-r from-blue-50/95 to-indigo-50/70 border-l-4 border-blue-600 border-t border-r border-b border-blue-100 text-zinc-800 shadow-sm flex items-start gap-3">
+                  blockquote: ({ node, children, ...props }) => (
+                    <blockquote className="my-6 p-4 rounded-2xl bg-gradient-to-r from-blue-50/95 to-indigo-50/70 border-l-4 border-blue-600 border-t border-r border-b border-blue-100 text-zinc-800 shadow-sm flex items-start gap-3" {...props}>
                       <span className="text-blue-600 mt-0.5 flex-shrink-0"><Info className="w-5 h-5" /></span>
-                      <div className="italic" {...props} />
+                      <div className="italic">{children}</div>
                     </blockquote>
                   ),
                   table: ({ node, ...props }) => (

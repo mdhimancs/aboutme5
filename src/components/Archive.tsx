@@ -30,9 +30,12 @@ import {
   BarChart3,
   Clock,
   Briefcase,
-  Cpu
+  Cpu,
+  BookOpen,
+  Quote
 } from 'lucide-react';
 import { ARCHIVE_ITEMS, PERSONAL_INFO } from '../data/portfolioData';
+import { TIMELESS_LESSONS, TimelessLesson } from '../data/timelessLessonsData';
 import { useHoverScroll } from '../lib/utils';
 import { trackAssetInteraction } from '../lib/analytics';
 import { useAuth } from '../context/AuthContext';
@@ -411,12 +414,18 @@ export const Archive: React.FC<ArchiveProps> = ({
 
   const isSectionGated = isSectionLocked('archive');
 
-  const [activeTab, setActiveTab] = useState<'blueprints' | 'aspirational' | 'playbooks' | 'archive'>('blueprints');
+  const [activeTab, setActiveTab] = useState<'blueprints' | 'aspirational' | 'playbooks' | 'wisdom' | 'archive'>('blueprints');
   const [selectedType, setSelectedType] = useState<string>('All');
   const [selectedYear, setSelectedYear] = useState<string>('All');
+  const [selectedWisdomCategory, setSelectedWisdomCategory] = useState<string>('All');
   const [selectedBlueprint, setSelectedBlueprint] = useState<ExecutiveBlueprint | null>(null);
   const [selectedAspirational, setSelectedAspirational] = useState<AspirationalRoadmap | null>(null);
   const [selectedPlaybook, setSelectedPlaybook] = useState<StrategicPlaybook | null>(null);
+  const [selectedLesson, setSelectedLesson] = useState<TimelessLesson | null>(null);
+
+  const filteredWisdomLessons = selectedWisdomCategory === 'All'
+    ? TIMELESS_LESSONS
+    : TIMELESS_LESSONS.filter(l => l.tradition === selectedWisdomCategory);
 
   const handleAspirationalClick = (item: AspirationalRoadmap) => {
     if (isAdmin || isVaultUnlocked) {
@@ -522,12 +531,12 @@ export const Archive: React.FC<ArchiveProps> = ({
             </div>
           </div>
           <p 
-            style={{ fontSize: '11px' }}
+            style={{ fontSize: '11px', paddingBottom: '3pt' }}
             className={`relative max-w-3xl text-[11px] font-normal text-left leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}
           >
             Granted intellectual property, institutional reference architectures, and standardized CISO operational blueprints.
           </p>
-          <div style={{ height: '2pt', width: '100%' }} />
+          <div style={{ height: '3pt', width: '100%' }} />
 
           <div className="flex flex-wrap items-center justify-start pt-1.5 gap-1.5 pb-0 -mt-2 sm:-mt-3" style={{ paddingTop: '6px', paddingBottom: '0px', marginBottom: '1px' }}>
             <button
@@ -568,6 +577,19 @@ export const Archive: React.FC<ArchiveProps> = ({
             >
               <Cpu className="w-3 h-3 text-emerald-400" />
               <span>Playbooks (1)</span>
+            </button>
+            <button
+              onClick={() => setActiveTab('wisdom')}
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all ${
+                activeTab === 'wisdom'
+                  ? 'bg-gradient-to-r from-amber-600 via-rose-600 to-indigo-600 text-white shadow-md shadow-amber-600/25'
+                  : isLight
+                    ? 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'
+                    : 'bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              <BookOpen className="w-3 h-3 text-amber-400" />
+              <span>Timeless Wisdom (15)</span>
             </button>
             <button
               onClick={() => setActiveTab('archive')}
@@ -1303,6 +1325,172 @@ export const Archive: React.FC<ArchiveProps> = ({
           </div>
         )}
 
+        {/* Tab: Timeless Wisdom & Executive Axioms */}
+        {activeTab === 'wisdom' && (
+          <div className="relative w-full">
+            {/* Filter pills & Header description */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2.5">
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+                {['All', 'Gita & Vedic', 'Marcus Aurelius & Stoics', 'Biblical Wisdom', 'Cinema & Culture', 'Modern Management'].map((trad) => {
+                  const count = trad === 'All' ? TIMELESS_LESSONS.length : TIMELESS_LESSONS.filter(l => l.tradition === trad).length;
+                  return (
+                    <button
+                      key={trad}
+                      onClick={() => setSelectedWisdomCategory(trad)}
+                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold whitespace-nowrap transition-all border cursor-pointer ${
+                        selectedWisdomCategory === trad
+                          ? 'bg-gradient-to-r from-amber-600 to-rose-600 text-white border-amber-600 shadow-xs'
+                          : isLight
+                            ? 'bg-white text-zinc-700 border-zinc-200 hover:bg-zinc-100'
+                            : 'bg-white/5 text-zinc-300 border-white/10 hover:bg-white/10'
+                      }`}
+                    >
+                      {trad} ({count})
+                    </button>
+                  );
+                })}
+              </div>
+              <div className="text-[10px] font-mono text-zinc-400 shrink-0">
+                15 Foundational Lessons of Enduring Leadership
+              </div>
+            </div>
+
+            {/* Scrollable Grid of 10 Wisdom Lessons */}
+            <div className="overflow-y-auto min-h-0 max-h-[380px] sm:max-h-[410px] lg:max-h-[430px] pr-1 pb-6 space-y-2.5 scrollbar-thin animate-in fade-in duration-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 w-full">
+                {filteredWisdomLessons.map((lesson) => {
+                  const locked = isItemLocked(lesson.id, 'archive');
+                  const hasSpecificClearance = currentUserEntry?.scope === 'specific' && currentUserEntry.allowedItems?.includes(lesson.id);
+
+                  return (
+                    <div
+                      key={lesson.id}
+                      onClick={() => {
+                        gateItem(lesson.id, 'archive', lesson.title, () => {
+                          setSelectedLesson(lesson);
+                          incrementStars(`wisdom-${lesson.id}`);
+                          trackAssetInteraction(lesson.id, lesson.title, 'Timeless Wisdom Lesson');
+                        });
+                      }}
+                      className={`p-3.5 rounded-2xl border flex flex-col justify-between transition-all cursor-pointer hover:border-amber-500/50 group ${
+                        isLight 
+                          ? 'bg-white border-zinc-200 shadow-xs hover:shadow-md' 
+                          : 'bg-white/[0.02] border-white/10 hover:bg-white/[0.04]'
+                      }`}
+                    >
+                      <div className="space-y-2">
+                        {/* Header: Badge, Number, Stars */}
+                        <div className="flex items-center justify-between gap-1 flex-wrap">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                              lesson.tradition === 'Gita & Vedic'
+                                ? (isLight ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-amber-500/10 border-amber-500/20 text-amber-400')
+                                : lesson.tradition === 'Marcus Aurelius & Stoics'
+                                ? (isLight ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400')
+                                : lesson.tradition === 'Biblical Wisdom'
+                                ? (isLight ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400')
+                                : lesson.tradition === 'Modern Management'
+                                ? (isLight ? 'bg-blue-50 border-blue-200 text-blue-800' : 'bg-blue-500/10 border-blue-500/20 text-blue-400')
+                                : (isLight ? 'bg-rose-50 border-rose-200 text-rose-800' : 'bg-rose-500/10 border-rose-500/20 text-rose-400')
+                            }`}>
+                              {lesson.tradition}
+                            </span>
+                            {hasSpecificClearance && (
+                              <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded text-[8px] font-bold border uppercase tracking-wider ${
+                                isLight ? 'bg-purple-50 border-purple-200 text-purple-700' : 'bg-purple-500/15 border-purple-500/30 text-purple-300'
+                              }`}>
+                                <KeyRound className="w-2.5 h-2.5 text-purple-400" />
+                                <span>Clearance Granted</span>
+                              </span>
+                            )}
+                            {locked && !hasSpecificClearance && (
+                              <span 
+                                className={`inline-flex items-center justify-center p-1 rounded border ${
+                                  isLight 
+                                    ? 'bg-amber-50 border-amber-200 text-amber-700' 
+                                    : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
+                                }`}
+                                title="Locked - Request Access"
+                              >
+                                <Lock className="w-3 h-3 text-amber-500" />
+                              </span>
+                            )}
+                            {isAdmin && (
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  toggleItemLock(lesson.id, 'archive');
+                                }}
+                                className="p-1 rounded bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors cursor-pointer"
+                                title={locked ? 'Unlock this lesson' : 'Lock this lesson'}
+                              >
+                                {locked ? <Lock className="w-2.5 h-2.5 text-amber-400" /> : <Unlock className="w-2.5 h-2.5 text-emerald-400" />}
+                              </button>
+                            )}
+                            <span className="text-[9.5px] font-mono font-bold text-zinc-400">
+                              #{lesson.number.toString().padStart(2, '0')}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <StarsCounter pageId={`wisdom-${lesson.id}`} isLight={isLight} compact />
+                            <span className="text-[9.5px] font-mono text-zinc-400 truncate max-w-[140px] text-right">
+                              {lesson.keyTheme}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Title and Source */}
+                        <div>
+                          <h4 className={`text-xs sm:text-sm font-bold tracking-tight ${isLight ? 'text-zinc-900 group-hover:text-amber-600' : 'text-white group-hover:text-amber-400'} transition-colors`}>
+                            {lesson.title}
+                          </h4>
+                          <span className="text-[10px] font-medium text-zinc-400 italic block mt-0.5">
+                            {lesson.source}
+                          </span>
+                        </div>
+
+                        {/* Italicized Quote */}
+                        <div className={`p-2 rounded-xl border relative italic text-[10px] sm:text-[10.5px] leading-relaxed ${
+                          isLight ? 'bg-zinc-50/80 border-zinc-200 text-zinc-700' : 'bg-white/[0.02] border-white/5 text-zinc-300'
+                        }`}>
+                          "{lesson.quote}"
+                        </div>
+
+                        {/* Executive Application */}
+                        <p className={`text-[10px] sm:text-[10.5px] leading-relaxed line-clamp-2 ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                          <strong className="text-zinc-900 dark:text-zinc-200 not-italic font-semibold mr-1">Executive Lens:</strong>
+                          {lesson.executiveApplication}
+                        </p>
+                      </div>
+
+                      {/* Footer: Tactical Pills and Read Action */}
+                      <div className={`pt-2 mt-2 border-t flex items-center justify-between text-[10px] ${isLight ? 'border-zinc-100' : 'border-white/5'}`}>
+                        <span className={`text-[9px] font-mono ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                          {lesson.tacticalExecution.length} Executive Tactics
+                        </span>
+                        <div className="flex items-center gap-1 font-semibold text-amber-600 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform">
+                          <span>{locked && !hasSpecificClearance ? 'Unlock Axiom' : 'Explore Axiom'}</span>
+                          <ChevronRight className="w-3 h-3" />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Bottom Gradient Fade Overlay */}
+            <div 
+              className={`pointer-events-none absolute bottom-0 left-0 right-0 h-8 sm:h-10 bg-gradient-to-t ${
+                isLight 
+                  ? 'from-[#fcfcfd] via-[#fcfcfd]/90 to-transparent' 
+                  : 'from-[#000000] via-[#000000]/90 to-transparent'
+              } z-20`} 
+            />
+          </div>
+        )}
+
         {/* Tab 4: Historical Archive & Patent Catalog */}
         {activeTab === 'archive' && (
           <div className="flex-1 flex flex-col min-h-0 animate-in fade-in duration-300">
@@ -1510,6 +1698,114 @@ export const Archive: React.FC<ArchiveProps> = ({
           </div>
         )}
       </div>
+
+      {/* Timeless Lesson Detail Modal */}
+      {selectedLesson && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
+          <div className={`max-w-2xl w-full rounded-3xl border p-5 sm:p-6 max-h-[85vh] overflow-y-auto space-y-4 shadow-2xl ${
+            isLight ? 'bg-white border-zinc-300 text-zinc-900' : 'bg-zinc-950 border-white/20 text-white'
+          }`}>
+            {/* Modal Header */}
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border ${
+                    selectedLesson.tradition === 'Gita & Vedic'
+                      ? (isLight ? 'bg-amber-50 border-amber-200 text-amber-800' : 'bg-amber-500/10 border-amber-500/20 text-amber-400')
+                      : selectedLesson.tradition === 'Marcus Aurelius & Stoics'
+                      ? (isLight ? 'bg-indigo-50 border-indigo-200 text-indigo-800' : 'bg-indigo-500/10 border-indigo-500/20 text-indigo-400')
+                      : selectedLesson.tradition === 'Biblical Wisdom'
+                      ? (isLight ? 'bg-emerald-50 border-emerald-200 text-emerald-800' : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400')
+                      : selectedLesson.tradition === 'Modern Management'
+                      ? (isLight ? 'bg-blue-50 border-blue-200 text-blue-800' : 'bg-blue-500/10 border-blue-500/20 text-blue-400')
+                      : (isLight ? 'bg-rose-50 border-rose-200 text-rose-800' : 'bg-rose-500/10 border-rose-500/20 text-rose-400')
+                  }`}>
+                    {selectedLesson.tradition}
+                  </span>
+                  <span className="text-xs font-mono font-bold text-zinc-400">
+                    Axiom #{selectedLesson.number.toString().padStart(2, '0')}
+                  </span>
+                </div>
+                <h3 className="text-base sm:text-lg font-bold">{selectedLesson.title}</h3>
+                <span className="text-xs text-zinc-400 italic block mt-0.5">{selectedLesson.source}</span>
+              </div>
+              <button 
+                onClick={() => setSelectedLesson(null)}
+                className="p-1.5 rounded-xl border text-xs text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Timeless Quote Highlight */}
+            <div className={`p-4 rounded-2xl border text-xs sm:text-sm italic leading-relaxed ${
+              isLight ? 'bg-amber-50/70 border-amber-200 text-zinc-800' : 'bg-amber-500/10 border-amber-500/25 text-amber-200'
+            }`}>
+              <Quote className="w-5 h-5 text-amber-500 mb-1 opacity-70" />
+              "{selectedLesson.quote}"
+            </div>
+
+            {/* Core Principle */}
+            <div className="space-y-1 text-xs">
+              <strong className="text-amber-500 uppercase tracking-wider text-[10px] font-bold block">
+                Foundational Axiom:
+              </strong>
+              <p className={`leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                {selectedLesson.corePrinciple}
+              </p>
+            </div>
+
+            {/* Executive Application */}
+            <div className={`p-3.5 rounded-2xl border text-xs space-y-1.5 ${
+              isLight ? 'bg-blue-50/60 border-blue-200 text-zinc-800' : 'bg-white/[0.03] border-white/10 text-zinc-200'
+            }`}>
+              <strong className="text-blue-500 uppercase tracking-wider text-[10px] font-bold block">
+                Executive Leadership & CISO Translation:
+              </strong>
+              <p className="leading-relaxed">
+                {selectedLesson.executiveApplication}
+              </p>
+            </div>
+
+            {/* Tactical Enterprise Execution Checklist */}
+            <div className="space-y-2 text-xs">
+              <strong className="text-zinc-400 uppercase tracking-wider text-[10px] font-bold block">
+                Tactical Playbook Execution:
+              </strong>
+              <div className="space-y-1.5">
+                {selectedLesson.tacticalExecution.map((tactic, idx) => (
+                  <div key={idx} className={`flex items-start gap-2 p-2 rounded-xl border ${
+                    isLight ? 'bg-zinc-50 border-zinc-200/80 text-zinc-700' : 'bg-white/[0.02] border-white/5 text-zinc-300'
+                  }`}>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                    <span>{tactic}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Modern Analogy */}
+            <div className={`p-3 rounded-xl border text-[11px] font-mono ${
+              isLight ? 'bg-zinc-100 border-zinc-200 text-zinc-600' : 'bg-white/5 border-white/10 text-zinc-400'
+            }`}>
+              <strong className="text-zinc-500 font-semibold block mb-0.5">Systems Analogy:</strong>
+              {selectedLesson.modernAnalogy}
+            </div>
+
+            {/* Modal Actions */}
+            <div className="flex items-center justify-between pt-2 border-t border-zinc-200 dark:border-white/10">
+              <StarsCounter pageId={`wisdom-${selectedLesson.id}`} isLight={isLight} />
+              <button
+                type="button"
+                onClick={() => setSelectedLesson(null)}
+                className="px-4 py-1.5 rounded-xl bg-blue-600 text-white font-semibold text-xs hover:bg-blue-700 transition-colors cursor-pointer"
+              >
+                Close Axiom
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Blueprint Detail Modal */}
       {selectedBlueprint && (

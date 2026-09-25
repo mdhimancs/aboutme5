@@ -31,7 +31,12 @@ import {
   Eye,
   EyeOff,
   AlertCircle,
-  Loader2
+  Loader2,
+  BarChart3,
+  TrendingUp,
+  Zap,
+  Flame,
+  Radio
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -69,6 +74,226 @@ interface VisitorSession {
   auditTrail: { time: string; event: string; type: 'search' | 'nav' | 'download' | 'auth' | 'view' }[];
 }
 
+const HOURLY_SESSION_DATA = [
+  { hour: 0, label: '00:00', est: '8:00 PM EST', sessions: 28, isPeak: false, peakLevel: 'low', primaryRegion: 'APAC (Tokyo/Sydney)' },
+  { hour: 1, label: '01:00', est: '9:00 PM EST', sessions: 22, isPeak: false, peakLevel: 'low', primaryRegion: 'APAC (Sydney/Melbourne)' },
+  { hour: 2, label: '02:00', est: '10:00 PM EST', sessions: 16, isPeak: false, peakLevel: 'low', primaryRegion: 'APAC (Singapore/HK)' },
+  { hour: 3, label: '03:00', est: '11:00 PM EST', sessions: 14, isPeak: false, peakLevel: 'low', primaryRegion: 'Global Off-Peak Low' },
+  { hour: 4, label: '04:00', est: '12:00 AM EST', sessions: 19, isPeak: false, peakLevel: 'low', primaryRegion: 'EMEA Early Pre-Market' },
+  { hour: 5, label: '05:00', est: '1:00 AM EST', sessions: 32, isPeak: false, peakLevel: 'low', primaryRegion: 'APAC Late Afternoon' },
+  { hour: 6, label: '06:00', est: '2:00 AM EST', sessions: 48, isPeak: false, peakLevel: 'medium', primaryRegion: 'EMEA Morning Triage' },
+  { hour: 7, label: '07:00', est: '3:00 AM EST', sessions: 74, isPeak: false, peakLevel: 'medium', primaryRegion: 'London Pre-Market' },
+  { hour: 8, label: '08:00', est: '4:00 AM EST', sessions: 110, isPeak: false, peakLevel: 'medium', primaryRegion: 'London & Frankfurt Open' },
+  { hour: 9, label: '09:00', est: '5:00 AM EST', sessions: 135, isPeak: false, peakLevel: 'medium', primaryRegion: 'European Regulatory Teams' },
+  { hour: 10, label: '10:00', est: '6:00 AM EST', sessions: 148, isPeak: false, peakLevel: 'medium', primaryRegion: 'UK GRC & Risk Assessment' },
+  { hour: 11, label: '11:00', est: '7:00 AM EST', sessions: 156, isPeak: false, peakLevel: 'medium', primaryRegion: 'EMEA Midday / US Pre-Dawn' },
+  { hour: 12, label: '12:00', est: '8:00 AM EST', sessions: 172, isPeak: false, peakLevel: 'medium', primaryRegion: 'US East Pre-Market Briefing' },
+  { hour: 13, label: '13:00', est: '9:00 AM EST', sessions: 195, isPeak: true, peakLevel: 'high', primaryRegion: 'Wall Street Open (NYSE/NASDAQ)' },
+  { hour: 14, label: '14:00', est: '10:00 AM EST', sessions: 234, isPeak: true, peakLevel: 'high', primaryRegion: 'London & NY Peak Overlap' },
+  { hour: 15, label: '15:00', est: '11:00 AM EST', sessions: 258, isPeak: true, peakLevel: 'high', primaryRegion: '🔥 All-Time Global Concurrency Apex' },
+  { hour: 16, label: '16:00', est: '12:00 PM EST', sessions: 226, isPeak: true, peakLevel: 'high', primaryRegion: 'London Close & US Midday' },
+  { hour: 17, label: '17:00', est: '1:00 PM EST', sessions: 182, isPeak: true, peakLevel: 'high', primaryRegion: 'US East Afternoon Governance' },
+  { hour: 18, label: '18:00', est: '2:00 PM EST', sessions: 136, isPeak: false, peakLevel: 'medium', primaryRegion: 'US West Coast Core Hours' },
+  { hour: 19, label: '19:00', est: '3:00 PM EST', sessions: 104, isPeak: false, peakLevel: 'medium', primaryRegion: 'Silicon Valley Engineering' },
+  { hour: 20, label: '20:00', est: '4:00 PM EST', sessions: 78, isPeak: false, peakLevel: 'medium', primaryRegion: 'US Post-Market Triage' },
+  { hour: 21, label: '21:00', est: '5:00 PM EST', sessions: 54, isPeak: false, peakLevel: 'low', primaryRegion: 'US West Evening Shift' },
+  { hour: 22, label: '22:00', est: '6:00 PM EST', sessions: 41, isPeak: false, peakLevel: 'low', primaryRegion: 'Trans-Pacific Handover' },
+  { hour: 23, label: '23:00', est: '7:00 PM EST', sessions: 33, isPeak: false, peakLevel: 'low', primaryRegion: 'APAC Early Morning' },
+];
+
+interface GeoTelemetryHub {
+  id: string;
+  city: string;
+  country: string;
+  flag: string;
+  region: 'Americas' | 'EMEA' | 'APAC';
+  lat: number;
+  lon: number;
+  x: number;
+  y: number;
+  sessions: number;
+  percentage: number;
+  intensity: 'apex' | 'high' | 'medium' | 'moderate';
+  asnOrg: string;
+  topEvaluated: string;
+  avgDwell: string;
+  complianceTier: string;
+  activeRole: string;
+  recentSearch: string;
+  saseNode: string;
+}
+
+const GEO_TELEMETRY_HUBS: GeoTelemetryHub[] = [
+  {
+    id: 'hub-nyc',
+    city: 'New York (Financial District)',
+    country: 'United States',
+    flag: '🇺🇸',
+    region: 'Americas',
+    lat: 40.71,
+    lon: -74.00,
+    x: 294,
+    y: 137,
+    sessions: 972,
+    percentage: 38.4,
+    intensity: 'apex',
+    asnOrg: 'AS13335 Cloudflare Anycast / AS701 Verizon Enterprise',
+    topEvaluated: 'Zero Trust IAM Architecture & Goldman Sachs Case Studies',
+    avgDwell: '6m 40s',
+    complianceTier: 'SOC 2 Type II / NYDFS Cybersecurity Reg (23 NYCRR 500)',
+    activeRole: 'Chief Risk Officer & Tier-1 Investment Bank Search Committee',
+    recentSearch: '"Enterprise Zero Trust Maturity Matrix"',
+    saseNode: 'US-EAST-EWR-01 (1.8ms Latency)'
+  },
+  {
+    id: 'hub-lon',
+    city: 'London (Canary Wharf & City)',
+    country: 'United Kingdom',
+    flag: '🇬🇧',
+    region: 'EMEA',
+    lat: 51.50,
+    lon: -0.12,
+    x: 500,
+    y: 107,
+    sessions: 556,
+    percentage: 22.0,
+    intensity: 'high',
+    asnOrg: 'AS16509 Amazon AWS Enterprise Transit UK',
+    topEvaluated: 'Materiality Determination Protocol & SEC Form 8-K',
+    avgDwell: '5m 50s',
+    complianceTier: 'UK GDPR / FCA Operational Resilience / ISO 27001',
+    activeRole: 'FTSE 100 Lead Security Auditor & Deputy CISO Assessor',
+    recentSearch: '"SOC 2 Type II & SOX 404 ITGC Controls"',
+    saseNode: 'EU-WEST-LHR-03 (2.4ms Latency)'
+  },
+  {
+    id: 'hub-sfo',
+    city: 'San Francisco (Silicon Valley)',
+    country: 'United States',
+    flag: '🇺🇸',
+    region: 'Americas',
+    lat: 37.77,
+    lon: -122.41,
+    x: 160,
+    y: 145,
+    sessions: 354,
+    percentage: 14.0,
+    intensity: 'high',
+    asnOrg: 'AS15169 Google LLC Cloud Backbone',
+    topEvaluated: 'AI Security Gateway Blueprint & NIST AI RMF 1.0',
+    avgDwell: '7m 15s',
+    complianceTier: 'CCPA / CPRA / NIST SP 800-207 Zero Trust',
+    activeRole: 'Head of Infrastructure Security & Generative AI Board Lead',
+    recentSearch: '"OWASP Top 10 for LLMs Threat Defense"',
+    saseNode: 'US-WEST-SFO-02 (2.1ms Latency)'
+  },
+  {
+    id: 'hub-fra',
+    city: 'Frankfurt (Main Central)',
+    country: 'Germany',
+    flag: '🇩🇪',
+    region: 'EMEA',
+    lat: 50.11,
+    lon: 8.68,
+    x: 524,
+    y: 111,
+    sessions: 278,
+    percentage: 11.0,
+    intensity: 'medium',
+    asnOrg: 'AS3320 Deutsche Telekom AG Transit',
+    topEvaluated: 'CISO Target Operating Model & Engineering Governance',
+    avgDwell: '5m 10s',
+    complianceTier: 'EU GDPR Article 32 / BSI IT-Grundschutz Standard',
+    activeRole: 'European Banking Authority (EBA) Risk Reviewer',
+    recentSearch: '"Post-Quantum Cryptography Kyber768"',
+    saseNode: 'EU-CENTRAL-FRA-01 (3.2ms Latency)'
+  },
+  {
+    id: 'hub-tyo',
+    city: 'Tokyo (Chiyoda / Roppongi)',
+    country: 'Japan',
+    flag: '🇯🇵',
+    region: 'APAC',
+    lat: 35.67,
+    lon: 139.65,
+    x: 888,
+    y: 151,
+    sessions: 177,
+    percentage: 7.0,
+    intensity: 'medium',
+    asnOrg: 'AS8075 Microsoft Corp Azure Transit Japan',
+    topEvaluated: 'SPIFFE/SPIRE Workload IAM & Multi-Cloud Defense',
+    avgDwell: '8m 20s',
+    complianceTier: 'APPI Japan Privacy Act / ISMAP Gov Cloud',
+    activeRole: 'Chief Security Architect Evaluator',
+    recentSearch: '"Kubernetes Microsegmentation Reference Architecture"',
+    saseNode: 'AP-NORTHEAST-NRT-01 (4.1ms Latency)'
+  },
+  {
+    id: 'hub-sin',
+    city: 'Singapore (Marina Bay)',
+    country: 'Singapore',
+    flag: '🇸🇬',
+    region: 'APAC',
+    lat: 1.35,
+    lon: 103.81,
+    x: 788,
+    y: 246,
+    sessions: 101,
+    percentage: 4.0,
+    intensity: 'moderate',
+    asnOrg: 'AS4657 StarHub Ltd Enterprise Internet',
+    topEvaluated: 'Goldman Sachs Global IAM & Cloud Migration',
+    avgDwell: '4m 30s',
+    complianceTier: 'MAS Technology Risk Management (TRM) Guidelines',
+    activeRole: 'Sovereign Wealth Fund Infrastructure Assessor',
+    recentSearch: '"Continuous Adaptive Authentication"',
+    saseNode: 'AP-SOUTHEAST-SIN-02 (3.8ms Latency)'
+  },
+  {
+    id: 'hub-syd',
+    city: 'Sydney (Barangaroo CBD)',
+    country: 'Australia',
+    flag: '🇦🇺',
+    region: 'APAC',
+    lat: -33.86,
+    lon: 151.20,
+    x: 920,
+    y: 344,
+    sessions: 50,
+    percentage: 2.0,
+    intensity: 'moderate',
+    asnOrg: 'AS7575 Telstra Global / AARNet Backbone',
+    topEvaluated: 'Post-Quantum Cryptography & Identity Fabric',
+    avgDwell: '3m 45s',
+    complianceTier: 'Australian Privacy Principles (APP) / CPS 234',
+    activeRole: 'ASX 50 Cybersecurity Steering Committee',
+    recentSearch: '"FIDO2 / WebAuthn Enterprise Rollout"',
+    saseNode: 'AP-SOUTHEAST-SYD-01 (5.2ms Latency)'
+  },
+  {
+    id: 'hub-tor',
+    city: 'Toronto (Bay Street Financial)',
+    country: 'Canada',
+    flag: '🇨🇦',
+    region: 'Americas',
+    lat: 43.65,
+    lon: -79.38,
+    x: 279,
+    y: 129,
+    sessions: 44,
+    percentage: 1.6,
+    intensity: 'moderate',
+    asnOrg: 'AS852 TELUS Communications Enterprise',
+    topEvaluated: 'CISO Enterprise Architecture Decision Record (ADR)',
+    avgDwell: '4m 10s',
+    complianceTier: 'PIPEDA / OSFI B-13 Cyber Risk Management',
+    activeRole: 'Schedule I Bank Cyber Defense Lead',
+    recentSearch: '"Architecture Review Board Cadence"',
+    saseNode: 'CA-CENTRAL-YYZ-01 (2.7ms Latency)'
+  }
+];
+
 export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
   isOpen,
   onClose,
@@ -77,11 +302,16 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
   const isLight = theme === 'apple-light';
   const { user, isAdmin, clientIp, signInWithGoogle, signInWithPasscode } = useAuth();
   
-  const [activeTab, setActiveTab] = useState<'visitors' | 'analytics' | 'sessions' | 'audit' | 'security'>('visitors');
+  const [activeTab, setActiveTab] = useState<'visitors' | 'analytics' | 'heatmap' | 'sessions' | 'audit' | 'security'>('visitors');
   const [searchTerm, setSearchTerm] = useState('');
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [expandedSessionId, setExpandedSessionId] = useState<string | null>(null);
   const [sessions, setSessions] = useState<VisitorSession[]>([]);
+  const [hoveredHour, setHoveredHour] = useState<number | null>(null);
+  const [selectedGeoRegion, setSelectedGeoRegion] = useState<'All' | 'Americas' | 'EMEA' | 'APAC'>('All');
+  const [hoveredHubId, setHoveredHubId] = useState<string | null>(null);
+  const [selectedHubId, setSelectedHubId] = useState<string | null>('hub-nyc');
+  const [heatmapMode, setHeatmapMode] = useState<'density' | 'pins' | 'mesh'>('density');
 
   // Passcode & Firebase auth state
   const [passcodeInput, setPasscodeInput] = useState('');
@@ -545,6 +775,7 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
             {[
               { id: 'visitors', label: 'Live Visitors & Deep Forensics', icon: Globe, count: sessions.length },
               { id: 'analytics', label: 'Searches & Content Visited', icon: Search, count: '18 Queries' },
+              { id: 'heatmap', label: 'Geographic Telemetry Heatmap', icon: MapPin, count: '8 Hubs' },
               { id: 'sessions', label: 'Session Posture Matrix', icon: Activity, count: sessions.filter(s => s.status === 'Active').length },
               { id: 'audit', label: 'Security Audit Trail', icon: Terminal, count: '142' },
               { id: 'security', label: 'Access Control & RBAC', icon: Lock, count: 'Tier-0' },
@@ -586,62 +817,141 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
         {/* Content Body */}
         <div className="p-3.5 sm:p-4 overflow-y-auto space-y-3 bg-zinc-50/50 flex-1">
           
-          {/* Overview Metric Cards - Compact Minimal Thin Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            <div className="p-2 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
-              <div>
-                <div className="text-zinc-500 text-[10px] font-semibold">Active Visitors</div>
-                <div className="text-sm font-extrabold text-zinc-900">4,289 <span className="text-[9px] font-normal text-emerald-600 font-mono">↑ 14.2%</span></div>
+          {/* Overview Metric Cards - Sophisticated Responsive Dashboard Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3">
+            {/* Card 1 */}
+            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Active Visitors</span>
+                <span className="p-1 rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100">
+                  <Users className="w-3.5 h-3.5" />
+                </span>
               </div>
-              <span className="p-1 rounded bg-emerald-50 text-emerald-600"><Users className="w-3.5 h-3.5" /></span>
+              <div className="flex items-baseline justify-between">
+                <div className="text-lg font-black text-zinc-900 tracking-tight">4,289</div>
+                <span className="text-[10px] font-bold text-emerald-600 font-mono bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                  ↑ 14.2% DoD
+                </span>
+              </div>
+              <div className="text-[9.5px] text-zinc-500 mt-1">Live active telemetry stream</div>
             </div>
 
-            <div className="p-2 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
-              <div>
-                <div className="text-zinc-500 text-[10px] font-semibold">Sections Explored</div>
-                <div className="text-sm font-extrabold text-zinc-900">12,410 <span className="text-[9px] font-normal text-blue-600 font-mono">Avg 4.8 / user</span></div>
+            {/* Card 2 */}
+            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Sections Explored</span>
+                <span className="p-1 rounded-md bg-blue-50 text-blue-600 border border-blue-100">
+                  <Compass className="w-3.5 h-3.5" />
+                </span>
               </div>
-              <span className="p-1 rounded bg-blue-50 text-blue-600"><Compass className="w-3.5 h-3.5" /></span>
+              <div className="flex items-baseline justify-between">
+                <div className="text-lg font-black text-zinc-900 tracking-tight">12,410</div>
+                <span className="text-[10px] font-bold text-blue-600 font-mono bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
+                  4.8 / session
+                </span>
+              </div>
+              <div className="text-[9.5px] text-zinc-500 mt-1">Deep architectural engagement</div>
             </div>
 
-            <div className="p-2 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
-              <div>
-                <div className="text-zinc-500 text-[10px] font-semibold">Searches & Downloads</div>
-                <div className="text-sm font-extrabold text-indigo-600">842 Assets <span className="text-[9px] font-normal text-indigo-500 font-mono">100% Verified</span></div>
+            {/* Card 3 */}
+            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Assets & Searches</span>
+                <span className="p-1 rounded-md bg-indigo-50 text-indigo-600 border border-indigo-100">
+                  <Download className="w-3.5 h-3.5" />
+                </span>
               </div>
-              <span className="p-1 rounded bg-indigo-50 text-indigo-600"><Download className="w-3.5 h-3.5" /></span>
+              <div className="flex items-baseline justify-between">
+                <div className="text-lg font-black text-indigo-700 tracking-tight">842 Assets</div>
+                <span className="text-[10px] font-bold text-indigo-600 font-mono bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200">
+                  100% Verified
+                </span>
+              </div>
+              <div className="text-[9.5px] text-zinc-500 mt-1">CISO blueprints & whitepapers</div>
             </div>
 
-            <div className="p-2 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
-              <div>
-                <div className="text-zinc-500 text-[10px] font-semibold">Cryptographic Guard</div>
-                <div className="text-sm font-extrabold text-zinc-900">TLS 1.3 / DPoP / PQC</div>
+            {/* Card 4: Global Heatmap Shortcut */}
+            <div 
+              onClick={() => setActiveTab('heatmap')}
+              className="p-3 rounded-xl bg-white hover:bg-blue-50/50 border border-zinc-200 hover:border-blue-300 shadow-2xs flex flex-col justify-between cursor-pointer transition-all hover:shadow-xs"
+              title="Click to view the Geographic Distribution Heatmap"
+            >
+              <div className="flex items-center justify-between text-zinc-500 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Global Heatmap</span>
+                <span className="p-1 rounded-md bg-blue-50 text-blue-600 border border-blue-100">
+                  <MapPin className="w-3.5 h-3.5" />
+                </span>
               </div>
-              <span className="p-1 rounded bg-amber-50 text-amber-600"><Lock className="w-3.5 h-3.5" /></span>
+              <div className="flex items-baseline justify-between">
+                <div className="text-lg font-black text-blue-700 tracking-tight">8 Hubs</div>
+                <span className="text-[10px] font-bold text-blue-600 font-mono bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
+                  38% US / 22% UK
+                </span>
+              </div>
+              <div className="text-[9.5px] text-blue-600 font-medium mt-1 flex items-center gap-1">
+                <span>Inspect interactive map</span>
+                <span>→</span>
+              </div>
+            </div>
+
+            {/* Card 5 */}
+            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Cryptographic Guard</span>
+                <span className="p-1 rounded-md bg-amber-50 text-amber-600 border border-amber-100">
+                  <Lock className="w-3.5 h-3.5" />
+                </span>
+              </div>
+              <div className="flex items-baseline justify-between">
+                <div className="text-base font-black text-zinc-900 tracking-tight font-mono">TLS 1.3 / DPoP</div>
+                <span className="text-[10px] font-bold text-amber-700 font-mono bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
+                  Zero Trust
+                </span>
+              </div>
+              <div className="text-[9.5px] text-zinc-500 mt-1">Hardware TPM 2.0 attestation</div>
             </div>
           </div>
 
           {/* TAB 1: Visitors & Deep Forensics */}
           {activeTab === 'visitors' && (
-            <div className="space-y-2">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="text-xs font-bold text-zinc-900 flex items-center gap-1.5">
-                  <Globe className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Real-Time Visitor Telemetry & AI Threat Intelligence</span>
-                </h3>
-                <div className="flex items-center gap-1.5">
+            <div className="space-y-3">
+              {/* Section Header Card */}
+              <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-blue-600" />
+                    <h3 className="text-xs font-bold text-zinc-900 tracking-tight">
+                      Live Visitor Telemetry & Real-Time Forensics Inspection
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full text-[9.5px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200 font-mono">
+                      {filteredSessions.length} Sessions Filtered
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-zinc-500">
+                    Active session inspection with TLS cryptographic attestation, hardware TPM root of trust, and AI risk scoring.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => setActiveTab('heatmap')}
+                    className="px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-[10.5px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
+                  >
+                    <MapPin className="w-3.5 h-3.5 text-indigo-600" />
+                    <span>Open Heatmap (8 Hubs)</span>
+                  </button>
                   <button
                     onClick={exportAuditReportJSON}
-                    className="px-2.5 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-[10px] font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
+                    className="px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white text-[10.5px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
                   >
-                    <Download className="w-3 h-3 text-cyan-400" />
+                    <Download className="w-3.5 h-3.5 text-cyan-400" />
                     <span>Export SOC 2 JSON</span>
                   </button>
                   <button
                     onClick={exportAuditReportCSV}
-                    className="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-semibold flex items-center gap-1 transition-colors cursor-pointer shadow-xs"
+                    className="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[10.5px] font-semibold flex items-center gap-1.5 transition-colors cursor-pointer shadow-2xs"
                   >
-                    <FileText className="w-3 h-3 text-blue-200" />
+                    <FileText className="w-3.5 h-3.5 text-blue-200" />
                     <span>Export GDPR CSV</span>
                   </button>
                 </div>
@@ -650,16 +960,22 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
               {/* Ultra Thin 2-Line Row Layout with Expandable Inspection Drawer */}
               <div className="bg-white border border-zinc-200 rounded-xl shadow-2xs overflow-hidden divide-y divide-zinc-100">
                 {/* Table Header Bar */}
-                <div className="bg-zinc-100 border-b border-zinc-200 px-3 py-2.5 hidden lg:grid grid-cols-4 gap-4 text-[11px] font-extrabold text-zinc-700 uppercase tracking-wider">
+                <div className="bg-zinc-100/90 border-b border-zinc-200 px-3 py-2.5 hidden lg:grid grid-cols-4 gap-4 text-[11px] font-extrabold text-zinc-700 uppercase tracking-wider">
                   <div className="flex items-center gap-1.5">
                     <Globe className="w-3.5 h-3.5 text-blue-600 shrink-0" />
-                    <span>Session ID & Identity</span>
+                    <span>Session ID & Identity Persona</span>
                   </div>
-                  <div>Network & Location</div>
-                  <div>Device & Posture Matrix</div>
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+                    <span>Network Transit & Geolocation</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <Laptop className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                    <span>Device Posture & TLS Cipher Suite</span>
+                  </div>
                   <div className="flex items-center justify-between">
-                    <span>Status & Forensics</span>
-                    <span className="text-[9.5px] text-zinc-500 font-normal lowercase">(click row to inspect)</span>
+                    <span>Status & Forensics Actions</span>
+                    <span className="text-[9.5px] text-zinc-500 font-normal lowercase font-sans">(click row to inspect)</span>
                   </div>
                 </div>
 
@@ -887,21 +1203,246 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
           {/* TAB 2: Aggregate Visitor Search Queries & Content Analytics */}
           {activeTab === 'analytics' && (
             <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xs font-bold text-zinc-900 flex items-center gap-1.5">
-                  <Search className="w-3.5 h-3.5 text-blue-600" />
-                  <span>Aggregated Visitor Search Intelligence & Popular Sections</span>
-                </h3>
+              {/* 24-Hour Session Distribution Bar Chart */}
+              <div className="p-3.5 rounded-xl bg-white border border-zinc-200 shadow-2xs space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="space-y-0.5">
+                    <div className="flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4 text-blue-600" />
+                      <h4 className="text-xs font-bold text-zinc-900 tracking-tight">
+                        User Sessions Distribution by Hour (Peak Access Telemetry)
+                      </h4>
+                      <span className="px-2 py-0.5 rounded-full text-[9.5px] font-extrabold bg-amber-50 text-amber-700 border border-amber-200 inline-flex items-center gap-1">
+                        <Flame className="w-3 h-3 text-amber-600" />
+                        <span>Peak Window: 13:00 - 17:00 UTC (09:00 - 13:00 EST)</span>
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-zinc-500">
+                      Visualizing 24-hour UTC access density to identify high-concurrency windows for C-suite search committees and GRC audit evaluations.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3 text-[10px] font-mono text-zinc-600">
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-xs bg-gradient-to-t from-amber-500 to-rose-500" />
+                      <span>Peak Hours (43.2%)</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-xs bg-gradient-to-t from-blue-500 to-indigo-600" />
+                      <span>Standard Business</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-xs bg-zinc-300" />
+                      <span>Off-Peak</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* The Bar Chart Canvas */}
+                <div className="relative pt-6 pb-2 px-1">
+                  {/* Y-Axis Guideline values */}
+                  <div className="absolute left-0 top-0 bottom-6 w-full flex flex-col justify-between pointer-events-none opacity-20">
+                    <div className="border-b border-zinc-400 w-full flex justify-end text-[8px] font-mono pr-1">260</div>
+                    <div className="border-b border-zinc-300 w-full flex justify-end text-[8px] font-mono pr-1">195</div>
+                    <div className="border-b border-zinc-300 w-full flex justify-end text-[8px] font-mono pr-1">130</div>
+                    <div className="border-b border-zinc-300 w-full flex justify-end text-[8px] font-mono pr-1">65</div>
+                    <div className="border-b border-zinc-300 w-full" />
+                  </div>
+
+                  {/* 24 Hourly Bars */}
+                  <div className="relative h-36 flex items-end justify-between gap-1 sm:gap-1.5 z-10">
+                    {HOURLY_SESSION_DATA.map((item) => {
+                      const maxSessions = 260;
+                      const heightPercent = Math.round((item.sessions / maxSessions) * 100);
+                      const isHovered = hoveredHour === item.hour;
+
+                      return (
+                        <div
+                          key={item.hour}
+                          onMouseEnter={() => setHoveredHour(item.hour)}
+                          onMouseLeave={() => setHoveredHour(null)}
+                          className="relative flex-1 flex flex-col items-center h-full justify-end group cursor-pointer"
+                        >
+                          {/* Hover Tooltip Popup */}
+                          {isHovered && (
+                            <div className="absolute -top-12 z-30 px-2 py-1 bg-zinc-900 text-white rounded-md shadow-lg pointer-events-none whitespace-nowrap text-[9.5px] font-mono animate-in fade-in duration-100 flex flex-col items-center">
+                              <div className="font-bold flex items-center gap-1">
+                                <span>{item.label} UTC ({item.est})</span>
+                                {item.isPeak && <Flame className="w-2.5 h-2.5 text-amber-400" />}
+                              </div>
+                              <div className="text-zinc-300">
+                                <span className="text-emerald-400 font-bold">{item.sessions} sessions</span> ({((item.sessions / 2532) * 100).toFixed(1)}%)
+                              </div>
+                              <div className="text-[8px] text-zinc-400">{item.primaryRegion}</div>
+                              <div className="w-1.5 h-1.5 bg-zinc-900 rotate-45 -mb-1 mt-0.5" />
+                            </div>
+                          )}
+
+                          {/* Bar Value on top of peak bars */}
+                          {item.isPeak && !isHovered && (
+                            <span className="text-[8px] font-mono font-bold text-amber-600 mb-0.5 hidden sm:block">
+                              {item.sessions}
+                            </span>
+                          )}
+
+                          {/* Bar Column */}
+                          <div
+                            style={{ height: `${heightPercent}%` }}
+                            className={`w-full rounded-t-sm transition-all duration-200 relative ${
+                              isHovered 
+                                ? 'ring-2 ring-blue-500 scale-x-110 brightness-110' 
+                                : ''
+                            } ${
+                              item.isPeak
+                                ? 'bg-gradient-to-t from-amber-500 via-rose-500 to-amber-400 shadow-xs shadow-amber-500/20'
+                                : item.peakLevel === 'medium'
+                                  ? 'bg-gradient-to-t from-blue-600 to-indigo-500'
+                                  : 'bg-gradient-to-t from-zinc-300 to-zinc-400'
+                            }`}
+                          >
+                            {item.hour === 15 && (
+                              <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-amber-500">
+                                <Zap className="w-2.5 h-2.5 fill-amber-400" />
+                              </div>
+                            )}
+                          </div>
+
+                          {/* X-axis label */}
+                          <span className={`text-[8.5px] font-mono mt-1 transition-colors ${
+                            item.isPeak 
+                              ? 'font-bold text-amber-700' 
+                              : isHovered 
+                                ? 'font-bold text-blue-600' 
+                                : 'text-zinc-400'
+                          }`}>
+                            {item.hour % 3 === 0 || item.isPeak ? item.hour.toString().padStart(2, '0') : ''}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Real-time Hover Detail or Default Peak Indicator */}
+                {(() => {
+                  const displayData = hoveredHour !== null 
+                    ? HOURLY_SESSION_DATA[hoveredHour] 
+                    : HOURLY_SESSION_DATA[15];
+
+                  return (
+                    <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200/80 flex flex-wrap items-center justify-between gap-3 text-[10.5px]">
+                      <div className="flex items-center gap-2">
+                        <div className={`p-1.5 rounded-md ${displayData.isPeak ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'}`}>
+                          {displayData.isPeak ? <Flame className="w-3.5 h-3.5" /> : <Clock className="w-3.5 h-3.5" />}
+                        </div>
+                        <div>
+                          <div className="font-bold text-zinc-900 flex items-center gap-1.5">
+                            <span>Hour {displayData.label} UTC ({displayData.est})</span>
+                            <span className={`text-[9px] uppercase px-1.5 py-0.2 rounded font-mono font-bold ${
+                              displayData.isPeak ? 'bg-amber-200/60 text-amber-900' : 'bg-zinc-200 text-zinc-700'
+                            }`}>
+                              {displayData.isPeak ? '⚡ High Concurrency Peak' : displayData.peakLevel === 'medium' ? 'Standard Enterprise Traffic' : 'Off-Peak Hours'}
+                            </span>
+                          </div>
+                          <div className="text-[10px] text-zinc-500">
+                            Primary Geographic Activity: <strong className="text-zinc-700 font-medium">{displayData.primaryRegion}</strong>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4 text-right">
+                        <div>
+                          <div className="text-zinc-400 text-[9px] uppercase font-mono">Hourly Volume</div>
+                          <div className="text-xs font-extrabold text-blue-700 font-mono">
+                            {displayData.sessions} sessions
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-zinc-400 text-[9px] uppercase font-mono">Share of Daily</div>
+                          <div className="text-xs font-extrabold text-zinc-800 font-mono">
+                            {((displayData.sessions / 2532) * 100).toFixed(1)}%
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-zinc-400 text-[9px] uppercase font-mono">24h Total Tracked</div>
+                          <div className="text-xs font-extrabold text-indigo-700 font-mono">
+                            2,532 sessions
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 3 Peak Insight Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-[10px]">
+                  <div className="p-2 rounded-lg bg-amber-50/60 border border-amber-200/80">
+                    <div className="font-bold text-amber-900 flex items-center gap-1 mb-0.5">
+                      <Flame className="w-3 h-3 text-amber-600" />
+                      <span>Primary Apex (13:00 - 17:00 UTC)</span>
+                    </div>
+                    <p className="text-amber-800/90 leading-tight">
+                      London & Wall Street market overlap. Highest volume of board recruiters, CISO search firms, and enterprise compliance assessments (1,095 sessions, 43.2% total).
+                    </p>
+                  </div>
+
+                  <div className="p-2 rounded-lg bg-blue-50/60 border border-blue-200/80">
+                    <div className="font-bold text-blue-900 flex items-center gap-1 mb-0.5">
+                      <Globe className="w-3 h-3 text-blue-600" />
+                      <span>EMEA Morning (08:00 - 12:00 UTC)</span>
+                    </div>
+                    <p className="text-blue-800/90 leading-tight">
+                      UK & European corporate hours. Concentrated technical deep-dives into Zero Trust IAM blueprints and SEC Form 8-K runbooks (573 sessions, 22.6% total).
+                    </p>
+                  </div>
+
+                  <div className="p-2 rounded-lg bg-zinc-50 border border-zinc-200">
+                    <div className="font-bold text-zinc-800 flex items-center gap-1 mb-0.5">
+                      <ShieldCheck className="w-3 h-3 text-zinc-600" />
+                      <span>Quiet Window (01:00 - 05:00 UTC)</span>
+                    </div>
+                    <p className="text-zinc-600 leading-tight">
+                      Global lull between Americas close and Asian afternoon. Ideal window for scheduled security policy deployments and immutable ledger attestations.
+                    </p>
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {/* Sub-Header for Search & Dwell Intelligence */}
+              <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <Search className="w-4 h-4 text-blue-600" />
+                    <h3 className="text-xs font-bold text-zinc-900 tracking-tight">
+                      Aggregated Visitor Search Intelligence & Popular Sections
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full text-[9.5px] font-extrabold bg-indigo-50 text-indigo-700 border border-indigo-200 font-mono">
+                      18 Keywords Tracked
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-zinc-500">
+                    Live intent tracking and real-time content engagement telemetry across active enterprise evaluators.
+                  </p>
+                </div>
+                <div className="text-[10px] font-mono text-zinc-500 bg-zinc-50 px-2.5 py-1 rounded-lg border border-zinc-200">
+                  Sorted by Live Telemetry Density
+                </div>
+              </div>
+
+              {/* 2-Column Responsive Grid: Top Searches vs Section Dwell Times */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
                 {/* Top Searches */}
-                <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs space-y-2">
-                  <h4 className="text-xs font-bold text-zinc-900 flex items-center justify-between">
-                    <span>Top Keyword Searches Recorded</span>
+                <div className="p-3.5 rounded-xl bg-white border border-zinc-200 shadow-2xs space-y-2.5 flex flex-col justify-between">
+                  <div className="flex items-center justify-between border-b border-zinc-100 pb-2">
+                    <div className="flex items-center gap-1.5">
+                      <Search className="w-3.5 h-3.5 text-blue-600" />
+                      <h4 className="text-xs font-bold text-zinc-900">
+                        Top Keyword Searches Recorded
+                      </h4>
+                    </div>
                     <span className="text-[10px] text-zinc-500 font-mono">Live Frequency</span>
-                  </h4>
-                  <div className="space-y-1.5">
+                  </div>
+                  <div className="space-y-2">
                     {[
                       { query: 'Zero Trust Architecture & Microsegmentation', count: 342, pct: '94%' },
                       { query: 'Goldman Sachs Global IAM Modernization', count: 289, pct: '82%' },
@@ -910,10 +1451,10 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
                       { query: 'OAuth 2.0 / OIDC / DPoP Token Binding', count: 147, pct: '48%' },
                       { query: 'Harvard Justice Moral Leadership Lecture', count: 112, pct: '39%' }
                     ].map((item, idx) => (
-                      <div key={idx} className="space-y-0.5">
+                      <div key={idx} className="space-y-1">
                         <div className="flex items-center justify-between text-[10.5px]">
                           <span className="font-semibold text-zinc-800">"{item.query}"</span>
-                          <span className="font-mono text-zinc-500">{item.count} queries</span>
+                          <span className="font-mono text-zinc-500 font-semibold">{item.count} queries</span>
                         </div>
                         <div className="w-full h-1.5 rounded-full bg-zinc-100 overflow-hidden">
                           <div className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full" style={{ width: item.pct }} />
@@ -924,12 +1465,17 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
                 </div>
 
                 {/* Most Visited Sections & Dwell Time */}
-                <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs space-y-2">
-                  <h4 className="text-xs font-bold text-zinc-900 flex items-center justify-between">
-                    <span>Most Visited Portfolio Sections</span>
+                <div className="p-3.5 rounded-xl bg-white border border-zinc-200 shadow-2xs space-y-2.5 flex flex-col justify-between">
+                  <div className="flex items-center justify-between border-b border-zinc-100 pb-2">
+                    <div className="flex items-center gap-1.5">
+                      <Compass className="w-3.5 h-3.5 text-indigo-600" />
+                      <h4 className="text-xs font-bold text-zinc-900">
+                        Most Visited Portfolio Sections
+                      </h4>
+                    </div>
                     <span className="text-[10px] text-zinc-500 font-mono">Average Dwell Time</span>
-                  </h4>
-                  <div className="space-y-1.5">
+                  </div>
+                  <div className="space-y-2">
                     {[
                       { name: 'Executive Bio (Leadership Pillars & 6 Axioms)', time: '4m 35s', hits: '1,840 views' },
                       { name: 'Core Technical Competencies (Zero Trust IAM)', time: '5m 12s', hits: '1,620 views' },
@@ -937,15 +1483,603 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
                       { name: 'Technical Blog Whitepapers & HLD Blueprints', time: '6m 20s', hits: '1,310 views' },
                       { name: 'Off-Keyboard (Curated Harvard & Stanford Masterclasses)', time: '4m 10s', hits: '980 views' }
                     ].map((sec, idx) => (
-                      <div key={idx} className="p-1.5 px-2.5 rounded-lg bg-zinc-50 border border-zinc-200 flex items-center justify-between text-[10.5px]">
+                      <div key={idx} className="p-2 px-3 rounded-lg bg-zinc-50 hover:bg-blue-50/40 border border-zinc-200/80 flex items-center justify-between text-[10.5px] transition-colors">
                         <span className="font-medium text-zinc-800">{sec.name}</span>
                         <div className="flex items-center gap-2 font-mono text-[9.5px]">
-                          <span className="text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded border border-blue-200">{sec.time}</span>
+                          <span className="text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200 font-bold">{sec.time}</span>
                           <span className="text-zinc-500">{sec.hits}</span>
                         </div>
                       </div>
                     ))}
                   </div>
+                </div>
+              </div>
+
+              {/* Edge Telemetry Ingest & SASE Status Bar */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <div className="p-2.5 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
+                  <div>
+                    <div className="text-[9.5px] font-mono text-zinc-400 uppercase">Edge SASE Ingest</div>
+                    <div className="text-xs font-bold text-zinc-900 font-mono">2.4ms (US-East)</div>
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                </div>
+
+                <div className="p-2.5 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
+                  <div>
+                    <div className="text-[9.5px] font-mono text-zinc-400 uppercase">Cache Hit Efficiency</div>
+                    <div className="text-xs font-bold text-blue-700 font-mono">99.4% Global</div>
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-blue-500" />
+                </div>
+
+                <div className="p-2.5 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
+                  <div>
+                    <div className="text-[9.5px] font-mono text-zinc-400 uppercase">TLS 1.3 Strict</div>
+                    <div className="text-xs font-bold text-emerald-700 font-mono">100% TPM Bound</div>
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                </div>
+
+                <div className="p-2.5 px-3 rounded-lg bg-white border border-zinc-200 shadow-2xs flex items-center justify-between">
+                  <div>
+                    <div className="text-[9.5px] font-mono text-zinc-400 uppercase">Replication Drift</div>
+                    <div className="text-xs font-bold text-zinc-900 font-mono">0.0ms Synced</div>
+                  </div>
+                  <span className="w-2 h-2 rounded-full bg-indigo-500" />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: Global Geographic Access Heatmap */}
+          {activeTab === 'heatmap' && (
+            <div className="space-y-3">
+              {/* Header and Filter Controls */}
+              <div className="flex flex-wrap items-center justify-between gap-2.5 p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs">
+                <div className="space-y-0.5">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1 rounded-md bg-blue-50 text-blue-600">
+                      <MapPin className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-xs font-bold text-zinc-900 tracking-tight">
+                      Global Geographic Access Heatmap & Telemetry Distribution
+                    </h3>
+                    <span className="px-2 py-0.5 rounded-full text-[9.5px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1 font-mono">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>8 Worldwide Hubs Active</span>
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-zinc-500">
+                    Visualizing worldwide visitor concentration, edge SASE routing points of presence, and sovereign regulatory compliance boundaries.
+                  </p>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {/* Layer Mode Toggle */}
+                  <div className="flex items-center gap-1 p-0.5 rounded-lg border border-zinc-200 bg-zinc-50 text-[10px] font-semibold">
+                    <button
+                      onClick={() => setHeatmapMode('density')}
+                      className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                        heatmapMode === 'density' 
+                          ? 'bg-blue-600 text-white shadow-2xs font-bold' 
+                          : 'text-zinc-600 hover:text-zinc-900'
+                      }`}
+                    >
+                      Heatmap Aura
+                    </button>
+                    <button
+                      onClick={() => setHeatmapMode('pins')}
+                      className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                        heatmapMode === 'pins' 
+                          ? 'bg-blue-600 text-white shadow-2xs font-bold' 
+                          : 'text-zinc-600 hover:text-zinc-900'
+                      }`}
+                    >
+                      Active Nodes
+                    </button>
+                    <button
+                      onClick={() => setHeatmapMode('mesh')}
+                      className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                        heatmapMode === 'mesh' 
+                          ? 'bg-blue-600 text-white shadow-2xs font-bold' 
+                          : 'text-zinc-600 hover:text-zinc-900'
+                      }`}
+                    >
+                      SASE Mesh
+                    </button>
+                  </div>
+
+                  {/* Region Filter Buttons */}
+                  <div className="flex items-center gap-1 p-0.5 rounded-lg border border-zinc-200 bg-zinc-50 text-[10px] font-semibold">
+                    {(['All', 'Americas', 'EMEA', 'APAC'] as const).map((r) => (
+                      <button
+                        key={r}
+                        onClick={() => setSelectedGeoRegion(r)}
+                        className={`px-2 py-1 rounded-md transition-all cursor-pointer ${
+                          selectedGeoRegion === r 
+                            ? 'bg-zinc-900 text-white shadow-2xs font-bold' 
+                            : 'text-zinc-600 hover:text-zinc-900'
+                        }`}
+                      >
+                        {r === 'All' ? 'All (100%)' : r === 'Americas' ? 'Americas (54%)' : r === 'EMEA' ? 'EMEA (33%)' : 'APAC (13%)'}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Main SVG Geographic Heatmap Canvas */}
+              <div className="relative rounded-2xl border border-zinc-200 bg-zinc-950 text-white overflow-hidden shadow-xl">
+                {/* Top Status Bar Inside Map */}
+                <div className="absolute top-3 left-3 right-3 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+                  <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-[10.5px] pointer-events-auto">
+                    <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+                    <span className="font-mono text-zinc-300">Edge Telemetry Ingest: <strong className="text-emerald-400 font-bold">Live Stream Active</strong></span>
+                    <span className="text-zinc-500">•</span>
+                    <span className="text-zinc-400">Total Global Volume: <strong className="text-white font-mono">2,532 Sessions</strong></span>
+                  </div>
+
+                  <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-[10px] pointer-events-auto">
+                    <span className="text-zinc-400">Heat Intensity:</span>
+                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500" /> Apex (&gt;35%)</span>
+                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500" /> High (10-25%)</span>
+                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500" /> Medium (5-10%)</span>
+                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500" /> Moderate (&lt;5%)</span>
+                  </div>
+                </div>
+
+                {/* SVG Map Container */}
+                <div className="w-full relative aspect-[2/1] min-h-[360px] max-h-[500px]">
+                  <svg
+                    viewBox="0 0 1000 500"
+                    className="w-full h-full select-none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      {/* Heatmap Radial Gradients with multi-ring falloff */}
+                      <radialGradient id="heat-apex" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#ef4444" stopOpacity="0.9" />
+                        <stop offset="25%" stopColor="#f97316" stopOpacity="0.75" />
+                        <stop offset="55%" stopColor="#eab308" stopOpacity="0.45" />
+                        <stop offset="85%" stopColor="#3b82f6" stopOpacity="0.2" />
+                        <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                      </radialGradient>
+
+                      <radialGradient id="heat-high" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.85" />
+                        <stop offset="35%" stopColor="#3b82f6" stopOpacity="0.55" />
+                        <stop offset="70%" stopColor="#10b981" stopOpacity="0.25" />
+                        <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                      </radialGradient>
+
+                      <radialGradient id="heat-medium" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                        <stop offset="45%" stopColor="#06b6d4" stopOpacity="0.45" />
+                        <stop offset="80%" stopColor="#10b981" stopOpacity="0.2" />
+                        <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                      </radialGradient>
+
+                      <radialGradient id="heat-moderate" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#10b981" stopOpacity="0.75" />
+                        <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.35" />
+                        <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
+                      </radialGradient>
+
+                      {/* Map Graticule Pattern */}
+                      <filter id="heat-blur" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="8" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                    </defs>
+
+                    {/* Dark Digital Radar Grid Background */}
+                    <rect width="1000" height="500" fill="#090d16" />
+
+                    {/* Graticule Latitude / Longitude lines */}
+                    <g opacity="0.15" stroke="#38bdf8" strokeWidth="0.75" strokeDasharray="3,4">
+                      {/* Latitudes */}
+                      <line x1="0" y1="83" x2="1000" y2="83" />
+                      <line x1="0" y1="166" x2="1000" y2="166" />
+                      <line x1="0" y1="250" x2="1000" y2="250" strokeWidth="1.2" stroke="#38bdf8" opacity="0.3" strokeDasharray="none" />
+                      <line x1="0" y1="333" x2="1000" y2="333" />
+                      <line x1="0" y1="416" x2="1000" y2="416" />
+
+                      {/* Longitudes */}
+                      <line x1="166" y1="0" x2="166" y2="500" />
+                      <line x1="333" y1="0" x2="333" y2="500" />
+                      <line x1="500" y1="0" x2="500" y2="500" strokeWidth="1.2" stroke="#38bdf8" opacity="0.3" strokeDasharray="none" />
+                      <line x1="666" y1="0" x2="666" y2="500" />
+                      <line x1="833" y1="0" x2="833" y2="500" />
+                    </g>
+
+                    {/* Graticule Text Coordinates */}
+                    <g opacity="0.3" fill="#94a3b8" fontSize="8" fontFamily="monospace">
+                      <text x="8" y="246">0° Equator</text>
+                      <text x="8" y="162">30°N</text>
+                      <text x="8" y="79">60°N</text>
+                      <text x="8" y="329">30°S</text>
+                      <text x="504" y="492">0° Prime Meridian</text>
+                      <text x="170" y="492">120°W</text>
+                      <text x="337" y="492">60°W</text>
+                      <text x="670" y="492">60°E</text>
+                      <text x="837" y="492">120°E</text>
+                    </g>
+
+                    {/* Continents Silhouettes */}
+                    <g fill="#172236" stroke="#253754" strokeWidth="1.2" opacity="0.85">
+                      {/* North America */}
+                      <path d="M 120,60 C 180,45 280,55 330,75 C 340,110 300,120 310,145 C 280,175 250,195 210,235 C 190,225 160,180 135,165 C 110,125 105,80 120,60 Z M 160,40 C 200,30 250,35 240,60 Z" />
+                      {/* South America */}
+                      <path d="M 235,255 C 290,270 320,305 300,380 C 275,445 255,455 240,410 C 220,340 215,285 235,255 Z" />
+                      {/* Europe */}
+                      <path d="M 465,75 C 525,65 570,85 555,140 C 530,165 485,155 470,125 C 460,95 475,80 465,75 Z M 480,95 C 505,90 500,115 480,115 Z" />
+                      {/* Africa */}
+                      <path d="M 470,170 C 555,160 570,215 550,285 C 540,365 500,395 465,325 C 445,250 450,195 470,170 Z" />
+                      {/* Asia */}
+                      <path d="M 575,65 C 760,45 890,85 860,175 C 830,225 770,255 710,245 C 670,205 610,165 575,65 Z M 870,125 C 900,145 880,175 860,155 Z" />
+                      {/* Australia */}
+                      <path d="M 835,330 C 915,320 940,360 920,415 C 860,415 830,375 835,330 Z" />
+                    </g>
+
+                    {/* SASE Transit Mesh Lines (When mode is 'mesh' or default) */}
+                    {(heatmapMode === 'mesh' || heatmapMode === 'density') && (
+                      <g stroke="#38bdf8" strokeWidth="1" strokeDasharray="4,4" opacity={heatmapMode === 'mesh' ? 0.75 : 0.35}>
+                        {/* NY to London */}
+                        <path d="M 294,137 Q 397,80 500,107" fill="none" />
+                        {/* London to Frankfurt */}
+                        <path d="M 500,107 Q 512,100 524,111" fill="none" />
+                        {/* SF to NY */}
+                        <path d="M 160,145 Q 227,110 294,137" fill="none" />
+                        {/* London to Singapore */}
+                        <path d="M 500,107 Q 644,130 788,246" fill="none" />
+                        {/* Singapore to Tokyo */}
+                        <path d="M 788,246 Q 838,180 888,151" fill="none" />
+                        {/* Singapore to Sydney */}
+                        <path d="M 788,246 Q 854,310 920,344" fill="none" />
+                        {/* Toronto to NY */}
+                        <path d="M 279,129 Q 286,133 294,137" fill="none" />
+                        {/* SF to Tokyo (Trans-Pacific East/West Arcs) */}
+                        <path d="M 160,145 Q 60,110 0,125" fill="none" />
+                        <path d="M 1000,125 Q 944,110 888,151" fill="none" />
+                      </g>
+                    )}
+
+                    {/* LAYER 1: HEATMAP RADIAL GLOW BLOBS */}
+                    {(heatmapMode === 'density' || heatmapMode === 'mesh') && (
+                      <g className="transition-opacity duration-300">
+                        {GEO_TELEMETRY_HUBS
+                          .filter(h => selectedGeoRegion === 'All' || h.region === selectedGeoRegion)
+                          .map(hub => {
+                            const gradId = hub.intensity === 'apex' 
+                              ? 'url(#heat-apex)' 
+                              : hub.intensity === 'high' 
+                                ? 'url(#heat-high)' 
+                                : hub.intensity === 'medium' 
+                                  ? 'url(#heat-medium)' 
+                                  : 'url(#heat-moderate)';
+                            
+                            const radius = hub.intensity === 'apex' 
+                              ? 75 
+                              : hub.intensity === 'high' 
+                                ? 58 
+                                : hub.intensity === 'medium' 
+                                  ? 44 
+                                  : 34;
+
+                            return (
+                              <g key={`heat-${hub.id}`} opacity="0.85">
+                                {/* Outer Heat Halo */}
+                                <circle
+                                  cx={hub.x}
+                                  cy={hub.y}
+                                  r={radius}
+                                  fill={gradId}
+                                  filter="url(#heat-blur)"
+                                />
+                                {hub.intensity === 'apex' && (
+                                  <circle
+                                    cx={hub.x}
+                                    cy={hub.y}
+                                    r={36}
+                                    fill="rgba(239, 68, 68, 0.45)"
+                                    filter="url(#heat-blur)"
+                                  />
+                                )}
+                              </g>
+                            );
+                          })}
+                      </g>
+                    )}
+
+                    {/* LAYER 2: INTERACTIVE CITY NODES & PINGS */}
+                    <g>
+                      {GEO_TELEMETRY_HUBS
+                        .filter(h => selectedGeoRegion === 'All' || h.region === selectedGeoRegion)
+                        .map(hub => {
+                          const isHovered = hoveredHubId === hub.id;
+                          const isSelected = selectedHubId === hub.id;
+                          const isApex = hub.intensity === 'apex';
+                          const isHigh = hub.intensity === 'high';
+
+                          return (
+                            <g
+                              key={`pin-${hub.id}`}
+                              className="cursor-pointer transition-transform duration-150"
+                              onClick={() => setSelectedHubId(hub.id)}
+                              onMouseEnter={() => setHoveredHubId(hub.id)}
+                              onMouseLeave={() => setHoveredHubId(null)}
+                            >
+                              {/* Pulsing Edge Ping Wave */}
+                              <circle
+                                cx={hub.x}
+                                cy={hub.y}
+                                r={isHovered ? 18 : 12}
+                                fill="none"
+                                stroke={isApex ? '#ef4444' : isHigh ? '#f59e0b' : '#38bdf8'}
+                                strokeWidth={isHovered ? 2 : 1.5}
+                                opacity={0.65}
+                                className="animate-ping"
+                                style={{ transformOrigin: `${hub.x}px ${hub.y}px` }}
+                              />
+
+                              {/* Selection Ring */}
+                              {(isSelected || isHovered) && (
+                                <circle
+                                  cx={hub.x}
+                                  cy={hub.y}
+                                  r={10}
+                                  fill="none"
+                                  stroke="#ffffff"
+                                  strokeWidth="2"
+                                  opacity="0.9"
+                                />
+                              )}
+
+                              {/* Central Glowing Core Node */}
+                              <circle
+                                cx={hub.x}
+                                cy={hub.y}
+                                r={isApex ? 6 : isHigh ? 5 : 4}
+                                fill={isApex ? '#ef4444' : isHigh ? '#f59e0b' : '#3b82f6'}
+                                stroke="#ffffff"
+                                strokeWidth="1.5"
+                              />
+
+                              {/* City Label Badge */}
+                              <g transform={`translate(${hub.x + 8}, ${hub.y - 6})`}>
+                                <rect
+                                  x="0"
+                                  y="-8"
+                                  width={hub.city.split(' ')[0].length * 6 + 32}
+                                  height="16"
+                                  rx="4"
+                                  fill={isSelected ? '#1e3a8a' : isHovered ? '#1e293b' : 'rgba(15, 23, 42, 0.75)'}
+                                  stroke={isSelected ? '#60a5fa' : isHovered ? '#94a3b8' : 'rgba(255,255,255,0.15)'}
+                                  strokeWidth="1"
+                                />
+                                <text
+                                  x="4"
+                                  y="3.5"
+                                  fill="#f8fafc"
+                                  fontSize="9"
+                                  fontFamily="monospace"
+                                  fontWeight={isSelected || isHovered ? 'bold' : 'normal'}
+                                >
+                                  {hub.city.split(' ')[0]} <tspan fill={isApex ? '#f87171' : isHigh ? '#fbbf24' : '#38bdf8'} fontWeight="bold">{hub.percentage}%</tspan>
+                                </text>
+                              </g>
+                            </g>
+                          );
+                        })}
+                    </g>
+                  </svg>
+                </div>
+
+                {/* Bottom Canvas Footer: Detected Local Client Telemetry */}
+                <div className="p-2.5 px-4 bg-zinc-900/90 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-[10.5px]">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                    <span className="text-zinc-300">
+                      Your Client Route: <strong className="text-white font-mono">{clientIp || '104.28.19.42'}</strong>
+                    </span>
+                    <span className="text-zinc-500">•</span>
+                    <span className="text-zinc-400">
+                      Autonomous System: <span className="text-cyan-400 font-mono">AS13335 (Cloudflare Managed Anycast)</span>
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-3 font-mono text-[10px]">
+                    <span className="text-zinc-400">Mean Global Latency: <strong className="text-emerald-400">31.4 ms</strong></span>
+                    <span className="text-zinc-600">|</span>
+                    <span className="text-zinc-400">Zero Trust Attestation: <strong className="text-blue-400">100% Passed</strong></span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Selected Hub Deep Telemetry Inspector & Breakdown */}
+              {(() => {
+                const activeHub = GEO_TELEMETRY_HUBS.find(h => h.id === (hoveredHubId || selectedHubId)) || GEO_TELEMETRY_HUBS[0];
+
+                return (
+                  <div className="p-3.5 rounded-xl bg-white border border-zinc-200 shadow-2xs space-y-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 pb-2">
+                      <div className="flex items-center gap-2.5">
+                        <span className="text-2xl">{activeHub.flag}</span>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <h4 className="text-sm font-bold text-zinc-900">{activeHub.city}</h4>
+                            <span className="px-2 py-0.2 rounded-full text-[9px] font-mono font-bold uppercase bg-blue-50 text-blue-700 border border-blue-200">
+                              {activeHub.region} Region
+                            </span>
+                            <span className={`px-2 py-0.2 rounded-full text-[9px] font-mono font-bold uppercase border ${
+                              activeHub.intensity === 'apex' 
+                                ? 'bg-rose-50 text-rose-700 border-rose-200' 
+                                : activeHub.intensity === 'high' 
+                                  ? 'bg-amber-50 text-amber-700 border-amber-200' 
+                                  : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                            }`}>
+                              {activeHub.intensity === 'apex' ? '⚡ Apex Traffic Density' : activeHub.intensity === 'high' ? 'High Traffic Density' : 'Standard Inflow'}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-zinc-500 font-mono">SASE Edge Point of Presence: {activeHub.saseNode}</p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-4 text-right">
+                        <div>
+                          <div className="text-[9px] uppercase font-mono text-zinc-400">Recorded Sessions</div>
+                          <div className="text-sm font-extrabold text-blue-700 font-mono">{activeHub.sessions} sessions</div>
+                        </div>
+                        <div>
+                          <div className="text-[9px] uppercase font-mono text-zinc-400">Portfolio Share</div>
+                          <div className="text-sm font-extrabold text-zinc-900 font-mono">{activeHub.percentage}%</div>
+                        </div>
+                        <div>
+                          <div className="text-[9px] uppercase font-mono text-zinc-400">Avg Dwell Time</div>
+                          <div className="text-sm font-extrabold text-emerald-700 font-mono">{activeHub.avgDwell}</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 4 Details Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2.5 text-[10.5px]">
+                      <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200 space-y-1">
+                        <div className="text-zinc-500 font-bold flex items-center gap-1">
+                          <Server className="w-3 h-3 text-blue-600" />
+                          <span>Network & Autonomous System (ASN)</span>
+                        </div>
+                        <p className="font-mono text-[10px] text-zinc-800 font-medium">{activeHub.asnOrg}</p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200 space-y-1">
+                        <div className="text-zinc-500 font-bold flex items-center gap-1">
+                          <FileText className="w-3 h-3 text-indigo-600" />
+                          <span>Top Evaluated Whitepaper / Blueprint</span>
+                        </div>
+                        <p className="font-medium text-zinc-900">{activeHub.topEvaluated}</p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200 space-y-1">
+                        <div className="text-zinc-500 font-bold flex items-center gap-1">
+                          <Users className="w-3 h-3 text-emerald-600" />
+                          <span>Primary Assessor Role Persona</span>
+                        </div>
+                        <p className="font-medium text-zinc-900">{activeHub.activeRole}</p>
+                      </div>
+
+                      <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200 space-y-1">
+                        <div className="text-zinc-500 font-bold flex items-center gap-1">
+                          <ShieldCheck className="w-3 h-3 text-amber-600" />
+                          <span>Sovereign Compliance & Data Boundary</span>
+                        </div>
+                        <p className="font-mono text-[9.5px] text-zinc-800 font-bold">{activeHub.complianceTier}</p>
+                      </div>
+                    </div>
+
+                    <div className="p-2 px-3 rounded-lg bg-blue-50/70 border border-blue-200/80 flex items-center justify-between text-[10.5px]">
+                      <div className="flex items-center gap-2">
+                        <Search className="w-3.5 h-3.5 text-blue-600" />
+                        <span className="text-zinc-600">Most Frequent Search Query From This Region:</span>
+                        <strong className="text-blue-900 font-mono">{activeHub.recentSearch}</strong>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSearchTerm(activeHub.city.split(' ')[0]);
+                          setActiveTab('visitors');
+                        }}
+                        className="px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold transition-colors cursor-pointer"
+                      >
+                        Filter {activeHub.city.split(' ')[0]} Sessions in Visitors Tab →
+                      </button>
+                    </div>
+                  </div>
+                );
+              })()}
+
+              {/* Full Global Hubs Breakdown Matrix Table */}
+              <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs space-y-2">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-bold text-zinc-900 flex items-center gap-1.5">
+                    <Globe className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Global Distribution Leaderboard by Volume & Dwell Time</span>
+                  </h4>
+                  <span className="text-[10px] text-zinc-500 font-mono">Sorted by Concentrated Session Volume</span>
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[10.5px]">
+                    <thead>
+                      <tr className="border-b border-zinc-200 bg-zinc-50 text-[10px] uppercase font-bold text-zinc-600">
+                        <th className="py-1.5 px-2.5">Rank & Hub</th>
+                        <th className="py-1.5 px-2.5">Region</th>
+                        <th className="py-1.5 px-2.5">Sessions</th>
+                        <th className="py-1.5 px-2.5">Distribution Share</th>
+                        <th className="py-1.5 px-2.5">Top Evaluated Portfolio Asset</th>
+                        <th className="py-1.5 px-2.5">Compliance Standard</th>
+                        <th className="py-1.5 px-2.5 text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-zinc-100">
+                      {GEO_TELEMETRY_HUBS
+                        .filter(h => selectedGeoRegion === 'All' || h.region === selectedGeoRegion)
+                        .map((hub, idx) => (
+                          <tr 
+                            key={hub.id} 
+                            onClick={() => setSelectedHubId(hub.id)}
+                            className={`hover:bg-blue-50/50 cursor-pointer transition-colors ${
+                              selectedHubId === hub.id ? 'bg-blue-50/70 font-semibold' : ''
+                            }`}
+                          >
+                            <td className="py-2 px-2.5 flex items-center gap-2">
+                              <span className="font-mono text-zinc-400 font-bold text-[10px]">#{idx + 1}</span>
+                              <span className="text-base">{hub.flag}</span>
+                              <div>
+                                <div className="font-bold text-zinc-900">{hub.city}</div>
+                                <div className="text-[9.5px] text-zinc-500">{hub.country}</div>
+                              </div>
+                            </td>
+                            <td className="py-2 px-2.5 font-mono text-zinc-600">{hub.region}</td>
+                            <td className="py-2 px-2.5 font-mono font-bold text-blue-700">{hub.sessions}</td>
+                            <td className="py-2 px-2.5">
+                              <div className="flex items-center gap-2">
+                                <div className="w-20 h-1.5 rounded-full bg-zinc-100 overflow-hidden">
+                                  <div 
+                                    className={`h-full rounded-full ${
+                                      hub.intensity === 'apex' 
+                                        ? 'bg-gradient-to-r from-amber-500 to-rose-600' 
+                                        : hub.intensity === 'high' 
+                                          ? 'bg-gradient-to-r from-blue-500 to-indigo-600' 
+                                          : 'bg-emerald-500'
+                                    }`} 
+                                    style={{ width: `${hub.percentage * 2.5}%` }} 
+                                  />
+                                </div>
+                                <span className="font-mono text-[9.5px] font-bold text-zinc-700">{hub.percentage}%</span>
+                              </div>
+                            </td>
+                            <td className="py-2 px-2.5 text-zinc-800 truncate max-w-xs">{hub.topEvaluated}</td>
+                            <td className="py-2 px-2.5">
+                              <span className="px-1.5 py-0.2 rounded bg-zinc-100 border border-zinc-200 text-zinc-700 font-mono text-[9px]">
+                                {hub.complianceTier.split('/')[0]}
+                              </span>
+                            </td>
+                            <td className="py-2 px-2.5 text-right">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSearchTerm(hub.city.split(' ')[0]);
+                                  setActiveTab('visitors');
+                                }}
+                                className="px-2 py-0.5 rounded text-[9.5px] font-bold bg-zinc-100 hover:bg-zinc-200 text-zinc-800 transition-colors cursor-pointer"
+                              >
+                                View Sessions
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>

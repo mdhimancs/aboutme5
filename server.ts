@@ -162,6 +162,43 @@ async function startServer() {
     });
   });
 
+  // API Route for sending access alerts on new visits
+  app.post("/api/access-alert", async (req, res) => {
+    if (!resend) {
+      return res.status(500).json({ error: "Email service not configured" });
+    }
+
+    const clientIp = getClientIp(req);
+    const userAgent = req.headers['user-agent'] || 'Unknown';
+    const { screenResolution, language, referrer } = req.body;
+
+    try {
+      await resend.emails.send({
+        from: 'Access Alert <onboarding@resend.dev>',
+        to: ['munish.world@gmail.com'],
+        subject: `[ACCESS ALERT] New Visit detected from ${clientIp}`,
+        html: `
+          <h3>Executive Portfolio Access Alert</h3>
+          <p>A new visitor has accessed your portfolio.</p>
+          <hr />
+          <p><strong>IP Address:</strong> ${clientIp}</p>
+          <p><strong>User Agent:</strong> ${userAgent}</p>
+          <p><strong>Screen Resolution:</strong> ${screenResolution || 'Unknown'}</p>
+          <p><strong>Language:</strong> ${language || 'Unknown'}</p>
+          <p><strong>Referrer:</strong> ${referrer || 'Direct'}</p>
+          <p><strong>Timestamp:</strong> ${new Date().toISOString()}</p>
+          <hr />
+          <p style="font-size: 10px; color: #666;">Automated security telemetry from Munish Dhiman's Executive Portfolio.</p>
+        `,
+      });
+
+      res.status(200).json({ success: true });
+    } catch (err) {
+      console.error("Access alert error:", err);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
   // API Route for sending emails with rate limiting
   app.post("/api/send-email", async (req, res) => {
     const rawIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1';

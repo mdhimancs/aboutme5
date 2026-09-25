@@ -170,48 +170,40 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       </div>
 
       <div 
-        className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2 mb-[3pt] shrink-0 w-full mt-1 sm:mt-1.5`}
+        style={{ paddingBottom: '4pt' }}
+        className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2 mb-[4pt] shrink-0 w-full mt-1 sm:mt-1.5`}
       >
-        <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
-        }`}>
-          <div className="text-[10px] sm:text-[10.5px] font-bold text-amber-500 uppercase tracking-wider">Goldman Sachs Tenure</div>
-          <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>14 Yrs · 4 Promotions</div>
+        <div className="py-1.5 px-2 rounded-lg border text-center transition-all bg-white border-zinc-200/90 shadow-2xs">
+          <div className="text-[10px] sm:text-[10.5px] font-bold text-amber-600 uppercase tracking-wider">Goldman Sachs Tenure</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">14 Yrs · 4 Promotions</div>
           <div className="text-[9px] text-zinc-500 font-mono">Sr. Analyst ➔ VP ➔ SVP</div>
         </div>
 
-        <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
-        }`}>
-          <div className="text-[10px] sm:text-[10.5px] font-bold text-blue-500 uppercase tracking-wider">Leadership Scale</div>
-          <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>30+ Global Engineers</div>
+        <div className="py-1.5 px-2 rounded-lg border text-center transition-all bg-white border-zinc-200/90 shadow-2xs">
+          <div className="text-[10px] sm:text-[10.5px] font-bold text-blue-600 uppercase tracking-wider">Leadership Scale</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">30+ Global Engineers</div>
           <div className="text-[9px] text-zinc-500 font-mono">SecOps, SOC, IAM & GRC</div>
         </div>
 
-        <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
-        }`}>
-          <div className="text-[10px] sm:text-[10.5px] font-bold text-emerald-500 uppercase tracking-wider">Audit & Compliance</div>
-          <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>100% Clean Attestations</div>
+        <div className="py-1.5 px-2 rounded-lg border text-center transition-all bg-white border-zinc-200/90 shadow-2xs">
+          <div className="text-[10px] sm:text-[10.5px] font-bold text-emerald-600 uppercase tracking-wider">Audit & Compliance</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">100% Clean Attestations</div>
           <div className="text-[9px] text-zinc-500 font-mono">SOX 404, SOC 2 & ISO 27001</div>
         </div>
 
-        <div className={`py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
-        }`}>
-          <div className="text-[10px] sm:text-[10.5px] font-bold text-indigo-500 uppercase tracking-wider">Transaction Defense</div>
-          <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>$100B–$500B+ Flow</div>
+        <div className="py-1.5 px-2 rounded-lg border text-center transition-all bg-white border-zinc-200/90 shadow-2xs">
+          <div className="text-[10px] sm:text-[10.5px] font-bold text-indigo-600 uppercase tracking-wider">Transaction Defense</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">$100B–$500B+ Flow</div>
           <div className="text-[9px] text-zinc-500 font-mono">$1T+ Tier-1 Clearing Scale</div>
         </div>
 
-        <div className={`col-span-2 sm:col-span-1 py-1.5 px-2 rounded-lg border text-center transition-all ${
-          isLight ? 'bg-white border-zinc-200/90 shadow-2xs' : 'bg-white border-white/10'
-        }`}>
-          <div className="text-[10px] sm:text-[10.5px] font-bold text-purple-500 uppercase tracking-wider">Privilege Exposure</div>
-          <div className={`text-[11.5px] sm:text-xs font-bold mt-0.5 ${isLight ? 'text-zinc-900' : 'text-white'}`}>-98.4% Zero Standing</div>
+        <div className="col-span-2 sm:col-span-1 py-1.5 px-2 rounded-lg border text-center transition-all bg-white border-zinc-200/90 shadow-2xs">
+          <div className="text-[10px] sm:text-[10.5px] font-bold text-purple-600 uppercase tracking-wider">Privilege Exposure</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">-98.4% Zero Standing</div>
           <div className="text-[9px] text-zinc-500 font-mono">SailPoint + CyberArk JIT</div>
         </div>
       </div>
+      <div style={{ height: '4pt', width: '100%' }} />
 
       {/* Filter and Controls Header (Mobile/Tablet horizontal scroller) */}
       <div className="lg:hidden flex items-center justify-start gap-1.5 mb-2.5 shrink-0 overflow-x-auto pb-0.5">
@@ -281,14 +273,10 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     onClick={() => {
                       setExpandedId(isExpanded ? null : milestone.id);
                     }}
-                    className={`border rounded-xl p-3 sm:p-3.5 backdrop-blur-xl transition-all duration-200 cursor-pointer interactive-card ${
-                      isLight
-                        ? (isExpanded 
-                            ? 'border-blue-500 bg-white shadow-sm ring-1 ring-blue-500/20' 
-                            : 'bg-white border-zinc-200/90 hover:border-zinc-300 shadow-2xs')
-                        : (isExpanded 
-                            ? 'border-blue-500/60 bg-white/[0.05] shadow-lg' 
-                            : 'bg-white/[0.025] border-white/10 hover:border-white/20')
+                    className={`border rounded-xl p-3 sm:p-3.5 backdrop-blur-xl transition-all duration-200 cursor-pointer interactive-card bg-white ${
+                      isExpanded 
+                        ? 'border-blue-500 shadow-md ring-1 ring-blue-500/20' 
+                        : 'border-zinc-200/90 hover:border-zinc-300 shadow-2xs'
                     }`}
                   >
                     {/* Header: Role, Attractive Company Pill, and Right-Aligned Highlight */}
@@ -297,45 +285,29 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                         {/* Company Badge with Elevated Visual Aesthetic */}
                         <div className="flex items-center gap-2 flex-wrap mb-1">
                           {milestone.company === 'Goldman Sachs' ? (
-                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md ${
-                              isLight 
-                                ? 'bg-gradient-to-r from-amber-100 to-amber-50 text-amber-900 border border-amber-300 shadow-2xs' 
-                                : 'bg-gradient-to-r from-amber-500/20 to-amber-600/10 text-amber-300 border border-amber-500/40 shadow-xs'
-                            }`}>
+                            <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-gradient-to-r from-amber-100 to-amber-50 text-amber-900 border border-amber-300 shadow-2xs">
                               <Building2 className="w-3 h-3 text-amber-500 shrink-0" />
                               <span>Goldman Sachs</span>
                             </span>
                           ) : milestone.company.includes('Computer Associates') ? (
-                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md ${
-                              isLight 
-                                ? 'bg-gradient-to-r from-sky-100 to-sky-50 text-sky-900 border border-sky-300 shadow-2xs' 
-                                : 'bg-gradient-to-r from-sky-500/20 to-sky-600/10 text-sky-300 border border-sky-500/40 shadow-xs'
-                            }`}>
+                            <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-gradient-to-r from-sky-100 to-sky-50 text-sky-900 border border-sky-300 shadow-2xs">
                               <Building2 className="w-3 h-3 text-sky-500 shrink-0" />
                               <span>CA (Broadcom)</span>
                             </span>
                           ) : milestone.company === 'Amrita Technologies' ? (
-                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md ${
-                              isLight 
-                                ? 'bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-900 border border-emerald-300 shadow-2xs' 
-                                : 'bg-gradient-to-r from-emerald-500/20 to-emerald-600/10 text-emerald-300 border border-emerald-500/40 shadow-xs'
-                            }`}>
+                            <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-gradient-to-r from-emerald-100 to-emerald-50 text-emerald-900 border border-emerald-300 shadow-2xs">
                               <Building2 className="w-3 h-3 text-emerald-500 shrink-0" />
                               <span>Amrita Tech</span>
                             </span>
                           ) : (
-                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md ${
-                              isLight 
-                                ? 'bg-gradient-to-r from-purple-100 to-purple-50 text-purple-900 border border-purple-300 shadow-2xs' 
-                                : 'bg-gradient-to-r from-purple-500/20 to-purple-600/10 text-purple-300 border border-purple-500/40 shadow-xs'
-                            }`}>
+                            <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-gradient-to-r from-purple-100 to-purple-50 text-purple-900 border border-purple-300 shadow-2xs">
                               <Building2 className="w-3 h-3 text-purple-500 shrink-0" />
                               <span>Confidential</span>
                             </span>
                           )}
 
                           {/* Location and Date Range Row */}
-                          <div className={`text-[11px] font-medium ${isLight ? 'text-zinc-600' : 'text-zinc-400'} flex items-center gap-1.5`}>
+                          <div className="text-[11px] font-medium text-zinc-600 flex items-center gap-1.5">
                             <span className="inline-flex items-center gap-0.5">
                               <MapPin className="w-2.5 h-2.5 text-zinc-400 shrink-0" />
                               <span>{milestone.location}</span>
@@ -349,7 +321,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                         </div>
 
                         {/* Role Title */}
-                        <h3 className={`text-[14px] sm:text-[15px] font-bold tracking-tight ${isLight ? 'text-zinc-900' : 'text-white'} leading-snug`}>
+                        <h3 className="text-[14px] sm:text-[15px] font-bold tracking-tight text-zinc-900 leading-snug">
                           {milestone.role}
                         </h3>
                       </div>
@@ -359,9 +331,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                         {milestone.category.split(',').map((catTag, cIdx) => (
                           <span 
                             key={cIdx}
-                            className={`text-[9.5px] sm:text-[10px] font-medium px-2 py-0.5 rounded-md border whitespace-nowrap shadow-2xs inline-block ${
-                              isLight ? 'bg-zinc-800 text-zinc-100 border-zinc-700' : 'bg-zinc-800/95 text-zinc-200 border-zinc-700'
-                            }`}
+                            className="text-[9.5px] sm:text-[10px] font-medium px-2 py-0.5 rounded-md border whitespace-nowrap shadow-2xs inline-block bg-zinc-800 text-zinc-100 border-zinc-700"
                           >
                             {catTag.trim()}
                           </span>
@@ -373,7 +343,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     <div className="mb-2">
                       <ul className="space-y-1">
                         {milestone.achievements.map((ach, i) => (
-                          <li key={i} className={`flex items-start space-x-1.5 text-xs sm:text-[12.5px] leading-relaxed ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
+                          <li key={i} className="flex items-start space-x-1.5 text-xs sm:text-[12.5px] leading-relaxed text-zinc-800">
                             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
                             <span>{ach}</span>
                           </li>
@@ -382,7 +352,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     </div>
 
                     {/* Executive Summary - Compact & Clear */}
-                    <p className={`text-xs sm:text-[13px] leading-relaxed mb-1.5 ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                    <p className="text-xs sm:text-[13px] leading-relaxed mb-1.5 text-zinc-700">
                       {milestone.summary}
                     </p>
 
@@ -394,22 +364,18 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
                           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                          className={`space-y-2 pt-2 border-t overflow-hidden ${isLight ? 'border-zinc-100' : 'border-white/10'}`}
+                          className="space-y-2 pt-2 border-t border-zinc-100 overflow-hidden"
                         >
                           {/* Tech Stack Chips */}
                           <div className="pt-1">
-                            <div className={`text-[9.5px] font-semibold uppercase tracking-wider mb-1 ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
+                            <div className="text-[9.5px] font-semibold uppercase tracking-wider mb-1 text-zinc-500">
                               Technology & Governance Frameworks:
                             </div>
                             <div className="flex flex-wrap gap-1">
                               {milestone.technologies.map((tech, tIdx) => (
                                 <span
                                   key={tIdx}
-                                  className={`text-[9px] font-medium px-1.5 py-0.5 rounded border ${
-                                    isLight 
-                                      ? 'bg-zinc-100 border-zinc-200 text-zinc-800' 
-                                      : 'bg-white/[0.04] border-white/10 text-zinc-300'
-                                  }`}
+                                  className="text-[9px] font-medium px-1.5 py-0.5 rounded border bg-zinc-100 border-zinc-200 text-zinc-800"
                                 >
                                   {tech}
                                 </span>

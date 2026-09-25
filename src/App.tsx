@@ -160,6 +160,34 @@ export default function App() {
     }
   }, [activeIndex, navigateToIndex]);
 
+  // Executive Access Alert: Notify owner on new visit (once per session)
+  useEffect(() => {
+    // Check if alert was already sent in this session to prevent spam on refreshes
+    const hasSentAlert = sessionStorage.getItem('executive_portfolio_access_alert_sent');
+    
+    if (!hasSentAlert) {
+      fetch('/api/access-alert', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          screenResolution: `${window.screen.width}x${window.screen.height}`,
+          language: navigator.language,
+          referrer: document.referrer || 'Direct'
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          sessionStorage.setItem('executive_portfolio_access_alert_sent', 'true');
+        }
+      })
+      .catch(err => {
+        // Silently log error to prevent console clutter for visitors
+        console.warn('Telemetry transmission delayed or restricted.');
+      });
+    }
+  }, []);
+
   // Sync active section based on scroll position in scroll container
   useEffect(() => {
     const container = containerRef.current;
@@ -441,6 +469,23 @@ export default function App() {
     }
   };
 
+  const getActiveFontFamilyCSS = () => {
+    if (customFontFamily) return customFontFamily;
+    switch (font) {
+      case 'jakarta':
+        return '"Plus Jakarta Sans", sans-serif';
+      case 'outfit':
+        return '"Outfit", sans-serif';
+      case 'serif':
+        return '"Playfair Display", Georgia, serif';
+      case 'mono':
+        return '"JetBrains Mono", monospace';
+      case 'inter':
+      default:
+        return '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    }
+  };
+
   const isLight = theme === 'apple-light' || theme === 'solarized';
 
   if (isDenied) {
@@ -453,10 +498,15 @@ export default function App() {
     );
   }
 
+  const activeFontVal = getActiveFontFamilyCSS();
+
   return (
     <div 
-      style={{ fontFamily: customFontFamily || undefined }}
-      className={`h-screen w-screen overflow-hidden transition-colors duration-500 theme-${theme} accent-${accent} ${getThemeClass()} ${getFontClass()}`}
+      style={{ 
+        fontFamily: activeFontVal,
+        '--active-font-family': activeFontVal 
+      } as React.CSSProperties}
+      className={`h-screen w-screen overflow-hidden transition-colors duration-500 theme-${theme} accent-${accent} ${getThemeClass()}`}
     >
       <Navbar
         onOpenContact={() => setContactOpen(true)}
