@@ -37,7 +37,7 @@ const SECTION_LABELS: Record<SectionId, string> = {
   blog: 'Publications',
   offkeyboard: 'Off Keyboard',
   philosophy: 'Philosophy',
-  archive: 'Archives & Patents'
+  archive: 'Archives & Publications'
 };
 
 interface SnapSectionProps {
@@ -163,97 +163,113 @@ export default function App() {
   // Executive Access Alert: Notify owner on new visit (once per session)
   useEffect(() => {
     // Check if alert was already sent in this session to prevent spam on refreshes
-    const hasSentAlert = sessionStorage.getItem('executive_portfolio_access_alert_sent');
+    let hasSentAlert = false;
+    try {
+      hasSentAlert = !!sessionStorage.getItem('executive_portfolio_access_alert_sent');
+    } catch (e) {
+      // In private mode or restricted environments, storage might be unavailable
+    }
     
     if (!hasSentAlert) {
-      // Collect advanced client details
+      // Collect advanced client details with high defensive rigor
       const getGpuInfo = () => {
         try {
           const canvas = document.createElement('canvas');
+          if (!canvas) return { vendor: 'Unavailable', renderer: 'Unavailable' };
           const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
-          if (!gl) return { vendor: 'Unknown', renderer: 'Unknown' };
+          if (!gl) return { vendor: 'Disabled', renderer: 'Disabled' };
           const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
           return debugInfo ? {
-            vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL),
-            renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL)
-          } : { vendor: 'Unknown', renderer: 'Unknown' };
+            vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Unknown',
+            renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Unknown'
+          } : { vendor: 'Restricted', renderer: 'Restricted' };
         } catch (e) {
           return { vendor: 'Error', renderer: 'Error' };
         }
       };
 
-      const gpu = getGpuInfo();
-      const nav = navigator as any;
-      const conn = nav.connection || nav.mozConnection || nav.webkitConnection;
+      try {
+        const gpu = getGpuInfo();
+        const nav = (navigator || {}) as any;
+        const conn = nav.connection || nav.mozConnection || nav.webkitConnection || {};
 
-      const payload = {
-        screen: {
-          width: window.screen.width,
-          height: window.screen.height,
-          availWidth: window.screen.availWidth,
-          availHeight: window.screen.availHeight,
-          colorDepth: window.screen.colorDepth,
-          pixelRatio: window.devicePixelRatio
-        },
-        device: {
-          memory: nav.deviceMemory || 'Unknown',
-          cpuCores: nav.hardwareConcurrency || 'Unknown',
-          platform: nav.platform || 'Unknown',
-          vendor: nav.vendor || 'Unknown',
-          maxTouchPoints: nav.maxTouchPoints || 0,
-          language: nav.language,
-          languages: nav.languages?.join(', '),
-          doNotTrack: nav.doNotTrack || 'Unknown',
-          gpu: gpu
-        },
-        context: {
-          referrer: document.referrer || 'Direct',
-          href: window.location.href,
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-          connection: conn ? {
-            type: conn.effectiveType,
-            downlink: conn.downlink,
-            rtt: conn.rtt,
-            saveData: conn.saveData
-          } : 'Unknown'
-        }
-      };
+        const payload = {
+          screen: {
+            width: window?.screen?.width || 0,
+            height: window?.screen?.height || 0,
+            availWidth: window?.screen?.availWidth || 0,
+            availHeight: window?.screen?.availHeight || 0,
+            colorDepth: window?.screen?.colorDepth || 0,
+            pixelRatio: window?.devicePixelRatio || 1
+          },
+          device: {
+            memory: nav.deviceMemory || 'Unknown',
+            cpuCores: nav.hardwareConcurrency || 'Unknown',
+            platform: nav.platform || 'Unknown',
+            vendor: nav.vendor || 'Unknown',
+            maxTouchPoints: nav.maxTouchPoints || 0,
+            language: nav.language || 'en-US',
+            languages: nav.languages?.join(', ') || 'Unknown',
+            doNotTrack: nav.doNotTrack || 'Unknown',
+            gpu: gpu
+          },
+          context: {
+            referrer: document.referrer || 'Direct',
+            href: window?.location?.href || 'Unknown',
+            timezone: 'UTC', // Default fallback
+            connection: {
+              type: conn.effectiveType || 'Unknown',
+              downlink: conn.downlink || 0,
+              rtt: conn.rtt || 0,
+              saveData: !!conn.saveData
+            }
+          }
+        };
 
-      const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
-      const endpoint = formspreeId 
-        ? `https://formspree.io/f/${formspreeId}`
-        : '/api/access-alert';
+        // Attempt to get accurate timezone
+        try {
+          payload.context.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        } catch (tzErr) {}
 
-      fetch(endpoint, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          ...payload,
-          _subject: `[ACCESS ALERT] New Visit from ${payload.context.href}` // Formspree subject
+        const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+        const endpoint = formspreeId 
+          ? `https://formspree.io/f/${formspreeId}`
+          : '/api/access-alert';
+
+        fetch(endpoint, {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            ...payload,
+            _subject: `[ACCESS ALERT] New Visit from ${payload.context.href}` // Formspree subject
+          })
         })
-      })
-      .then(res => {
-        // Handle potential HTML response from static hosts
-        const contentType = res.headers.get("content-type");
-        if (contentType && contentType.indexOf("application/json") !== -1) {
-          return res.json();
-        } else {
-          return { success: res.ok };
-        }
-      })
-      .then(data => {
-        if (data.success || data.ok) {
-          sessionStorage.setItem('executive_portfolio_access_alert_sent', 'true');
-        }
-      })
-      .catch(err => {
-        // Silently log error to prevent console clutter for visitors
-        // On static hosts like GitHub Pages, this will fail if VITE_FORMSPREE_ID is not set
-        console.warn('Telemetry transmission restricted on static host.');
-      });
+        .then(res => {
+          // Handle potential HTML response from static hosts
+          const contentType = res.headers.get("content-type");
+          if (contentType && contentType.indexOf("application/json") !== -1) {
+            return res.json();
+          } else {
+            return { success: res.ok };
+          }
+        })
+        .then(data => {
+          if (data && (data.success || data.ok)) {
+            try {
+              sessionStorage.setItem('executive_portfolio_access_alert_sent', 'true');
+            } catch (sErr) {}
+          }
+        })
+        .catch(err => {
+          // Silently log error to prevent console clutter for visitors
+          console.warn('Telemetry transmission restricted.');
+        });
+      } catch (telemetryErr) {
+        console.error('Critical telemetry failure:', telemetryErr);
+      }
     }
   }, []);
 

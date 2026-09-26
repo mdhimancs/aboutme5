@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import { Resend } from 'resend';
 import dotenv from 'dotenv';
@@ -15,7 +16,7 @@ const CSP_HEADER_VALUE = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https://images.unsplash.com https://img.youtube.com https://*.google-analytics.com https://*.googletagmanager.com https://lh3.googleusercontent.com",
-  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com",
+  "connect-src 'self' https://formspree.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com",
   "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com",
   "frame-ancestors 'self' https://ai.studio https://*.google.com https://*.run.app https://*.googleusercontent.com"
 ].join("; ");
@@ -165,7 +166,8 @@ async function startServer() {
   // API Route for sending access alerts on new visits
   app.post("/api/access-alert", async (req, res) => {
     if (!resend) {
-      return res.status(500).json({ error: "Email service not configured" });
+      console.error("[ACCESS-ALERT] Error: RESEND_API_KEY is missing from environment variables.");
+      return res.status(500).json({ error: "Email service not configured on server" });
     }
 
     const clientIp = getClientIp(req);
@@ -183,7 +185,8 @@ async function startServer() {
     };
 
     try {
-      await resend.emails.send({
+      console.log(`[ACCESS-ALERT] Attempting to send alert for IP: ${clientIp}`);
+      const { data, error } = await resend.emails.send({
         from: 'Access Alert <onboarding@resend.dev>',
         to: ['munish.world@gmail.com'],
         subject: `[DETAILED ACCESS ALERT] New Visit from ${clientIp}`,
@@ -274,11 +277,27 @@ async function startServer() {
         `,
       });
 
-      res.status(200).json({ success: true });
+      if (error) {
+        console.error("[ACCESS-ALERT] Resend Error:", error);
+        return res.status(400).json({ error });
+      }
+
+      console.log(`[ACCESS-ALERT] Success: Email sent to munish.world@gmail.com`);
+      res.status(200).json({ success: true, id: data?.id });
     } catch (err) {
-      console.error("Access alert error:", err);
+      console.error("[ACCESS-ALERT] Server Exception:", err);
       res.status(500).json({ error: "Internal server error" });
     }
+  });
+
+  // Health Check Endpoint
+  app.get("/api/health", (req, res) => {
+    res.json({
+      status: "healthy",
+      emailService: resend ? "configured" : "not-configured",
+      nodeEnv: process.env.NODE_ENV,
+      timestamp: new Date().toISOString()
+    });
   });
 
   // API Route for sending emails with rate limiting
@@ -307,8 +326,8 @@ async function startServer() {
     }
 
     if (!resend) {
-      console.error("RESEND_API_KEY is not configured");
-      return res.status(500).json({ error: "Email service not configured. Please add RESEND_API_KEY to environment variables." });
+      console.error("[SEND-EMAIL] Error: RESEND_API_KEY is not configured in env.");
+      return res.status(500).json({ error: "Email service not configured on server. Please add RESEND_API_KEY." });
     }
 
     // Support multiple email addresses separated by ; or ,
@@ -325,6 +344,7 @@ async function startServer() {
       : undefined;
 
     try {
+      console.log(`[SEND-EMAIL] Attempting to send inquiry from ${name} (${emailList[0]})`);
       const { data, error } = await resend.emails.send({
         from: 'Portfolio Contact <onboarding@resend.dev>',
         to: ['munish.world@gmail.com'], // The user's email from portfolioData
@@ -343,17 +363,18 @@ async function startServer() {
       });
 
       if (error) {
-        console.error("Resend error:", error);
+        console.error("[SEND-EMAIL] Resend Error:", error);
         return res.status(400).json({ error });
       }
 
+      console.log(`[SEND-EMAIL] Success: Email transmitted (ID: ${data?.id})`);
       // Record successful transmission timestamp for rate limiting
       validTimestamps.push(now);
       emailRateLimitMap.set(clientIp, validTimestamps);
 
       res.status(200).json({ success: true, data });
     } catch (err) {
-      console.error("Server error:", err);
+      console.error("[SEND-EMAIL] Server Exception:", err);
       res.status(500).json({ error: "Internal server error" });
     }
   });
@@ -367,13 +388,35 @@ async function startServer() {
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
-      appType: "spa",
+      appType: "custom", // Change to custom to manually handle index.html transformation
     });
+    
     app.use(vite.middlewares);
+
+    app.use(async (req, res, next) => {
+      const url = req.originalUrl;
+      try {
+        // 1. Read index.html
+        let template = await fs.promises.readFile(
+          path.resolve(process.cwd(), 'index.html'),
+          'utf-8'
+        );
+
+        // 2. Apply Vite HTML transforms.
+        template = await vite.transformIndexHtml(url, template);
+
+        // 3. Send the rendered HTML back.
+        res.status(200).set({ 'Content-Type': 'text/html' }).end(template);
+      } catch (e) {
+        // If an error is caught, let Vite fix the stack trace
+        if (e instanceof Error) vite.ssrFixStacktrace(e);
+        next(e);
+      }
+    });
   } else {
     const distPath = path.join(process.cwd(), 'dist');
     app.use(express.static(distPath));
-    app.get('*', (req, res) => {
+    app.use((req, res) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });
   }
@@ -383,4 +426,7 @@ async function startServer() {
   });
 }
 
-startServer();
+startServer().catch(err => {
+  console.error("CRITICAL: Server failed to start:", err);
+  process.exit(1);
+});

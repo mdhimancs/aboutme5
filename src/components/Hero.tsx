@@ -78,7 +78,7 @@ const HIGHLIGHT_PRESETS: HighlightPreset[] = [
     stats: [
       { value: "NIST 800-207", label: "Zero Trust Architecture", sublabel: "Micro-Segmented Fabric" },
       { value: "100%", label: "Phishing-Resistant MFA", sublabel: "FIDO2 & Hardware Keys" },
-      { value: "12 Patents", label: "Granted Defensibility", sublabel: "Auth & Cryptography IP" },
+      { value: "45+", label: "Strategic Publications", sublabel: "Cyber & Tech Thought Leadership" },
       { value: "-70%", label: "Threat Exposure Window", sublabel: "Continuous Posture Check" },
       { value: "Tier-0", label: "Active Directory Enclaves", sublabel: "Forest & Kerberos Hardened" }
     ],

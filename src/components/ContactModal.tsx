@@ -136,17 +136,26 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, the
       // Attempt to parse response as JSON, but handle HTML error pages from static hosts
       let result;
       const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
+      const isJson = contentType && contentType.includes("application/json");
+
+      if (isJson) {
         result = await response.json();
       } else {
-        // If we got HTML back, the endpoint likely doesn't exist (404 redirected to index.html)
+        // If we got HTML back on a non-Formspree endpoint, the server.ts is likely not running
+        if (!formspreeId) {
+          throw new Error('Architecture Mismatch: Your browser is receiving HTML instead of an API response. This usually means you are on a static host (like GitHub Pages) but trying to use the Node.js backend. Please configure VITE_FORMSPREE_ID for static hosting or move to Vercel/Railway.');
+        }
         if (!response.ok) {
-          throw new Error('Endpoint configuration mismatch. If you are on GitHub Pages, ensure VITE_FORMSPREE_ID is correctly set in your Variables.');
+          throw new Error('Endpoint configuration mismatch. Please verify your VITE_FORMSPREE_ID.');
         }
         result = { success: true };
       }
 
       if (!response.ok) {
+        // Specific check for server-side configuration error
+        if (result?.error === "Email service not configured on server") {
+          throw new Error('Server Error: RESEND_API_KEY is missing from your hosting provider\'s environment variables.');
+        }
         throw new Error(result?.error || result?.errors?.[0]?.message || 'Failed to send message.');
       }
 
