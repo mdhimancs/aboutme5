@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   ShieldCheck, 
   Users, 
@@ -36,7 +36,8 @@ import {
   TrendingUp,
   Zap,
   Flame,
-  Radio
+  Radio,
+  LogOut
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -300,7 +301,7 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
   theme = 'apple-light'
 }) => {
   const isLight = theme === 'apple-light';
-  const { user, isAdmin, clientIp, signInWithGoogle, signInWithPasscode } = useAuth();
+  const { user, isAdmin, clientIp, signInWithGoogle, signInWithPasscode, signOut } = useAuth();
   
   const [activeTab, setActiveTab] = useState<'visitors' | 'analytics' | 'heatmap' | 'sessions' | 'audit' | 'security'>('visitors');
   const [searchTerm, setSearchTerm] = useState('');
@@ -313,6 +314,65 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
   const [selectedHubId, setSelectedHubId] = useState<string | null>('hub-nyc');
   const [heatmapMode, setHeatmapMode] = useState<'density' | 'pins' | 'mesh'>('density');
 
+  // Idle Timer & Security Logout Logic
+  const IDLE_TIMEOUT_SECONDS = 15 * 60;
+  const [timeLeft, setTimeLeft] = useState(IDLE_TIMEOUT_SECONDS);
+
+  const handleLogout = useCallback(async () => {
+    try {
+      await signOut();
+      onClose();
+    } catch (err) {
+      onClose();
+    }
+  }, [signOut, onClose]);
+
+  useEffect(() => {
+    if (!isOpen || !isAdmin) return;
+
+    // Reset timer on activity
+    const resetTimer = () => setTimeLeft(IDLE_TIMEOUT_SECONDS);
+    const activityEvents = ['mousemove', 'keydown', 'scroll', 'click', 'touchstart'];
+    
+    activityEvents.forEach(event => {
+      window.addEventListener(event, resetTimer);
+    });
+
+    // Window visibility check - logout if inactive/hidden
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        handleLogout();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    // Countdown interval
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleLogout();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+      activityEvents.forEach(event => {
+        window.removeEventListener(event, resetTimer);
+      });
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isOpen, isAdmin, handleLogout]);
+
+  const formatTimeLeft = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
   // Passcode & Firebase auth state
   const [passcodeInput, setPasscodeInput] = useState('');
   const [passcodeEmail, setPasscodeEmail] = useState('munish.world@gmail.com');
@@ -320,7 +380,7 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState('');
 
-  // Generate deep, realistic live visitor telemetry & interaction data
+  // Logic for generating deep, realistic live visitor telemetry & interaction data
   useEffect(() => {
     if (isOpen) {
       const currentUptime = `${Math.floor(Math.random() * 2 + 1)}h ${Math.floor(Math.random() * 40 + 10)}m`;
@@ -525,7 +585,8 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
     }
   }, [isOpen, isAdmin, clientIp]);
 
-  // Auto-close console after 2 hours (7200000ms)
+  // Auto-close console after 2 hours (removed in favor of 15-min idle/visibility logout)
+  /*
   useEffect(() => {
     if (!isOpen) return;
 
@@ -535,6 +596,7 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
 
     return () => clearTimeout(timer);
   }, [isOpen, onClose]);
+  */
 
   const handleRefresh = () => {
     setIsRefreshing(true);
@@ -751,7 +813,17 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
+            <div className="flex flex-col items-end mr-2 px-3 py-1 rounded-lg bg-red-500/10 border border-red-500/20">
+              <div className="flex items-center gap-1.5 text-[10px] font-bold text-red-400 uppercase tracking-tighter">
+                <Clock className="w-3 h-3" />
+                <span>Session Expiry</span>
+              </div>
+              <span className="text-xs font-mono font-black text-red-500 tabular-nums">
+                {formatTimeLeft(timeLeft)}
+              </span>
+            </div>
+            
             <button
               onClick={handleRefresh}
               title="Refresh telemetry streams"
@@ -760,11 +832,12 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
               <RefreshCw className="w-4 h-4" />
             </button>
             <button
-              onClick={onClose}
-              title="Close console"
-              className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors cursor-pointer"
+              onClick={handleLogout}
+              title="Terminate Admin Session & Logout"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-600 hover:bg-red-500 text-white font-bold text-xs transition-colors cursor-pointer shadow-lg shadow-red-900/20"
             >
-              <X className="w-4 h-4" />
+              <LogOut className="w-4 h-4" />
+              <span>Admin Logout</span>
             </button>
           </div>
         </div>
