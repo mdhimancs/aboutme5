@@ -2,6 +2,454 @@ import { BlogPost } from '../types';
 
 export const NEW_BLOG_POSTS: BlogPost[] = [
   {
+    id: "bp-2026-non-human-identities-cicd",
+    title: "Securing Non-Human Identities (NHI) & Service Principals in Multi-Cloud CI/CD Pipelines",
+    slug: "securing-non-human-identities-service-principals-cicd",
+    excerpt: "An architectural blueprint for governing and rotating workload identities, OAuth client credentials grants, SPIFFE/SPIRE workload attestation, and eliminating hardcoded secrets in GitHub Actions and GitLab runners.",
+    date: "September 27, 2026",
+    readTime: "15 min read",
+    category: "Cloud & Network Security",
+    tags: ["Non-Human Identities", "CI/CD Security", "SPIFFE/SPIRE", "Workload Identity", "Service Principals", "Secret Rotation"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 4720,
+    likes: 410,
+    content: `
+# Securing Non-Human Identities (NHI) & Service Principals in Multi-Cloud CI/CD Pipelines
+
+![Non-Human Identity Architecture](https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & The NHI Threat Vector
+In modern cloud-native enterprises, **Non-Human Identities (NHIs)**—such as service principals, API keys, OAuth client credentials, CI/CD runners, and cloud IAM roles—outnumber human user identities by a factor of 50 to 1. Yet, organizations frequently apply rigorous MFA and governance to human accounts while leaving service principals with permanent, unrotated credentials and over-privileged permissions.
+
+This publication outlines an enterprise security architecture for discovering, vaulting, and automatically rotating multi-cloud NHIs using **SPIFFE/SPIRE workload attestation** and OIDC federation.
+
+---
+
+### Architectural Design & Workload Attestation Topology
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                    MULTI-CLOUD WORKLOAD IDENTITY & SPIFFE/SPIRE ATTESTATION                  │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+     [ CI/CD PIPELINE / KUBERNETES POD ]
+                    │
+                    ▼ (Cryptographic Node & Container Attestation)
+     ┌──────────────────────────────────────────────────────────────┐
+     │                     SPIRE AGGREGATOR SERVER                  │
+     │ • Verifies Cryptographic SVIDs (X.509 / JWT)                 │
+     │ • Issues Short-Lived Ephemeral Workload Tokens               │
+     └──────────────────────────────┬───────────────────────────────┘
+                                    │
+                                    ▼
+     ┌──────────────────────────────────────────────────────────────┐
+     │                     CLOUD IAM FEDERATION                     │
+     │ • AWS / Azure / GCP AssumeRole with OIDC Federation          │
+     │ • Zero Static API Keys or Long-Lived Service Principal Keys  │
+     └──────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+### Core Architecture Controls
+1. **Elimination of Long-Lived Secrets**: Replaced static access keys in GitHub Actions with OIDC token exchange, eliminating credential leakage risks.
+2. **SPIFFE/SPIRE Workload Identity**: Cryptographically verifying workload provenance before granting access to sensitive databases and vaults.
+3. **Automated Least Privilege Scoping**: Continuous monitoring of service principal permissions to reclaim unused privileges.
+
+---
+`
+  },
+  {
+    id: "bp-2026-decentralized-identity-enterprise",
+    title: "Designing Decentralized Identity (DID) & Verifiable Credentials for Enterprise Workforce Trust",
+    slug: "decentralized-identity-verifiable-credentials-enterprise",
+    excerpt: "An architectural evaluation of W3C decentralized identifiers (DIDs) and verifiable credentials (VCs) for cryptographically establishing zero-trust employee credentials and partner authentication.",
+    date: "September 22, 2026",
+    readTime: "14 min read",
+    category: "IAM & PAM Architecture",
+    tags: ["Decentralized Identity", "Verifiable Credentials", "W3C DIDs", "Zero Trust", "Enterprise Trust", "Cryptographic Badges"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 3950,
+    likes: 340,
+    content: `
+# Designing Decentralized Identity (DID) & Verifiable Credentials for Enterprise Workforce Trust
+
+![Decentralized Identity Architecture](https://images.unsplash.com/photo-1639762681485-074b7f938ba0?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & Scope
+Centralized enterprise identity providers (IdPs) create single points of failure and privacy vulnerabilities. **Decentralized Identifiers (DIDs)** and **Verifiable Credentials (VCs)** anchored on W3C standards offer a cryptographic paradigm shift, allowing enterprises to issue tamper-proof digital badges to employees, contractors, and partner organizations without central database tracking.
+
+---
+
+### Core Architecture & Trust Triangle
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                         W3C VERIFIABLE CREDENTIALS TRUST TRIANGLE                            │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+                      ┌───────────────────────────┐
+                      │    ISSUER (Enterprise)    │
+                      │ • Signs Employee DID VC   │
+                      └─────────────┬─────────────┘
+                                    │
+                       Issues       │      Presents
+                   Credential       │      Credential
+                                    ▼
+                      ┌─────────────┴─────────────┐         Verifies
+                      │    HOLDER (Employee)      │ ────────────────────────► ┌──────────────────────────┐
+                      │ • Stores in Secure Wallet │                           │  VERIFIER (Cloud App)    │
+                      └───────────────────────────┘                           │  • Validates Cryptography│
+                                                                              └──────────────────────────┘
+\`\`\`
+
+---
+`
+  },
+  {
+    id: "bp-2026-ai-driven-access-governance-ueba",
+    title: "AI-Driven Access Governance: Applying Behavioral UEBA and Risk-Scoring to Dynamic Entitlement Reviews",
+    slug: "ai-driven-access-governance-ueba-risk-scoring",
+    excerpt: "How machine learning models and User & Entity Behavior Analytics (UEBA) automate entitlement certifications, detect lateral movement anomalies, and eliminate certification fatigue.",
+    date: "September 15, 2026",
+    readTime: "16 min read",
+    category: "AI Governance & Security",
+    tags: ["AI Access Governance", "UEBA", "Risk Scoring", "Access Certifications", "Machine Learning", "Identity Analytics"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 4310,
+    likes: 390,
+    content: `
+# AI-Driven Access Governance: Applying Behavioral UEBA and Risk-Scoring to Dynamic Entitlement Reviews
+
+![AI Access Governance Architecture](https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & Challenge
+Quarterly access certification reviews are traditionally plagued by "rubber-stamping," where managers approve all user entitlements without granular verification, rendering compliance audits superficial. 
+
+This publication details an AI-powered access governance architecture combining **User & Entity Behavior Analytics (UEBA)** with SailPoint IGA to automatically certify low-risk entitlements and surface high-risk permission anomalies.
+
+---
+`
+  },
+  {
+    id: "bp-2026-privileged-remote-access-third-party",
+    title: "Architecting Privileged Remote Access for Third-Party Vendors Without VPNs",
+    slug: "architectural-privileged-remote-access-third-party-vendors",
+    excerpt: "A Zero Trust design blueprint for securing third-party vendor and contractor access using clientless browser isolation, just-in-time access, and continuous behavioral recording.",
+    date: "September 5, 2026",
+    readTime: "13 min read",
+    category: "Cloud & Network Security",
+    tags: ["Third-Party Access", "Vendor PAM", "Clientless Browser Isolation", "Zero Trust", "Remote Access", "Session Recording"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 4080,
+    likes: 355,
+    content: `
+# Architecting Privileged Remote Access for Third-Party Vendors Without VPNs
+
+![Vendor PAM Architecture](https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & The Third-Party Risk Vector
+Many major enterprise data breaches originate from compromised third-party vendor credentials traversing traditional corporate VPNs. Once inside, vendors often have broad network access. 
+
+This publication presents a Zero Trust architecture for vendor access utilizing **clientless browser isolation, ephemeral JIT tunneling, and WORM session recording**.
+
+---
+`
+  },
+  {
+    id: "bp-2026-pam-cyberark-beyondtrust-integration",
+    title: "Enterprise PAM & Secret Management Architecture: End-to-End CyberArk and BeyondTrust Integration Topologies",
+    slug: "enterprise-pam-cyberark-beyondtrust-integration-architecture",
+    excerpt: "A comprehensive blueprint for designing hybrid multi-cloud Privileged Access Management (PAM) architectures combining CyberArk Enterprise Vaulting, AIM, and PSM with BeyondTrust Password Safe and Privilege Management.",
+    date: "September 25, 2026",
+    readTime: "16 min read",
+    category: "IAM & PAM Architecture",
+    tags: ["CyberArk", "BeyondTrust", "PAM Architecture", "Secret Management", "Zero Standing Privilege", "PSM & AIM"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 4890,
+    likes: 412,
+    content: `
+# Enterprise PAM & Secret Management Architecture: End-to-End CyberArk and BeyondTrust Integration Topologies
+
+![PAM Enterprise Architecture](https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & Design Scope
+Privileged Access Management (PAM) is the cornerstone of Tier-0 infrastructure defense. In large-scale enterprise environments spanning hybrid multi-cloud perimeters, organizations frequently deploy best-of-breed solutions from both **CyberArk** (Enterprise Vaulting, Privileged Session Manager [PSM], Application Identity Manager [AIM]) and **BeyondTrust** (Password Safe, Endpoint Privilege Management). 
+
+This publication presents a production-grade architectural design for unifying CyberArk and BeyondTrust across a global financial enterprise, eliminating standing administrative credentials, enforcing Just-In-Time (JIT) elevation, and securing non-human machine identities.
+
+---
+
+### Architectural Topologizing: CyberArk & BeyondTrust Coexistence
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                 HYBRID MULTI-CLOUD PRIVILEGED ACCESS MANAGEMENT FABRIC                       │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+     [ IDENTITY PROVIDER ] ───► (Microsoft Entra ID / Okta OIDC Federation with FIDO2 MFA)
+              │
+              ▼
+     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+     │                      CENTRAL PRIVILEGE ORCHESTRATION LAYER                               │
+     │                                                                                          │
+     │   ┌────────────────────────────────────────┐    ┌──────────────────────────────────────┐ │
+     │   │         CYBERARK ENTERPRISE            │    │        BEYONDTRUST PASSWORD SAFE     │ │
+     │   │ • Central Vault & CPM Rotations        │    │ • Infrastructure & Network Vault     │ │
+     │   │ • PSM (Privileged Session Manager)     │    │ • Active Directory LAPS Federation   │ │
+     │   │ • AIM (Application Identity Manager)   │    │ • Endpoint Least Privilege Agents    │ │
+     │   └───────────────────┬────────────────────┘    └──────────────────┬───────────────────┘ │
+     └───────────────────────┼────────────────────────────────────────────┼─────────────────────┘
+                             │                                            │
+                             ▼                                            ▼
+     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+     │                           TARGET TIER-0 INFRASTRUCTURE ENCLAVES                          │
+     │   • Active Directory & Entra ID Domain Controllers                                       │
+     │   • AWS / Azure / GCP Cloud Management Consoles & IAM Roles                              │
+     │   • Linux & Windows Enterprise Servers (SSH / RDP Ephemeral Access)                      │
+     │   • CI/CD Pipelines & Kubernetes Clusters (Non-Human Machine Secrets)                    │
+     └──────────────────────────────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+### Core Design Components & Protocols
+
+#### 1. CyberArk Enterprise Vaulting & Session Isolation (PSM)
+* **Central Credential Provider (CCP) & AIM**: Eliminates hardcoded service account credentials in application configuration files by fetching secrets ephemerally via secure REST APIs with mutual TLS (mTLS) client certificate authentication.
+* **Privileged Session Manager (PSM)**: Proxies all administrative RDP and SSH sessions, recording keystrokes and session videos into an encrypted WORM storage vault while preventing direct network-layer access to Tier-0 servers.
+
+#### 2. BeyondTrust Password Safe & Endpoint Privilege Management
+* **Active Directory & LAPS Integration**: Leverages BeyondTrust Password Safe to discover, vault, and rotate privileged accounts across network gear, hypervisors, and databases.
+* **Endpoint Least Privilege (EPM)**: Deploys BeyondTrust agents on corporate workstations to strip local administrator rights from end-users while dynamically elevating approved administrative tools via centralized policy rules.
+
+#### 3. Zero Standing Privilege (ZSP) & JIT Elevation Workflow
+* **ServiceNow Integration**: Engineers request ephemeral privileged access via ServiceNow tickets. Upon automated approval, CyberArk or BeyondTrust provisions a time-bound (e.g., 60-minute) access token and automatically revokes credentials upon session termination.
+
+---
+
+### Security Controls & Governance Best Practices
+* **Secret Sprawl Elimination**: Centralized rotation policies guarantee that database root passwords and domain administrator accounts are rotated every 24 hours.
+* **Comprehensive Audit Trail**: Correlating session recordings with SIEM (Splunk / Microsoft Sentinel) alerts for real-time anomaly detection.
+* **Compliance Assurance**: Fully satisfies SOX 404, PCI-DSS Requirement 8, and ISO 27001 Annex A.9 access control mandates.
+
+---
+`
+  },
+  {
+    id: "bp-2026-ztna-sase-zscaler-design",
+    title: "Zero Trust Network Access (ZTNA) & Secure Access Service Edge (SASE): Designing Zscaler Internet Access (ZIA) & Private Access (ZPA) Topologies",
+    slug: "ztna-sase-zscaler-zia-zpa-architecture-design",
+    excerpt: "An architectural blueprint for replacing legacy corporate VPNs with Zscaler ZIA and ZPA, establishing identity-aware microsegmentation, TLS inspection, and cloud native SASE security.",
+    date: "September 18, 2026",
+    readTime: "15 min read",
+    category: "Cloud & Network Security",
+    tags: ["Zscaler", "ZTNA", "SASE", "ZIA", "ZPA", "Zero Trust Architecture", "Microsegmentation"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 4420,
+    likes: 385,
+    content: `
+# Zero Trust Network Access (ZTNA) & Secure Access Service Edge (SASE): Designing Zscaler Internet Access (ZIA) & Private Access (ZPA) Topologies
+
+![Zscaler SASE & ZTNA Architecture](https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & Paradigm Shift
+Traditional enterprise networks relied on perimeter security—"castle-and-moat" architectures where users connected via corporate VPNs and were implicitly trusted once inside. In a hybrid multi-cloud world where applications reside in AWS, Azure, and SaaS platforms, legacy VPNs expose enterprises to lateral movement risks and ransomware propagation.
+
+This publication outlines the enterprise design and deployment of **Zscaler Secure Access Service Edge (SASE)**, combining **Zscaler Internet Access (ZIA)** for secure web gateway protection and **Zscaler Private Access (ZPA)** for Zero Trust Network Access (ZTNA) to internal applications without exposing them to the public internet.
+
+---
+
+### SASE & ZTNA Architecture Design Topology
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                       ZSCALER CLOUD SASE & ZTNA GLOBAL ARCHITECTURE                          │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+   CORPORATE USERS / BRANCHES                ZSCALER GLOBAL CLOUD ENCLAVE                PRIVATE APPS (AWS/Azure)
+  ┌──────────────────────────┐              ┌─────────────────────────────┐             ┌──────────────────────────┐
+  │ • Remote Laptops         │              │  Zscaler Enforcement Node   │             │  Zscaler App Connector   │
+  │ • Branch Offices (SD-WAN)│ ────────────►│  • ZIA (Secure Web Gateway) │ ───────────►│  • Outbound-Only TLS     │
+  │ • Mobile Devices         │  (TLS 1.3)   │  • ZPA (Zero Trust App Map) │  (Encrypted)│  • Zero Inbound Firewall │
+  └──────────────────────────┘              │  • Cloud Firewall & DLP     │             │    Ports Required        │
+                                            └──────────────┬──────────────┘             └──────────────────────────┘
+                                                           │
+                                                           ▼
+                                            ┌─────────────────────────────┐
+                                            │ IDENTITY & CONTEXT ENGINE   │
+                                            │ • Entra ID / Okta SAML/OIDC │
+                                            │ • Device Posture & MDM      │
+                                            └─────────────────────────────┘
+\`\`\`
+
+---
+
+### Core Design Principles & Implementation Standards
+
+#### 1. Zscaler Private Access (ZPA) & App Connectors
+* **Outbound-Only Connectivity**: Internal applications in AWS and Azure host lightweight Zscaler App Connectors that establish outbound-only TLS encrypted tunnels to the Zscaler Cloud. No inbound firewall ports or public IPs are ever exposed.
+* **Application-Level Microsegmentation**: Users never receive network-level IP connectivity to corporate subnets. Access is granted strictly to specific named applications (e.g., \`finance-app.internal\`) based on verified user identity and device posture.
+
+#### 2. Zscaler Internet Access (ZIA) & SSL Inspection
+* **Secure Web Gateway (SWG)**: Inspects 100% of web and cloud traffic for malware, phishing, and data exfiltration.
+* **At-Scale SSL/TLS Decryption**: Deploys enterprise certificate authorities to inspect encrypted traffic while honoring privacy exemptions for financial and healthcare SaaS categories.
+
+#### 3. Identity and Posture Integration
+* Seamlessly integrates with **Microsoft Entra ID** and **Okta** to enforce continuous adaptive access policies based on user group membership, device compliance (Intune / CrowdStrike), and risk scores.
+
+---
+`
+  },
+  {
+    id: "bp-2026-phishing-resistant-mfa-otp-architecture",
+    title: "Modernizing Phishing-Resistant MFA & OTP Topologies: FIDO2 Passkeys, TOTP, and Hardware Token Design",
+    slug: "modernizing-phishing-resistant-mfa-otp-architecture-design",
+    excerpt: "An architectural evaluation and design standard for transitioning enterprise authentication from vulnerable SMS/OTP and legacy MFA to cryptographic, phishing-resistant FIDO2 WebAuthn passkeys and hardware tokens.",
+    date: "September 10, 2026",
+    readTime: "14 min read",
+    category: "IAM & PAM Architecture",
+    tags: ["FIDO2", "WebAuthn", "Passkeys", "OTP", "MFA", "Phishing Resistance", "Authentication Design"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 4150,
+    likes: 360,
+    content: `
+# Modernizing Phishing-Resistant MFA & OTP Topologies: FIDO2 Passkeys, TOTP, and Hardware Token Design
+
+![Phishing Resistant MFA Architecture](https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & The MFA Threat Landscape
+Traditional Multi-Factor Authentication (MFA)—specifically SMS One-Time Passwords (OTPs), voice calls, and basic Time-based One-Time Passwords (TOTP)—is fundamentally vulnerable to modern adversary-in-the-middle (AiTM) phishing kits and SIM-swapping attacks. 
+
+This publication presents an enterprise architectural standard for transitioning away from interceptable OTP mechanisms toward **cryptographically bound, phishing-resistant FIDO2 WebAuthn passkeys and hardware security tokens (YubiKeys)**.
+
+---
+
+### Architectural Comparison: Phishing Vulnerable vs. Phishing-Resistant MFA
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                         AUTHENTICATION PROTOCOL SECURITY SPECTRUM                            │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+   VULNERABLE (Phishable)                                    PHISHING-RESISTANT (Cryptographic)
+  ┌───────────────────────────────┐                         ┌──────────────────────────────────┐
+  │ • SMS / Voice OTP             │                         │ • FIDO2 / WebAuthn Passkeys      │
+  │ • Push Notifications (Fatigue)│                         │ • Hardware Security Keys (YubiKey)│
+  │ • Standard TOTP App Codes     │                         │ • Platform Authenticator (TPM 2.0)│
+  ├───────────────────────────────┤                         ├──────────────────────────────────┤
+  │ ❌ Interceptable via AiTM Proxy │                         │ ✅ Cryptographically Bound to Origin│
+  └───────────────────────────────┘                         └──────────────────────────────────┘
+\`\`\`
+
+---
+
+### Core Design Elements & Deployment Standards
+
+#### 1. FIDO2 / WebAuthn Cryptographic Binding
+* **Origin Binding**: Cryptographic key pairs generated on the authenticator are inextricably bound to the specific web domain (origin). Even if a user visits a sophisticated phishing replica site, the passkey refuses to sign the challenge, rendering AiTM attacks obsolete.
+
+#### 2. Phasing Out SMS and Push Fatigue
+* Eliminates out-of-band push notifications vulnerable to "push bombing" / MFA fatigue attacks by mandating number-matching or biometric verification.
+
+#### 3. Enterprise Hardware Token Lifecycle
+* Standardizing dual YubiKey deployments (Primary + Backup) for privileged administrators and executives, enrolled securely via SailPoint and Entra ID self-service onboarding portals.
+
+---
+`
+  },
+  {
+    id: "bp-2026-sso-governance-iga-architecture",
+    title: "Unified SSO Governance & Identity Lifecycle Management (IGA): SailPoint & Entra ID Cross-Tenant Architecture",
+    slug: "unified-sso-governance-iga-architecture-design",
+    excerpt: "Architectural blueprint for unifying Single Sign-On (SSO) governance with Identity Governance and Administration (IGA), orchestrating automated lifecycle workflows, separation of duties (SoD), and access reviews.",
+    date: "August 28, 2026",
+    readTime: "17 min read",
+    category: "IAM & PAM Architecture",
+    tags: ["SSO Governance", "IGA", "SailPoint", "Entra ID", "Identity Lifecycle", "SoD Policies", "Access Certifications"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 4980,
+    likes: 450,
+    content: `
+# Unified SSO Governance & Identity Lifecycle Management (IGA): SailPoint & Entra ID Cross-Tenant Architecture
+
+![SSO Governance & IGA Architecture](https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & Challenge
+Managing enterprise Single Sign-On (SSO) without robust **Identity Governance and Administration (IGA)** leads to orphaned accounts, unchecked permission creep, and severe regulatory non-compliance. 
+
+This publication details the architectural design for integrating **SailPoint IdentityIQ / Cloud** with **Microsoft Entra ID / Okta SSO**, establishing automated joiner-mover-leaver (JML) provisioning, Separation of Duties (SoD) policy enforcement, and quarterly manager access certifications.
+
+---
+
+### Architectural Design & Provisioning Topology
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                 ENTERPRISE SSO GOVERNANCE & IGA ORCHESTRATION FABRIC                         │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+     [ HR SYSTEM OF RECORD ] ───► (Workday / SuccessFactors Real-time Feed)
+                 │
+                 ▼
+     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+     │                IDENTITY GOVERNANCE & ADMINISTRATION (SailPoint IGA)                      │
+     │ • Role-Mining & Birthright Assignment Engine                                             │
+     │ • Separation of Duties (SoD) Policy Constraint Checker                                   │
+     │ • Automated Quarterly Access Certification Campaigns                                     │
+     └──────────────────────────┬───────────────────────────────────────────────────────────────┘
+                                │ (SCIM 2.0 Synchronized Provisioning)
+                                ▼
+     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+     │                      ENTERPRISE SSO IDP (Microsoft Entra ID / Okta)                      │
+     │ • SAML 2.0 / OIDC Federated Application Access                                           │
+     │ • Conditional Access & Risk-Adaptive Policies                                            │
+     └──────────────────────────────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+### Key Architectural Governance Controls
+1. **Automated Birthright Provisioning**: New hires receive baseline application entitlements within 5 minutes of HR record creation based on job function and department role models.
+2. **Separation of Duties (SoD) Guardrails**: Prevents toxic access combinations (e.g., users holding permissions to both create vendors and approve payments) before provisioning occurs.
+3. **Automated Access Certification**: Streamlines manager reviews by using AI risk insights to highlight anomalous entitlements, reducing review fatigue and ensuring 100% audit compliance.
+
+---
+`
+  },
+  {
     id: "bp-2026-nab-shift-left-architecture",
     title: "Shift-Left Security Architecture in Banking: Embedding Architecture into Agile Domain Delivery Cycles",
     slug: "shift-left-security-architecture-banking-domain-delivery",
@@ -18,7 +466,6 @@ export const NEW_BLOG_POSTS: BlogPost[] = [
     views: 4120,
     likes: 310,
     content: `
-# Shift-Left Security Architecture in Banking: Embedding Architecture into Agile Domain Delivery Cycles
 
 ![Banking Technology Architecture](https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto=format&fit=crop)
 

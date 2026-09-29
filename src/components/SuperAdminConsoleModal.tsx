@@ -856,10 +856,10 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
             {[
               { id: 'visitors', label: 'Live Visitors & Deep Forensics', icon: Globe, count: sessions.length },
               { id: 'analytics', label: 'Searches & Content Visited', icon: Search, count: '18 Queries' },
-              { id: 'heatmap', label: 'Geographic Telemetry Heatmap', icon: MapPin, count: '8 Hubs' },
               { id: 'sessions', label: 'Session Posture Matrix', icon: Activity, count: sessions.filter(s => s.status === 'Active').length },
               { id: 'audit', label: 'Security Audit Trail', icon: Terminal, count: '142' },
               { id: 'security', label: 'Access Control & RBAC', icon: Lock, count: 'Tier-0' },
+              { id: 'heatmap', label: 'Geographic Telemetry Heatmap', icon: MapPin, count: '8 Hubs' },
             ].map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -882,114 +882,103 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
               );
             })}
           </div>
-
-          <div className="relative hidden md:block">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-zinc-400" />
-            <input
-              type="text"
-              placeholder="Search IP, keywords, sections, actions..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-8 pr-3 py-0.5 bg-white border border-zinc-200 rounded-lg text-xs text-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-blue-500/40 w-64"
-            />
-          </div>
         </div>
 
         {/* Content Body */}
-        <div className="p-3.5 sm:p-4 overflow-y-auto space-y-3 bg-zinc-50/50 flex-1">
+        <div className="p-3 sm:p-3.5 overflow-y-auto space-y-2.5 bg-zinc-50/50 flex-1">
           
-          {/* Overview Metric Cards - Sophisticated Responsive Dashboard Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-3">
+          {/* Overview Metric Cards - 20% Smaller */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-2.5">
             {/* Card 1 */}
-            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
-              <div className="flex items-center justify-between text-zinc-500 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Active Visitors</span>
-                <span className="p-1 rounded-md bg-emerald-50 text-emerald-600 border border-emerald-100">
-                  <Users className="w-3.5 h-3.5" />
+            <div className="p-2.5 rounded-lg bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-0.5">
+                <span className="text-[9.5px] font-bold uppercase tracking-wider text-zinc-500">Active Visitors</span>
+                <span className="p-0.5 rounded bg-emerald-50 text-emerald-600 border border-emerald-100">
+                  <Users className="w-3 h-3" />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
-                <div className="text-lg font-black text-zinc-900 tracking-tight">4,289</div>
-                <span className="text-[10px] font-bold text-emerald-600 font-mono bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                <div className="text-base font-black text-zinc-900 tracking-tight">4,289</div>
+                <span className="text-[9.5px] font-bold text-emerald-600 font-mono bg-emerald-50 px-1 py-0.2 rounded border border-emerald-200">
                   ↑ 14.2% DoD
                 </span>
               </div>
-              <div className="text-[9.5px] text-zinc-500 mt-1">Live active telemetry stream</div>
+              <div className="text-[9px] text-zinc-500 mt-0.5">Live active telemetry stream</div>
             </div>
 
             {/* Card 2 */}
-            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
-              <div className="flex items-center justify-between text-zinc-500 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Sections Explored</span>
-                <span className="p-1 rounded-md bg-blue-50 text-blue-600 border border-blue-100">
-                  <Compass className="w-3.5 h-3.5" />
+            <div className="p-2.5 rounded-lg bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-0.5">
+                <span className="text-[9.5px] font-bold uppercase tracking-wider text-zinc-500">Sections Explored</span>
+                <span className="p-0.5 rounded bg-blue-50 text-blue-600 border border-blue-100">
+                  <Compass className="w-3 h-3" />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
-                <div className="text-lg font-black text-zinc-900 tracking-tight">12,410</div>
-                <span className="text-[10px] font-bold text-blue-600 font-mono bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
+                <div className="text-base font-black text-zinc-900 tracking-tight">12,410</div>
+                <span className="text-[9.5px] font-bold text-blue-600 font-mono bg-blue-50 px-1 py-0.2 rounded border border-blue-200">
                   4.8 / session
                 </span>
               </div>
-              <div className="text-[9.5px] text-zinc-500 mt-1">Deep architectural engagement</div>
+              <div className="text-[9px] text-zinc-500 mt-0.5">Deep architectural engagement</div>
             </div>
 
             {/* Card 3 */}
-            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
-              <div className="flex items-center justify-between text-zinc-500 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Assets & Searches</span>
-                <span className="p-1 rounded-md bg-indigo-50 text-indigo-600 border border-indigo-100">
-                  <Download className="w-3.5 h-3.5" />
+            <div className="p-2.5 rounded-lg bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-0.5">
+                <span className="text-[9.5px] font-bold uppercase tracking-wider text-zinc-500">Assets & Searches</span>
+                <span className="p-0.5 rounded bg-indigo-50 text-indigo-600 border border-indigo-100">
+                  <Download className="w-3 h-3" />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
-                <div className="text-lg font-black text-indigo-700 tracking-tight">842 Assets</div>
-                <span className="text-[10px] font-bold text-indigo-600 font-mono bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200">
+                <div className="text-base font-black text-indigo-700 tracking-tight">842 Assets</div>
+                <span className="text-[9.5px] font-bold text-indigo-600 font-mono bg-indigo-50 px-1 py-0.2 rounded border border-indigo-200">
                   100% Verified
                 </span>
               </div>
-              <div className="text-[9.5px] text-zinc-500 mt-1">CISO blueprints & whitepapers</div>
+              <div className="text-[9px] text-zinc-500 mt-0.5">CISO blueprints & whitepapers</div>
             </div>
 
             {/* Card 4: Global Heatmap Shortcut */}
             <div 
               onClick={() => setActiveTab('heatmap')}
-              className="p-3 rounded-xl bg-white hover:bg-blue-50/50 border border-zinc-200 hover:border-blue-300 shadow-2xs flex flex-col justify-between cursor-pointer transition-all hover:shadow-xs"
+              className="p-2.5 rounded-lg bg-white hover:bg-blue-50/50 border border-zinc-200 hover:border-blue-300 shadow-2xs flex flex-col justify-between cursor-pointer transition-all hover:shadow-xs"
               title="Click to view the Geographic Distribution Heatmap"
             >
-              <div className="flex items-center justify-between text-zinc-500 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Global Heatmap</span>
-                <span className="p-1 rounded-md bg-blue-50 text-blue-600 border border-blue-100">
-                  <MapPin className="w-3.5 h-3.5" />
+              <div className="flex items-center justify-between text-zinc-500 mb-0.5">
+                <span className="text-[9.5px] font-bold uppercase tracking-wider text-zinc-500">Global Heatmap</span>
+                <span className="p-0.5 rounded bg-blue-50 text-blue-600 border border-blue-100">
+                  <MapPin className="w-3 h-3" />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
-                <div className="text-lg font-black text-blue-700 tracking-tight">8 Hubs</div>
-                <span className="text-[10px] font-bold text-blue-600 font-mono bg-blue-50 px-1.5 py-0.5 rounded border border-blue-200">
+                <div className="text-base font-black text-blue-700 tracking-tight">8 Hubs</div>
+                <span className="text-[9.5px] font-bold text-blue-600 font-mono bg-blue-50 px-1 py-0.2 rounded border border-blue-200">
                   38% US / 22% UK
                 </span>
               </div>
-              <div className="text-[9.5px] text-blue-600 font-medium mt-1 flex items-center gap-1">
+              <div className="text-[9px] text-blue-600 font-medium mt-0.5 flex items-center gap-1">
                 <span>Inspect interactive map</span>
                 <span>→</span>
               </div>
             </div>
 
             {/* Card 5 */}
-            <div className="p-3 rounded-xl bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
-              <div className="flex items-center justify-between text-zinc-500 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">Cryptographic Guard</span>
-                <span className="p-1 rounded-md bg-amber-50 text-amber-600 border border-amber-100">
-                  <Lock className="w-3.5 h-3.5" />
+            <div className="p-2.5 rounded-lg bg-white border border-zinc-200 shadow-2xs flex flex-col justify-between hover:shadow-xs transition-shadow">
+              <div className="flex items-center justify-between text-zinc-500 mb-0.5">
+                <span className="text-[9.5px] font-bold uppercase tracking-wider text-zinc-500">Cryptographic Guard</span>
+                <span className="p-0.5 rounded bg-amber-50 text-amber-600 border border-amber-100">
+                  <Lock className="w-3 h-3" />
                 </span>
               </div>
               <div className="flex items-baseline justify-between">
-                <div className="text-base font-black text-zinc-900 tracking-tight font-mono">TLS 1.3 / DPoP</div>
-                <span className="text-[10px] font-bold text-amber-700 font-mono bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">
+                <div className="text-sm font-black text-zinc-900 tracking-tight font-mono">TLS 1.3 / DPoP</div>
+                <span className="text-[9.5px] font-bold text-amber-700 font-mono bg-amber-50 px-1 py-0.2 rounded border border-amber-200">
                   Zero Trust
                 </span>
               </div>
-              <div className="text-[9.5px] text-zinc-500 mt-1">Hardware TPM 2.0 attestation</div>
+              <div className="text-[9px] text-zinc-500 mt-0.5">Hardware TPM 2.0 attestation</div>
             </div>
           </div>
 
