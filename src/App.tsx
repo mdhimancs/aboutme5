@@ -22,6 +22,7 @@ import { useAuth } from './context/AuthContext';
 import { InterfaceOptionsModal, ThemeMode, AccentColor, FontStyle } from './components/InterfaceOptionsModal';
 import { SuperAdminConsoleModal } from './components/SuperAdminConsoleModal';
 import { ExecutiveFontsShowcaseModal, TOP_56_EXECUTIVE_FONTS } from './components/ExecutiveFontsShowcaseModal';
+import { StatusBanner } from './components/StatusBanner';
 import { ChevronUp, ChevronDown, Clock, AlertTriangle, X } from 'lucide-react';
 import { motion } from 'motion/react';
 
@@ -616,6 +617,8 @@ export default function App() {
         style={{ marginLeft: isSidebarCollapsed ? '72px' : '295px' }}
         className="h-screen overflow-y-auto scroll-container select-text transition-[margin] duration-300 ease-in-out relative"
       >
+        <StatusBanner theme={theme} />
+        
         {/* Atmospheric Top Scroll Progress Bar */}
         <div className="sticky top-0 left-0 right-0 h-[3px] z-50 pointer-events-none bg-transparent overflow-hidden">
           <div 
