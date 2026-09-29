@@ -2185,7 +2185,7 @@ export const Archive: React.FC<ArchiveProps> = ({
                 className={`hover:text-blue-500 transition-colors p-0.5 ${isLight ? 'text-zinc-500 hover:text-zinc-900' : 'text-zinc-400 hover:text-white'}`}
                 title="LinkedIn Profile"
               >
-                <Linkedin className="w-3.5 h-3.5" />
+                <Linkedin className="w-3.5 h-3.5 text-blue-500" />
               </a>
               {onOpenContact && (
                 <button 
@@ -2193,7 +2193,7 @@ export const Archive: React.FC<ArchiveProps> = ({
                   className={`hover:text-blue-500 transition-colors p-0.5 ${isLight ? 'text-zinc-500 hover:text-zinc-900' : 'text-zinc-400 hover:text-white'}`}
                   title="Get in Touch via Email"
                 >
-                  <Mail className="w-3.5 h-3.5" />
+                  <Mail className="w-3.5 h-3.5 text-red-500" />
                 </button>
               )}
             </div>
