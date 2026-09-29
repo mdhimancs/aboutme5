@@ -15,6 +15,7 @@ interface TechnicalBlogProps {
 
 const CATEGORIES = [
   { id: 'all', label: 'All Publications' },
+  { id: 'Industry Trends', label: 'Industry Trends' },
   { id: 'PQC & Cryptography', label: 'PQC & Cryptography' },
   { id: 'Executive Risk & GRC', label: 'Executive Risk & GRC' },
   { id: 'engineering', label: 'Architects & Engineering' },

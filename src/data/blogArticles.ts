@@ -2,6 +2,160 @@ import { BlogPost } from '../types';
 
 export const NEW_BLOG_POSTS: BlogPost[] = [
   {
+    id: "bp-2026-convergence-ai-iam-adaptive-rbac-pbac",
+    title: "The Convergence of AI and IAM: Adaptive Risk-Based Access Control (RBAC & PBAC) for Modern Enterprises",
+    slug: "convergence-ai-iam-adaptive-rbac-pbac-enterprise",
+    excerpt: "An architectural exploration of how machine learning and behavioral risk scoring converge with traditional Role-Based (RBAC) and Policy-Based Access Control (PBAC) to deliver dynamic, zero-trust access decisions.",
+    date: "September 29, 2026",
+    readTime: "15 min read",
+    category: "Industry Trends",
+    tags: ["AI & IAM Convergence", "Adaptive Access Control", "RBAC", "PBAC", "Risk-Based Access", "Zero Trust IAM"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 5410,
+    likes: 495,
+    content: `
+# The Convergence of AI and IAM: Adaptive Risk-Based Access Control (RBAC & PBAC) for Modern Enterprises
+
+![AI and IAM Convergence Architecture](https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & The Paradigm Shift
+For decades, Enterprise Identity and Access Management (IAM) relied on static Role-Based Access Control (RBAC)—granting permissions based on job titles—and static Policy-Based Access Control (PBAC). In today's dynamic threat landscape characterized by sophisticated phishing, stolen session tokens, and insider threats, static roles are no longer sufficient.
+
+This publication explores the strategic convergence of Artificial Intelligence (AI) with IAM, establishing an **Adaptive Risk-Based Access Control (RBAC/PBAC)** architecture that continuously evaluates real-time telemetry, user behavior, device posture, and session risk to dynamically adjust entitlements.
+
+---
+
+### Architectural Topologizing: Real-Time Risk Engine & Policy Decision Point
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                   ADAPTIVE AI-DRIVEN RISK-BASED ACCESS CONTROL (RBAC/PBAC)                   │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+     [ USER AUTHENTICATION REQUEST ]
+                    │
+                    ▼
+     ┌──────────────────────────────────────────────────────────────┐
+     │                CONTINUOUS TELEMETRY COLLECTOR                │
+     │ • Device Posture (Intune / CrowdStrike)                      │
+     │ • Behavioral Biometrics & Typing Cadence                     │
+     │ • Network Risk, ASN Reputation & Geolocation Velocity        │
+     └──────────────┬───────────────────────────────┬───────────────┘
+                    │                               │
+                    ▼                               ▼
+     ┌──────────────────────────────┐┌──────────────────────────────┐
+     │  AI BEHAVIORAL RISK ENGINE   ││    STATIC IAM POLICY STORE   │
+     │  (Calculates Real-Time Score)││    (Base RBAC & PBAC Rules)  │
+     └──────────────┬───────────────┴───────────────┬───────────────┘
+                    │                               │
+                    └───────────────┬───────────────┘
+                                    │ (Dynamic Context Evaluation)
+                                    ▼
+     ┌──────────────────────────────────────────────────────────────┐
+     │            POLICY DECISION POINT (PDP) ENCLAVE               │
+     │ • If Risk Score < 30: Standard Access Granted                │
+     │ • If Risk Score 30-70: Step-up FIDO2 MFA Required            │
+     │ • If Risk Score > 70: Immediate Session Revocation & Alert   │
+     └──────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+### Core Architecture Capabilities
+
+#### 1. Dynamic RBAC Enhancement via Behavioral Risk Scoring
+* Traditional RBAC assigns broad roles (e.g., \`Financial-Analyst\`). Adaptive RBAC augments role evaluation with real-time risk scores: even if a user holds the correct role, anomalous network locations or impossible travel velocities instantly constrain or challenge access.
+
+#### 2. Contextual PBAC Policy Evaluation
+* PBAC rules evaluate environmental attributes—such as corporate-managed device vs. personal laptop, secure office IP vs. public Wi-Fi—to dynamically enforce least privilege data masking and API throttling.
+
+#### 3. Zero-Trust Continuous Verification
+* Moving away from one-time login authentication toward continuous session re-evaluation, ensuring that mid-session risk spikes trigger automated session termination or step-up authentication.
+
+---
+`
+  },
+  {
+    id: "bp-2026-mcp-rbac-pbac-ai-governance",
+    title: "Model Context Protocol (MCP) Security Governance: Implementing RBAC and PBAC for Enterprise AI Agents",
+    slug: "mcp-rbac-pbac-enterprise-ai-governance",
+    excerpt: "An architectural blueprint for securing Anthropic's Model Context Protocol (MCP) servers and client agents with Role-Based Access Control (RBAC) and Policy-Based Access Control (PBAC) to prevent unauthorized tool execution and data exfiltration.",
+    date: "September 29, 2026",
+    readTime: "16 min read",
+    category: "AI Governance & Security",
+    tags: ["Model Context Protocol", "MCP", "RBAC", "PBAC", "AI Governance", "Agentic Security", "Context Filtering"],
+    author: {
+      name: "Munish Dhiman",
+      role: "Cybersecurity & IAM Executive Architect",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    views: 5120,
+    likes: 480,
+    content: `
+# Model Context Protocol (MCP) Security Governance: Implementing RBAC and PBAC for Enterprise AI Agents
+
+![MCP AI Governance Architecture](https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop)
+
+### Executive Summary & The MCP Security Paradigm
+As enterprises rapidly deploy autonomous AI agents powered by **Model Context Protocol (MCP)** standards to query databases, read codebases, and execute tools, traditional perimeter security falls short. MCP clients and servers establish open context-sharing channels that, if ungoverned, expose organizations to severe risks: prompt injection tool hijacking, excessive data reading, and unauthorized privilege escalation.
+
+This publication presents a production-grade enterprise security architecture for governing MCP servers using **Role-Based Access Control (RBAC)** and **Policy-Based Access Control (PBAC)**.
+
+---
+
+### Architectural Design: MCP Policy Decision & Enforcement Layer
+
+\`\`\`
+  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+  │                   MODEL CONTEXT PROTOCOL (MCP) SECURITY GOVERNANCE FABRIC                    │
+  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+
+     [ AI CLIENT AGENT ] ─── (JSON-RPC Tool Request / Context Query) ───► 
+                                                                        │
+                                                                        ▼
+     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+     │                      MCP POLICY ENFORCEMENT POINT (PEP) PROXY                            │
+     │ • Validates User JWT & OIDC Identity Claims                                              │
+     │ • Intercepts MCP Tool Calls & Resource Reads                                             │
+     └──────────────────────────┬───────────────────────────────────────────────┘
+                                │
+                                ▼ (Dynamic Attribute Evaluation)
+     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+     │                      CENTRAL POLICY ENGINE (PBAC & RBAC Evaluator)                       │
+     │ • Evaluates Role Claims (e.g., 'Finance-Auditor', 'DevOps-Engineer')                     │
+     │ • Evaluates Context Attributes (Time, Data Classification, Tenant ID)                    │
+     └──────────────────────────┬───────────────────────────────────────────────┘
+                                │
+                                ▼ (Allowed / Filtered / Denied)
+     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
+     │                          TARGET MCP SERVER & TOOL ENCLAVE                                │
+     │ • Database Query Tool   • Filesystem Resource Reader   • Kubernetes Cluster Tool         │
+     └──────────────────────────────────────────────────────────────────────────────────────────┘
+\`\`\`
+
+---
+
+### Core Architecture Controls
+
+#### 1. Role-Based Access Control (RBAC) in MCP Tool Execution
+* **Granular Tool Scoping**: Not all agents or users require access to all MCP tools. RBAC restricts tool execution (e.g., \`execute_sql_query\`, \`restart_k8s_pod\`) strictly to verified administrative roles.
+* **Least Privilege Agent Personas**: Dynamically bounding agent capabilities based on the authenticated human user initiating the session.
+
+#### 2. Policy-Based Access Control (PBAC) for Context Filtering
+* **Attribute-Based Context Redaction**: PBAC evaluates real-time attributes—such as data classification (Confidential vs. Public), user department, and time of day—to automatically filter and redact sensitive PII or financial records from the LLM context window.
+* **Dynamic Guardrails**: Preventing data exfiltration by inspecting outgoing tool payloads for regex matches (e.g., credit card numbers, AWS keys).
+
+#### 3. Audit Logging & Non-Repudiation
+* Every MCP JSON-RPC transaction, tool invocation, and context access is cryptographically signed and streamed to immutable SIEM storage for compliance auditing.
+
+---
+`
+  },
+  {
     id: "bp-2026-non-human-identities-cicd",
     title: "Securing Non-Human Identities (NHI) & Service Principals in Multi-Cloud CI/CD Pipelines",
     slug: "securing-non-human-identities-service-principals-cicd",
@@ -119,7 +273,7 @@ Centralized enterprise identity providers (IdPs) create single points of failure
     title: "AI-Driven Access Governance: Applying Behavioral UEBA and Risk-Scoring to Dynamic Entitlement Reviews",
     slug: "ai-driven-access-governance-ueba-risk-scoring",
     excerpt: "How machine learning models and User & Entity Behavior Analytics (UEBA) automate entitlement certifications, detect lateral movement anomalies, and eliminate certification fatigue.",
-    date: "September 15, 2026",
+    date: "August 18, 2026",
     readTime: "16 min read",
     category: "AI Governance & Security",
     tags: ["AI Access Governance", "UEBA", "Risk Scoring", "Access Certifications", "Machine Learning", "Identity Analytics"],
@@ -148,7 +302,7 @@ This publication details an AI-powered access governance architecture combining 
     title: "Architecting Privileged Remote Access for Third-Party Vendors Without VPNs",
     slug: "architectural-privileged-remote-access-third-party-vendors",
     excerpt: "A Zero Trust design blueprint for securing third-party vendor and contractor access using clientless browser isolation, just-in-time access, and continuous behavioral recording.",
-    date: "September 5, 2026",
+    date: "August 10, 2026",
     readTime: "13 min read",
     category: "Cloud & Network Security",
     tags: ["Third-Party Access", "Vendor PAM", "Clientless Browser Isolation", "Zero Trust", "Remote Access", "Session Recording"],
@@ -177,7 +331,7 @@ This publication presents a Zero Trust architecture for vendor access utilizing 
     title: "Enterprise PAM & Secret Management Architecture: End-to-End CyberArk and BeyondTrust Integration Topologies",
     slug: "enterprise-pam-cyberark-beyondtrust-integration-architecture",
     excerpt: "A comprehensive blueprint for designing hybrid multi-cloud Privileged Access Management (PAM) architectures combining CyberArk Enterprise Vaulting, AIM, and PSM with BeyondTrust Password Safe and Privilege Management.",
-    date: "September 25, 2026",
+    date: "July 24, 2026",
     readTime: "16 min read",
     category: "IAM & PAM Architecture",
     tags: ["CyberArk", "BeyondTrust", "PAM Architecture", "Secret Management", "Zero Standing Privilege", "PSM & AIM"],
@@ -261,7 +415,7 @@ This publication presents a production-grade architectural design for unifying C
     title: "Zero Trust Network Access (ZTNA) & Secure Access Service Edge (SASE): Designing Zscaler Internet Access (ZIA) & Private Access (ZPA) Topologies",
     slug: "ztna-sase-zscaler-zia-zpa-architecture-design",
     excerpt: "An architectural blueprint for replacing legacy corporate VPNs with Zscaler ZIA and ZPA, establishing identity-aware microsegmentation, TLS inspection, and cloud native SASE security.",
-    date: "September 18, 2026",
+    date: "July 12, 2026",
     readTime: "15 min read",
     category: "Cloud & Network Security",
     tags: ["Zscaler", "ZTNA", "SASE", "ZIA", "ZPA", "Zero Trust Architecture", "Microsegmentation"],
