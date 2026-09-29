@@ -16,7 +16,7 @@ const CSP_HEADER_VALUE = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https://images.unsplash.com https://img.youtube.com https://*.google-analytics.com https://*.googletagmanager.com https://lh3.googleusercontent.com",
-  "connect-src 'self' https://formspree.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com",
+  "connect-src 'self' https://formspree.io https://ipapi.co https://ipwho.is https://api.ipify.org https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com",
   "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com",
   "frame-ancestors 'self' https://ai.studio https://*.google.com https://*.run.app https://*.googleusercontent.com"
 ].join("; ");
@@ -170,108 +170,251 @@ async function startServer() {
       return res.status(500).json({ error: "Email service not configured on server" });
     }
 
-    const clientIp = getClientIp(req);
+    const serverDetectedIp = getClientIp(req);
+    const forwardedChain = Array.isArray(req.headers['x-forwarded-for'])
+      ? req.headers['x-forwarded-for'].join(', ')
+      : (req.headers['x-forwarded-for'] || 'None');
     const userAgent = req.headers['user-agent'] || 'Unknown';
-    const { screen, device, context } = req.body;
+    const acceptLanguageHeader = req.headers['accept-language'] || 'Unknown';
+    const secChUa = req.headers['sec-ch-ua'] || 'Not provided';
+    const secChUaPlatform = req.headers['sec-ch-ua-platform'] || 'Not provided';
+    const secChUaMobile = req.headers['sec-ch-ua-mobile'] || 'Not provided';
+
+    // Extract Edge / Cloud Proxy Geolocation Headers (Cloud Run / Google App Engine / Cloudflare)
+    const edgeCountry = (req.headers['x-appengine-country'] || req.headers['cf-ipcountry'] || '') as string;
+    const edgeRegion = (req.headers['x-appengine-region'] || '') as string;
+    const edgeCity = (req.headers['x-appengine-city'] || '') as string;
+    const edgeLatLong = (req.headers['x-appengine-citylatlong'] || '') as string;
+
+    const { screen, device, context, location: clientLocation, performance: perfMetrics, battery, storage, media } = req.body || {};
+
+    // Determine primary public IP (prefer client-resolved public IP if server sees local/internal proxy)
+    const isPrivateIp = (ip: string) =>
+      !ip || ip === '127.0.0.1' || ip === '::1' || ip.startsWith('10.') || ip.startsWith('192.168.') || ip.startsWith('172.');
+    const targetIp = (clientLocation?.ip && !isPrivateIp(clientLocation.ip)) ? clientLocation.ip : serverDetectedIp;
+
+    // Server-side Geolocation Enrichment Fallback if client location is missing or incomplete
+    let geoData: Record<string, any> = clientLocation && typeof clientLocation === 'object' ? { ...clientLocation } : {};
+    if ((!geoData.city || geoData.city === 'Unknown') && !isPrivateIp(targetIp)) {
+      try {
+        const geoRes = await fetch(`https://ipwho.is/${encodeURIComponent(targetIp)}`);
+        if (geoRes.ok) {
+          const gd = await geoRes.json();
+          if (gd && gd.success !== false) {
+            geoData = {
+              ip: gd.ip || targetIp,
+              type: gd.type || geoData.type || 'IPv4',
+              continent: gd.continent || geoData.continent,
+              continentCode: gd.continent_code || geoData.continentCode,
+              country: gd.country || geoData.country,
+              countryCode: gd.country_code || geoData.countryCode,
+              capital: gd.capital || geoData.capital,
+              region: gd.region || geoData.region,
+              regionCode: gd.region_code || geoData.regionCode,
+              city: gd.city || geoData.city,
+              postal: gd.postal || geoData.postal,
+              latitude: gd.latitude ?? geoData.latitude,
+              longitude: gd.longitude ?? geoData.longitude,
+              callingCode: gd.calling_code ? `+${gd.calling_code}` : geoData.callingCode,
+              isEu: gd.is_eu ?? geoData.isEu,
+              asn: gd.connection?.asn ? `AS${gd.connection.asn}` : geoData.asn,
+              org: gd.connection?.org || geoData.org,
+              isp: gd.connection?.isp || geoData.isp,
+              domain: gd.connection?.domain || geoData.domain,
+              timezone: gd.timezone?.id || geoData.timezone,
+              utcOffset: gd.timezone?.utc || geoData.utcOffset,
+              localTime: gd.timezone?.current_time || geoData.localTime,
+              currency: gd.currency ? `${gd.currency.name} (${gd.currency.code} ${gd.currency.symbol || ''})` : geoData.currency
+            };
+          }
+        }
+      } catch (geoErr) {
+        console.warn("[ACCESS-ALERT] Server geo-enrichment fallback warning:", geoErr);
+      }
+    }
+
+    // Merge Edge headers if still missing
+    const resolvedCity = geoData.city || edgeCity || 'Unknown';
+    const resolvedRegion = geoData.region || edgeRegion || 'Unknown';
+    const resolvedRegionCode = geoData.regionCode || '';
+    const resolvedCountry = geoData.country || edgeCountry || 'Unknown';
+    const resolvedCountryCode = geoData.countryCode || edgeCountry || '';
+    const resolvedContinent = geoData.continent ? `${geoData.continent} (${geoData.continentCode || ''})` : 'Unknown';
+    const resolvedPostal = geoData.postal || 'Unknown';
+    const resolvedLat = geoData.latitude ?? (edgeLatLong ? edgeLatLong.split(',')[0] : null);
+    const resolvedLng = geoData.longitude ?? (edgeLatLong ? edgeLatLong.split(',')[1] : null);
+    const coordinatesStr = (resolvedLat !== null && resolvedLng !== null && resolvedLat !== undefined && resolvedLng !== undefined)
+      ? `${resolvedLat}, ${resolvedLng}`
+      : 'Unavailable';
+    const googleMapsUrl = (resolvedLat !== null && resolvedLng !== null && resolvedLat !== undefined && resolvedLng !== undefined)
+      ? `https://www.google.com/maps?q=${encodeURIComponent(`${resolvedLat},${resolvedLng}`)}`
+      : null;
 
     const formatGpu = (gpu: any) => {
       if (!gpu || typeof gpu !== 'object') return 'Unknown';
-      return `${gpu.vendor} | ${gpu.renderer}`;
+      return `${gpu.vendor || 'Unknown'} | ${gpu.renderer || 'Unknown'}${gpu.webglVersion ? ` (${gpu.webglVersion})` : ''}`;
     };
 
     const formatConn = (conn: any) => {
       if (!conn || typeof conn !== 'object') return 'Unknown';
-      return `${conn.type || 'N/A'} (DL: ${conn.downlink || 'N/A'} Mbps, RTT: ${conn.rtt || 'N/A'} ms)`;
+      return `${conn.type || 'N/A'} (Downlink: ${conn.downlink ?? 'N/A'} Mbps, RTT: ${conn.rtt ?? 'N/A'} ms, SaveData: ${conn.saveData ? 'Yes' : 'No'})`;
     };
 
+    const locationSummary = [resolvedCity, resolvedRegion, resolvedCountry].filter(v => v && v !== 'Unknown').join(', ') || 'Unknown Location';
+
     try {
-      console.log(`[ACCESS-ALERT] Attempting to send alert for IP: ${clientIp}`);
+      console.log(`[ACCESS-ALERT] Attempting to send alert for IP: ${targetIp} (${locationSummary})`);
       const { data, error } = await resend.emails.send({
         from: 'Access Alert <onboarding@resend.dev>',
         to: ['munish.world@gmail.com'],
-        subject: `[DETAILED ACCESS ALERT] New Visit from ${clientIp}`,
+        subject: `[DETAILED ACCESS ALERT] ${locationSummary} (${targetIp})`,
         html: `
-          <div style="font-family: sans-serif; color: #333; max-width: 600px;">
-            <h2 style="color: #2563eb; border-bottom: 2px solid #eee; padding-bottom: 10px;">Executive Portfolio: Detailed Access Alert</h2>
-            <p>A new visitor session has been initiated with high-fidelity telemetry.</p>
-            
-            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">IP Address</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${clientIp}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Timestamp (UTC)</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${new Date().toISOString()}</td>
-              </tr>
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Location/Timezone</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${context?.timezone || 'Unknown'}</td>
-              </tr>
-            </table>
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; max-width: 680px; line-height: 1.5;">
+            <div style="background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%); color: #ffffff; padding: 20px 24px; border-radius: 12px 12px 0 0;">
+              <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #93c5fd; font-weight: 700;">Executive Situational Awareness</div>
+              <h2 style="margin: 6px 0 4px; font-size: 20px; font-weight: 800;">New Visitor Access Telemetry</h2>
+              <div style="font-size: 13px; color: #e2e8f0;">Origin: <strong>${locationSummary}</strong> • IP: <span style="font-family: monospace; background: rgba(255,255,255,0.15); padding: 2px 6px; border-radius: 4px;">${targetIp}</span></div>
+            </div>
 
-            <h3 style="color: #475569; margin-top: 25px;">Device & Hardware</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">Platform / OS</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${device?.platform || 'Unknown'}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">CPU Cores</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${device?.cpuCores || 'Unknown'} logical cores</td>
-              </tr>
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Device Memory</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">~${device?.memory || 'Unknown'} GB RAM</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">GPU Architecture</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${formatGpu(device?.gpu)}</td>
-              </tr>
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Touch Support</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${device?.maxTouchPoints > 0 ? `Yes (${device.maxTouchPoints} pts)` : 'No'}</td>
-              </tr>
-            </table>
+            <div style="border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 12px 12px; padding: 20px 24px; background: #ffffff;">
+              <h3 style="color: #1d4ed8; margin-top: 4px; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #dbeafe; padding-bottom: 6px;">1. Geographic & Location Intelligence</h3>
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700; width: 36%;">Public IP Address</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace; font-weight: 700; color: #0f172a;">${targetIp} (${geoData.type || 'IPv4/v6'})</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Server / Proxy Chain IP</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace; font-size: 12px;">Socket: ${serverDetectedIp} | X-Forwarded-For: ${forwardedChain}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">City</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 600;">${resolvedCity}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Region / State</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${resolvedRegion}${resolvedRegionCode ? ` (${resolvedRegionCode})` : ''}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Country & Continent</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${resolvedCountry}${resolvedCountryCode ? ` [${resolvedCountryCode}]` : ''} • ${resolvedContinent}${geoData.capital ? ` (Capital: ${geoData.capital})` : ''}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Postal / ZIP Code</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace;">${resolvedPostal}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">GPS Coordinates (Lat, Lng)</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace;">
+                    ${coordinatesStr}
+                    ${googleMapsUrl ? ` — <a href="${googleMapsUrl}" target="_blank" style="color: #2563eb; font-weight: 700; text-decoration: underline;">View on Google Maps ↗</a>` : ''}
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Timezone & UTC Offset</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${geoData.timezone || context?.timezone || 'Unknown'}${geoData.utcOffset ? ` (UTC ${geoData.utcOffset})` : ''}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Visitor Local Time / UTC</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">Local: ${context?.localTime || geoData.localTime || 'Unknown'} <br/><small style="color: #64748b;">UTC: ${new Date().toISOString()}</small></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Calling Code & Currency</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">Dial: ${geoData.callingCode || 'N/A'} • Currency: ${geoData.currency || 'N/A'} • EU Member: ${geoData.isEu !== undefined ? (geoData.isEu ? 'Yes' : 'No') : 'N/A'}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Edge / Cloud Geo Headers</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-size: 12px;">Country: ${edgeCountry || 'N/A'} | Region: ${edgeRegion || 'N/A'} | City: ${edgeCity || 'N/A'} | Coords: ${edgeLatLong || 'N/A'}</td>
+                </tr>
+              </table>
 
-            <h3 style="color: #475569; margin-top: 25px;">Display & Browser</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">Resolution</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${screen?.width}x${screen?.height} (@${screen?.pixelRatio}x)</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Viewport Size</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${screen?.availWidth}x${screen?.availHeight}</td>
-              </tr>
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Language(s)</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">Primary: ${device?.language} <br/> <small>${device?.languages}</small></td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">User Agent</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-size: 11px; font-family: monospace;">${userAgent}</td>
-              </tr>
-            </table>
+              <h3 style="color: #1d4ed8; margin-top: 24px; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #dbeafe; padding-bottom: 6px;">2. Network, ISP & Autonomous System (ASN)</h3>
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700; width: 36%;">ISP / Carrier</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 600;">${geoData.isp || geoData.org || 'Unknown'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Organization & Domain</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${geoData.org || 'Unknown'}${geoData.domain ? ` (${geoData.domain})` : ''}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Autonomous System (ASN)</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace;">${geoData.asn || 'Unknown'}${geoData.network ? ` • CIDR: ${geoData.network}` : ''}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Connection Telemetry</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${formatConn(context?.connection)}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Page Load & Network Latency</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">DNS: ${perfMetrics?.dnsMs ?? 'N/A'} ms | TCP: ${perfMetrics?.tcpMs ?? 'N/A'} ms | TLS: ${perfMetrics?.tlsMs ?? 'N/A'} ms | TTFB: ${perfMetrics?.ttfbMs ?? 'N/A'} ms</td>
+                </tr>
+              </table>
 
-            <h3 style="color: #475569; margin-top: 25px;">Network & Context</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 35%;">Connection Type</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${formatConn(context?.connection)}</td>
-              </tr>
-              <tr>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Referrer</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0;">${context?.referrer || 'Direct Entry'}</td>
-              </tr>
-              <tr style="background: #f8fafc;">
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Landing URL</td>
-                <td style="padding: 8px; border: 1px solid #e2e8f0; font-size: 11px;">${context?.href || 'Unknown'}</td>
-              </tr>
-            </table>
+              <h3 style="color: #1d4ed8; margin-top: 24px; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #dbeafe; padding-bottom: 6px;">3. Device, Hardware & Power Posture</h3>
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700; width: 36%;">OS / Platform & Architecture</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${device?.platform || 'Unknown'} ${device?.architecture ? `(${device.architecture} ${device.bitness ? `${device.bitness}-bit` : ''})` : ''} ${device?.platformVersion ? `v${device.platformVersion}` : ''}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Device Model / Mobile Flag</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">Model: ${device?.model || 'Desktop / Unspecified'} • Mobile: ${device?.isMobile !== undefined ? (device.isMobile ? 'Yes' : 'No') : secChUaMobile}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">CPU & System Memory</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${device?.cpuCores || 'Unknown'} Logical Cores • ~${device?.memory || 'Unknown'} GB RAM</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">GPU Architecture</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-family: monospace; font-size: 12px;">${formatGpu(device?.gpu)}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Battery & Power State</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${battery ? `Level: ${battery.level ?? 'N/A'} • Charging: ${battery.charging ?? 'N/A'}` : 'Restricted / Desktop AC'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Storage & Media Peripherals</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">Storage Quota: ${storage?.quotaGb ? `${storage.usageMb || 0} MB / ${storage.quotaGb} GB` : 'N/A'} • Media: ${media ? `${media.audioInputs ?? 0} Mic, ${media.videoInputs ?? 0} Cam, ${media.audioOutputs ?? 0} Out` : 'N/A'}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Touch Support</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">${device?.maxTouchPoints > 0 ? `Yes (${device.maxTouchPoints} touch points)` : 'No'}</td>
+                </tr>
+              </table>
 
-            <div style="margin-top: 30px; padding: 15px; background: #f1f5f9; border-radius: 8px; font-size: 11px; color: #64748b;">
-              <strong>Security Protocol:</strong> This alert is generated once per unique browser session. Telemetry is collected via standard Web APIs for executive situational awareness.
+              <h3 style="color: #1d4ed8; margin-top: 24px; margin-bottom: 10px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 2px solid #dbeafe; padding-bottom: 6px;">4. Display, Browser & Session Context</h3>
+              <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700; width: 36%;">Screen & Inner Viewport</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">Screen: ${screen?.width}x${screen?.height} (Avail: ${screen?.availWidth}x${screen?.availHeight}) • Window: ${screen?.innerWidth || 'N/A'}x${screen?.innerHeight || 'N/A'} (@${screen?.pixelRatio}x DPR, ${screen?.colorDepth}-bit)</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Orientation & Display Mode</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">Orientation: ${screen?.orientation || 'Unknown'} • OS Theme: ${screen?.colorScheme || 'Unknown'} • HDR: ${screen?.hdr || 'Standard'}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Landing URL & Referrer</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-size: 12px;">URL: <strong>${context?.href || 'Unknown'}</strong><br/>Referrer: ${context?.referrer || 'Direct Entry'} (Nav: ${context?.navType || 'navigate'}, History: ${context?.historyLength ?? 1})</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Locale & Languages</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">Primary: ${device?.language} | All: ${device?.languages} | Header: ${acceptLanguageHeader}</td>
+                </tr>
+                <tr style="background: #f8fafc;">
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Privacy & Bot Indicators</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0;">WebDriver (Bot): <strong>${device?.webdriver ? 'DETECTED (True)' : 'False (Human)'}</strong> • DNT: ${device?.doNotTrack} • Cookies: ${device?.cookiesEnabled ?? 'Unknown'} • PDF Viewer: ${device?.pdfViewerEnabled ?? 'Unknown'}</td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-weight: 700;">Client Hints & User Agent</td>
+                  <td style="padding: 8px 10px; border: 1px solid #e2e8f0; font-size: 11px; font-family: monospace;">UA: ${userAgent}<br/>CH-UA: ${secChUa} (${secChUaPlatform})</td>
+                </tr>
+              </table>
+
+              <div style="margin-top: 24px; padding: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 11px; color: #64748b;">
+                <strong>Security Protocol:</strong> This high-density access dossier is generated once per unique browser session combining client-side sensors, multi-provider IP geolocation, and server edge headers.
+              </div>
             </div>
           </div>
         `,
@@ -282,7 +425,7 @@ async function startServer() {
         return res.status(400).json({ error });
       }
 
-      console.log(`[ACCESS-ALERT] Success: Email sent to munish.world@gmail.com`);
+      console.log(`[ACCESS-ALERT] Success: Detailed access alert sent to munish.world@gmail.com`);
       res.status(200).json({ success: true, id: data?.id });
     } catch (err) {
       console.error("[ACCESS-ALERT] Server Exception:", err);

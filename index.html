@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://img.youtube.com https://*.google-analytics.com https://*.googletagmanager.com https://lh3.googleusercontent.com; connect-src 'self' https://formspree.io https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://img.youtube.com https://*.google-analytics.com https://*.googletagmanager.com https://lh3.googleusercontent.com; connect-src 'self' https://formspree.io https://ipapi.co https://ipwho.is https://api.ipify.org https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com;">
     
     <!-- Google Analytics 4 (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7FM99M7G3F"></script>
@@ -97,6 +97,28 @@
   <body class="bg-[#000000] text-[#f5f5f7] font-sans antialiased selection:bg-blue-500 selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Static Branch Fallback for GitHub Pages ("Deploy from a branch" root mode):
+      // When served via Vite Dev Server, /@vite/client is injected.
+      // When built via Vite into dist/index.html, script[src="/src/main.tsx"] is replaced with ./assets/index-*.js.
+      // When GitHub Pages serves the raw root index.html from the main branch, neither happens and raw .tsx cannot execute in a browser.
+      // This fallback automatically mounts the pre-compiled production bundle from ./dist/standalone.js.
+      (function () {
+        var isViteDev = !!document.querySelector('script[src*="/@vite/client"]');
+        var hasRawTsxEntry = !!document.querySelector('script[src="/src/main.tsx"]');
+        if (!isViteDev && hasRawTsxEntry) {
+          var cssLink = document.createElement('link');
+          cssLink.rel = 'stylesheet';
+          cssLink.href = './dist/standalone.css';
+          document.head.appendChild(cssLink);
+
+          var jsScript = document.createElement('script');
+          jsScript.type = 'module';
+          jsScript.src = './dist/standalone.js';
+          document.body.appendChild(jsScript);
+        }
+      })();
+    </script>
   </body>
 </html>
 

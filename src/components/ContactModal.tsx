@@ -102,61 +102,74 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose, the
     setError(null);
 
     try {
-      // Logic for GitHub Pages / Static Hosting: 
-      // Prefer Formspree (or similar) over the non-existent /api/send-email endpoint
       const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
-      
-      // Determine if we are likely on a static host (GitHub Pages, etc.)
       const isStaticHost = window.location.hostname.endsWith('github.io') || window.location.hostname.includes('pages.dev');
 
-      if (isStaticHost && !formspreeId) {
-        throw new Error('Static Hosting Configuration Error: VITE_FORMSPREE_ID is not set in repository variables. Unable to send email without a backend.');
+      const requestBody = {
+        name,
+        email,
+        cc,
+        subject: subject || 'Portfolio Inquiry',
+        message,
+        _subject: `[Portfolio Inquiry] ${subject || 'New Message'}` // Formspree specific subject
+      };
+
+      let sentViaBackend = false;
+      let backendErrorMsg: string | null = null;
+
+      // 1. Primary Channel: Try Node.js /api/send-email (Resend) when not on a pure static host
+      if (!isStaticHost) {
+        try {
+          const backendRes = await fetch('/api/send-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+          });
+
+          const contentType = backendRes.headers.get("content-type") || "";
+          if (contentType.includes("application/json")) {
+            const backendJson = await backendRes.json();
+            if (backendRes.ok && backendJson?.success) {
+              sentViaBackend = true;
+            } else {
+              backendErrorMsg = backendJson?.error || 'Backend email transmission failed.';
+            }
+          }
+        } catch (netErr: any) {
+          backendErrorMsg = netErr?.message || 'Backend endpoint unreachable.';
+        }
       }
 
-      const endpoint = formspreeId 
-        ? `https://formspree.io/f/${formspreeId}`
-        : '/api/send-email';
-
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          cc,
-          subject: subject || 'Portfolio Inquiry',
-          message,
-          _subject: `[Portfolio Inquiry] ${subject || 'New Message'}` // Formspree specific subject
-        }),
-      });
-
-      // Attempt to parse response as JSON, but handle HTML error pages from static hosts
-      let result;
-      const contentType = response.headers.get("content-type");
-      const isJson = contentType && contentType.includes("application/json");
-
-      if (isJson) {
-        result = await response.json();
-      } else {
-        // If we got HTML back on a non-Formspree endpoint, the server.ts is likely not running
+      // 2. Fallback / Static Channel: Use Formspree if on static host or if backend Resend was unavailable/unconfigured
+      if (!sentViaBackend) {
         if (!formspreeId) {
-          throw new Error('Architecture Mismatch: Your browser is receiving HTML instead of an API response. This usually means you are on a static host (like GitHub Pages) but trying to use the Node.js backend. Please configure VITE_FORMSPREE_ID for static hosting or move to Vercel/Railway.');
+          if (isStaticHost) {
+            throw new Error('Static Hosting Configuration Error: VITE_FORMSPREE_ID is not set in repository variables. Unable to send email without a backend.');
+          }
+          if (backendErrorMsg?.includes('not configured on server')) {
+            throw new Error('Server Error: Neither RESEND_API_KEY (server) nor VITE_FORMSPREE_ID (fallback) is configured.');
+          }
+          throw new Error(backendErrorMsg || 'Architecture Mismatch: Backend API is unreachable and VITE_FORMSPREE_ID fallback is not configured.');
         }
-        if (!response.ok) {
-          throw new Error('Endpoint configuration mismatch. Please verify your VITE_FORMSPREE_ID.');
-        }
-        result = { success: true };
-      }
 
-      if (!response.ok) {
-        // Specific check for server-side configuration error
-        if (result?.error === "Email service not configured on server") {
-          throw new Error('Server Error: RESEND_API_KEY is missing from your hosting provider\'s environment variables.');
+        const fsResponse = await fetch(`https://formspree.io/f/${formspreeId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(requestBody)
+        });
+
+        const fsContentType = fsResponse.headers.get("content-type") || "";
+        const fsResult = fsContentType.includes("application/json") ? await fsResponse.json() : null;
+
+        if (!fsResponse.ok) {
+          throw new Error(fsResult?.error || fsResult?.errors?.[0]?.message || 'Failed to send message via Formspree.');
         }
-        throw new Error(result?.error || result?.errors?.[0]?.message || 'Failed to send message.');
       }
 
       // Record timestamp to enforce 5-minute quota protection

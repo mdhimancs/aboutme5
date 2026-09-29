@@ -218,105 +218,290 @@ export default function App() {
     }
     
     if (!hasSentAlert) {
-      // Collect advanced client details with high defensive rigor
-      const getGpuInfo = () => {
-        try {
-          const canvas = document.createElement('canvas');
-          if (!canvas) return { vendor: 'Unavailable', renderer: 'Unavailable' };
-          const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
-          if (!gl) return { vendor: 'Disabled', renderer: 'Disabled' };
-          const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-          return debugInfo ? {
-            vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Unknown',
-            renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Unknown'
-          } : { vendor: 'Restricted', renderer: 'Restricted' };
-        } catch (e) {
-          return { vendor: 'Error', renderer: 'Error' };
-        }
-      };
-
-      try {
-        const gpu = getGpuInfo();
-        const nav = (navigator || {}) as any;
-        const conn = nav.connection || nav.mozConnection || nav.webkitConnection || {};
-
-        const payload = {
-          screen: {
-            width: window?.screen?.width || 0,
-            height: window?.screen?.height || 0,
-            availWidth: window?.screen?.availWidth || 0,
-            availHeight: window?.screen?.availHeight || 0,
-            colorDepth: window?.screen?.colorDepth || 0,
-            pixelRatio: window?.devicePixelRatio || 1
-          },
-          device: {
-            memory: nav.deviceMemory || 'Unknown',
-            cpuCores: nav.hardwareConcurrency || 'Unknown',
-            platform: nav.platform || 'Unknown',
-            vendor: nav.vendor || 'Unknown',
-            maxTouchPoints: nav.maxTouchPoints || 0,
-            language: nav.language || 'en-US',
-            languages: nav.languages?.join(', ') || 'Unknown',
-            doNotTrack: nav.doNotTrack || 'Unknown',
-            gpu: gpu
-          },
-          context: {
-            referrer: document.referrer || 'Direct',
-            href: window?.location?.href || 'Unknown',
-            timezone: 'UTC', // Default fallback
-            connection: {
-              type: conn.effectiveType || 'Unknown',
-              downlink: conn.downlink || 0,
-              rtt: conn.rtt || 0,
-              saveData: !!conn.saveData
-            }
+      const dispatchDetailedAccessAlert = async () => {
+        const getGpuInfo = () => {
+          try {
+            const canvas = document.createElement('canvas');
+            if (!canvas) return { vendor: 'Unavailable', renderer: 'Unavailable', webglVersion: 'Unavailable' };
+            const gl = (canvas.getContext('webgl2') || canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
+            if (!gl) return { vendor: 'Disabled', renderer: 'Disabled', webglVersion: 'Disabled' };
+            const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+            const webglVersion = gl.getParameter(gl.VERSION) || 'WebGL';
+            return debugInfo ? {
+              vendor: gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'Unknown',
+              renderer: gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'Unknown',
+              webglVersion
+            } : { vendor: 'Restricted', renderer: 'Restricted', webglVersion };
+          } catch {
+            return { vendor: 'Error', renderer: 'Error', webglVersion: 'Error' };
           }
         };
 
-        // Attempt to get accurate timezone
+        // 1. Collect multi-provider Geolocation & Network ISP Intelligence
+        let locationData: Record<string, any> = {};
         try {
-          payload.context.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        } catch (tzErr) {}
-
-        const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
-        const endpoint = formspreeId 
-          ? `https://formspree.io/f/${formspreeId}`
-          : '/api/access-alert';
-
-        fetch(endpoint, {
-          method: 'POST',
-          headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            ...payload,
-            _subject: `[ACCESS ALERT] New Visit from ${payload.context.href}` // Formspree subject
-          })
-        })
-        .then(res => {
-          // Handle potential HTML response from static hosts
-          const contentType = res.headers.get("content-type");
-          if (contentType && contentType.indexOf("application/json") !== -1) {
-            return res.json();
-          } else {
-            return { success: res.ok };
+          const geoRes = await fetch('https://ipwho.is/');
+          if (geoRes.ok) {
+            const gd = await geoRes.json();
+            if (gd && gd.success !== false) {
+              locationData = {
+                ip: gd.ip,
+                type: gd.type || 'IPv4',
+                continent: gd.continent,
+                continentCode: gd.continent_code,
+                country: gd.country,
+                countryCode: gd.country_code,
+                capital: gd.capital,
+                region: gd.region,
+                regionCode: gd.region_code,
+                city: gd.city,
+                postal: gd.postal,
+                latitude: gd.latitude,
+                longitude: gd.longitude,
+                googleMapsUrl: (gd.latitude !== undefined && gd.longitude !== undefined)
+                  ? `https://www.google.com/maps?q=${gd.latitude},${gd.longitude}`
+                  : undefined,
+                callingCode: gd.calling_code ? `+${gd.calling_code}` : undefined,
+                isEu: gd.is_eu,
+                asn: gd.connection?.asn ? `AS${gd.connection.asn}` : undefined,
+                org: gd.connection?.org,
+                isp: gd.connection?.isp,
+                domain: gd.connection?.domain,
+                timezone: gd.timezone?.id,
+                utcOffset: gd.timezone?.utc,
+                localTime: gd.timezone?.current_time,
+                currency: gd.currency ? `${gd.currency.name} (${gd.currency.code} ${gd.currency.symbol || ''})` : undefined
+              };
+            }
           }
-        })
-        .then(data => {
-          if (data && (data.success || data.ok)) {
+        } catch {}
+
+        // Fallback to ipapi.co if primary geolocation was blocked or incomplete
+        if (!locationData.ip || !locationData.city) {
+          try {
+            const fallbackRes = await fetch('https://ipapi.co/json/');
+            if (fallbackRes.ok) {
+              const fb = await fallbackRes.json();
+              locationData = {
+                ip: fb.ip || locationData.ip,
+                type: fb.version || locationData.type || 'IPv4',
+                continent: fb.continent_code || locationData.continent,
+                continentCode: fb.continent_code || locationData.continentCode,
+                country: fb.country_name || fb.country || locationData.country,
+                countryCode: fb.country_code || locationData.countryCode,
+                capital: fb.country_capital || locationData.capital,
+                region: fb.region || locationData.region,
+                regionCode: fb.region_code || locationData.regionCode,
+                city: fb.city || locationData.city,
+                postal: fb.postal || locationData.postal,
+                latitude: fb.latitude ?? locationData.latitude,
+                longitude: fb.longitude ?? locationData.longitude,
+                googleMapsUrl: (fb.latitude !== undefined && fb.longitude !== undefined)
+                  ? `https://www.google.com/maps?q=${fb.latitude},${fb.longitude}`
+                  : locationData.googleMapsUrl,
+                callingCode: fb.country_calling_code || locationData.callingCode,
+                isEu: fb.in_eu ?? locationData.isEu,
+                asn: fb.asn || locationData.asn,
+                org: fb.org || locationData.org,
+                isp: fb.org || locationData.isp,
+                network: fb.network || undefined,
+                timezone: fb.timezone || locationData.timezone,
+                utcOffset: fb.utc_offset || locationData.utcOffset,
+                currency: fb.currency ? `${fb.currency_name || fb.currency} (${fb.currency})` : locationData.currency
+              };
+            }
+          } catch {}
+        }
+
+        try {
+          const gpu = getGpuInfo();
+          const nav = (navigator || {}) as any;
+          const conn = nav.connection || nav.mozConnection || nav.webkitConnection || {};
+
+          // 2. Collect High-Entropy User-Agent Client Hints (CPU Architecture, Bitness, OS Version, Device Model)
+          let clientHints: Record<string, any> = {};
+          if (nav.userAgentData && typeof nav.userAgentData.getHighEntropyValues === 'function') {
+            try {
+              clientHints = await nav.userAgentData.getHighEntropyValues([
+                'architecture',
+                'bitness',
+                'model',
+                'platform',
+                'platformVersion',
+                'fullVersionList'
+              ]);
+            } catch {}
+          }
+
+          // 3. Collect Battery Telemetry
+          let batteryInfo: Record<string, any> | undefined;
+          if (typeof nav.getBattery === 'function') {
+            try {
+              const bat = await nav.getBattery();
+              batteryInfo = {
+                level: `${Math.round((bat.level || 0) * 100)}%`,
+                charging: bat.charging ? 'Yes (AC/Charging)' : 'No (On Battery)'
+              };
+            } catch {}
+          }
+
+          // 4. Collect Browser Storage Quota Estimate
+          let storageInfo: Record<string, any> | undefined;
+          if (nav.storage && typeof nav.storage.estimate === 'function') {
+            try {
+              const est = await nav.storage.estimate();
+              storageInfo = {
+                usageMb: est.usage ? Math.round(est.usage / (1024 * 1024)) : 0,
+                quotaGb: est.quota ? (est.quota / (1024 * 1024 * 1024)).toFixed(1) : undefined
+              };
+            } catch {}
+          }
+
+          // 5. Collect Media Peripheral Counts (without requesting permissions)
+          let mediaInfo: Record<string, any> | undefined;
+          if (nav.mediaDevices && typeof nav.mediaDevices.enumerateDevices === 'function') {
+            try {
+              const devices = await nav.mediaDevices.enumerateDevices();
+              mediaInfo = {
+                audioInputs: devices.filter((d: any) => d.kind === 'audioinput').length,
+                videoInputs: devices.filter((d: any) => d.kind === 'videoinput').length,
+                audioOutputs: devices.filter((d: any) => d.kind === 'audiooutput').length
+              };
+            } catch {}
+          }
+
+          // 6. Collect Navigation & Network Timing Metrics
+          let perfMetrics: Record<string, any> | undefined;
+          try {
+            const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+            if (navEntries && navEntries.length > 0) {
+              const n = navEntries[0];
+              perfMetrics = {
+                dnsMs: Math.max(0, Math.round(n.domainLookupEnd - n.domainLookupStart)),
+                tcpMs: Math.max(0, Math.round(n.connectEnd - n.connectStart)),
+                tlsMs: n.secureConnectionStart > 0 ? Math.max(0, Math.round(n.connectEnd - n.secureConnectionStart)) : 0,
+                ttfbMs: Math.max(0, Math.round(n.responseStart - n.requestStart))
+              };
+            }
+          } catch {}
+
+          let resolvedTimezone = 'UTC';
+          try {
+            resolvedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+          } catch {}
+
+          const payload = {
+            location: locationData,
+            screen: {
+              width: window?.screen?.width || 0,
+              height: window?.screen?.height || 0,
+              availWidth: window?.screen?.availWidth || 0,
+              availHeight: window?.screen?.availHeight || 0,
+              innerWidth: window?.innerWidth || 0,
+              innerHeight: window?.innerHeight || 0,
+              colorDepth: window?.screen?.colorDepth || 0,
+              pixelRatio: window?.devicePixelRatio || 1,
+              orientation: window?.screen?.orientation?.type || (window?.innerWidth > window?.innerHeight ? 'landscape' : 'portrait'),
+              colorScheme: window?.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'Dark Mode' : 'Light Mode',
+              hdr: window?.matchMedia?.('(dynamic-range: high)').matches ? 'HDR Supported' : 'SDR Standard'
+            },
+            device: {
+              memory: nav.deviceMemory || 'Unknown',
+              cpuCores: nav.hardwareConcurrency || 'Unknown',
+              platform: clientHints.platform || nav.userAgentData?.platform || nav.platform || 'Unknown',
+              platformVersion: clientHints.platformVersion || undefined,
+              architecture: clientHints.architecture || undefined,
+              bitness: clientHints.bitness || undefined,
+              model: clientHints.model || undefined,
+              isMobile: nav.userAgentData?.mobile ?? /Mobi|Android|iPhone|iPad/i.test(nav.userAgent || ''),
+              vendor: nav.vendor || 'Unknown',
+              maxTouchPoints: nav.maxTouchPoints || 0,
+              language: nav.language || 'en-US',
+              languages: nav.languages?.join(', ') || 'Unknown',
+              doNotTrack: nav.doNotTrack || 'Unknown',
+              cookiesEnabled: nav.cookieEnabled ?? true,
+              pdfViewerEnabled: nav.pdfViewerEnabled ?? true,
+              webdriver: !!nav.webdriver,
+              gpu
+            },
+            battery: batteryInfo,
+            storage: storageInfo,
+            media: mediaInfo,
+            performance: perfMetrics,
+            context: {
+              referrer: document.referrer || 'Direct Entry',
+              href: window?.location?.href || 'Unknown',
+              timezone: locationData.timezone || resolvedTimezone,
+              localTime: new Date().toString(),
+              historyLength: window?.history?.length || 1,
+              navType: (performance?.getEntriesByType?.('navigation')?.[0] as any)?.type || 'navigate',
+              connection: {
+                type: conn.effectiveType || 'Unknown',
+                downlink: conn.downlink || 0,
+                rtt: conn.rtt || 0,
+                saveData: !!conn.saveData
+              }
+            }
+          };
+
+          const formspreeId = import.meta.env.VITE_FORMSPREE_ID;
+          const isStaticHost = window.location.hostname.endsWith('github.io') || window.location.hostname.includes('pages.dev');
+          const locLabel = [locationData.city, locationData.region, locationData.country].filter(Boolean).join(', ') || locationData.ip || 'Visitor';
+
+          let sentSuccessfully = false;
+
+          // Primary Channel: Try Node.js /api/access-alert (Resend) when not on a pure static host
+          if (!isStaticHost) {
+            try {
+              const apiRes = await fetch('/api/access-alert', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify(payload)
+              });
+              const ct = apiRes.headers.get('content-type') || '';
+              if (apiRes.ok && ct.includes('application/json')) {
+                const resJson = await apiRes.json();
+                if (resJson && resJson.success) {
+                  sentSuccessfully = true;
+                }
+              }
+            } catch {}
+          }
+
+          // Fallback Channel: If on GitHub Pages / static host (or if backend Resend was unavailable) and Formspree is configured
+          if (!sentSuccessfully && formspreeId) {
+            const fsRes = await fetch(`https://formspree.io/f/${formspreeId}`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({
+                _subject: `[DETAILED ACCESS ALERT] ${locLabel} (${locationData.ip || 'Unknown IP'})`,
+                locationSummary: `${locLabel} | IP: ${locationData.ip || 'Unknown'} | ISP: ${locationData.isp || locationData.org || 'Unknown'} (${locationData.asn || 'N/A'}) | Postal: ${locationData.postal || 'N/A'} | Coords: ${locationData.latitude ?? 'N/A'}, ${locationData.longitude ?? 'N/A'}`,
+                googleMapsPin: locationData.googleMapsUrl || 'Unavailable',
+                ...payload
+              })
+            });
+            if (fsRes.ok) {
+              sentSuccessfully = true;
+            }
+          }
+
+          if (sentSuccessfully) {
             try {
               sessionStorage.setItem('executive_portfolio_access_alert_sent', 'true');
-            } catch (sErr) {}
+            } catch {}
           }
-        })
-        .catch(err => {
-          // Silently log error to prevent console clutter for visitors
+        } catch (telemetryErr) {
           console.warn('Telemetry transmission restricted.');
-        });
-      } catch (telemetryErr) {
-        console.error('Critical telemetry failure:', telemetryErr);
-      }
+        }
+      };
+
+      dispatchDetailedAccessAlert();
     }
   }, []);
 

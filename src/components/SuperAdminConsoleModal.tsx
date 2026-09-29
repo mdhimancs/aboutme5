@@ -839,6 +839,14 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
               <LogOut className="w-4 h-4" />
               <span>Admin Logout</span>
             </button>
+            <button
+              onClick={onClose}
+              title="Close Console (Keep Admin Session Active)"
+              aria-label="Close Console"
+              className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-all cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
         </div>
 
@@ -2284,12 +2292,6 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
             <span className="text-[11px]">Telemetry Stream Active • Persistent Session • Secured by Zero Trust Architecture</span>
           </div>
-          <button
-            onClick={onClose}
-            className="px-3.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg text-xs font-semibold transition-colors shadow-sm cursor-pointer"
-          >
-            Close Console
-          </button>
         </div>
 
       </div>
