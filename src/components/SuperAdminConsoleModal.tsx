@@ -794,7 +794,7 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-2.5 md:p-3 overflow-hidden bg-black/65 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="relative w-full max-w-[1440px] h-[95vh] sm:h-[96vh] bg-white border border-zinc-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col text-zinc-900">
+      <div className="relative w-full max-w-[1440px] h-[95vh] sm:h-[96vh] bg-white border border-zinc-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col text-zinc-900 translate-x-[20%]">
         
         {/* Header Bar */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-200 bg-zinc-900 text-white shrink-0">
