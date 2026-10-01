@@ -47,29 +47,6 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
     }
   };
 
-  const getHueColor = (iconName: string) => {
-    switch (iconName) {
-      case 'Shield':
-        return 'from-blue-500/20';
-      case 'Lock':
-        return 'from-indigo-500/20';
-      case 'Network':
-        return 'from-sky-500/20';
-      case 'FileCheck':
-        return 'from-emerald-500/20';
-      case 'Brain':
-        return 'from-purple-500/20';
-      case 'Cpu':
-        return 'from-amber-500/20';
-      case 'Server':
-        return 'from-indigo-400/20';
-      case 'Database':
-        return 'from-purple-400/20';
-      default:
-        return 'from-emerald-500/20';
-    }
-  };
-
   const filteredCategories = selectedFilter === 'all' 
     ? SKILL_CATEGORIES 
     : SKILL_CATEGORIES.filter(cat => cat.title.toLowerCase().includes(selectedFilter.toLowerCase()));
@@ -93,7 +70,7 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
               ? 'bg-gradient-to-r from-blue-400/25 via-sky-300/20 to-indigo-300/20 opacity-80' 
               : 'bg-gradient-to-r from-blue-500/30 via-cyan-400/20 to-indigo-500/25 opacity-90'
           }`} 
-          />
+        />
 
         <div className="relative space-y-0 max-w-3xl flex-1">
           <div 
@@ -133,32 +110,28 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
           return (
             <div
               key={idx}
-              className="relative rounded-2xl backdrop-blur-xl transition-all group flex flex-col justify-between h-full border border-emerald-500/30 bg-gradient-to-br from-zinc-950 via-[#042114] to-zinc-950 shadow-xl hover:border-emerald-400/60 hover:shadow-2xl overflow-hidden interactive-card"
+              className="rounded-2xl backdrop-blur-xl transition-all group flex flex-col justify-between h-full border border-emerald-500/30 bg-gradient-to-br from-emerald-950 via-[#042616] to-emerald-950 shadow-xl hover:border-emerald-400/60 hover:shadow-2xl overflow-hidden interactive-card"
             >
-              {/* Subtle Top Hue Effect */}
-              <div className={`absolute top-0 left-0 right-0 h-16 bg-gradient-to-b ${getHueColor(cat.iconName)} to-transparent opacity-40 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none`} />
-              
-              <div className="relative z-10 p-2 sm:p-2.5 text-zinc-100">
-                {/* Card Header with Icon, Title, and Pillar Badge */}
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <div className="flex items-start gap-2 min-w-0">
-                    <div className="p-1 rounded-md border border-emerald-500/40 bg-emerald-950/80 shrink-0 mt-0.5 group-hover:scale-105 transition-transform shadow-inner">
+                {/* Card Header with Veo 3 Style High-Tech Aesthetics - More Compact */}
+                <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-emerald-500/20 pb-1.5 mb-1.5 p-2 sm:p-2.5">
+                  <div className="flex items-center gap-1.5 text-[9px] sm:text-[11px] font-bold tracking-widest uppercase text-emerald-300">
+                    <div className="p-0.5 sm:p-1 rounded-md border border-emerald-500/40 bg-emerald-950/80 shrink-0 group-hover:scale-110 transition-transform shadow-inner">
                       {getIcon(cat.iconName)}
                     </div>
-                    <h3 className="text-xs sm:text-sm font-bold tracking-tight leading-snug break-words text-white">
-                      {cat.title}
-                    </h3>
+                    <span className="truncate max-w-[140px] sm:max-w-none">{cat.title}</span>
                   </div>
-                  <span className="text-[9.5px] font-mono font-bold px-1.5 py-0.2 rounded-full border border-emerald-500/40 bg-emerald-900/50 text-emerald-300 shrink-0 mt-0.5 whitespace-nowrap shadow-xs">
-                    Pillar {idx + 1}
-                  </span>
+                  <div className="px-1.5 py-0.5 rounded-full text-[8.5px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm flex items-center gap-1">
+                    <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                    <span>P.0{idx + 1}</span>
+                  </div>
                 </div>
- 
-                {/* Description with 1-point reduced font and word wrap */}
-                <p className="text-[9.5px] sm:text-[10px] leading-relaxed break-words whitespace-normal text-zinc-300">
-                  {cat.description}
-                </p>
-              </div>
+
+                <div className="px-2.5 sm:px-3 pb-2 sm:pb-2.5 text-zinc-100 flex-1">
+                  {/* Description with 1-point reduced font and word wrap */}
+                  <p className="text-[9.5px] sm:text-[10px] leading-snug break-words whitespace-normal text-emerald-100/60 font-medium italic">
+                    {cat.description}
+                  </p>
+                </div>
  
               {/* Skills List - Light Colored Below Part with increased font */}
               <div className="space-y-2 p-3.5 sm:p-4 bg-zinc-50/95 text-zinc-900 border-t border-emerald-500/25 rounded-b-2xl shadow-inner">
