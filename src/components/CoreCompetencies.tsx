@@ -47,6 +47,29 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
     }
   };
 
+  const getHueColor = (iconName: string) => {
+    switch (iconName) {
+      case 'Shield':
+        return 'from-blue-500/20';
+      case 'Lock':
+        return 'from-indigo-500/20';
+      case 'Network':
+        return 'from-sky-500/20';
+      case 'FileCheck':
+        return 'from-emerald-500/20';
+      case 'Brain':
+        return 'from-purple-500/20';
+      case 'Cpu':
+        return 'from-amber-500/20';
+      case 'Server':
+        return 'from-indigo-400/20';
+      case 'Database':
+        return 'from-purple-400/20';
+      default:
+        return 'from-emerald-500/20';
+    }
+  };
+
   const filteredCategories = selectedFilter === 'all' 
     ? SKILL_CATEGORIES 
     : SKILL_CATEGORIES.filter(cat => cat.title.toLowerCase().includes(selectedFilter.toLowerCase()));
@@ -70,7 +93,7 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
               ? 'bg-gradient-to-r from-blue-400/25 via-sky-300/20 to-indigo-300/20 opacity-80' 
               : 'bg-gradient-to-r from-blue-500/30 via-cyan-400/20 to-indigo-500/25 opacity-90'
           }`} 
-        />
+          />
 
         <div className="relative space-y-0 max-w-3xl flex-1">
           <div 
@@ -110,9 +133,12 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
           return (
             <div
               key={idx}
-              className="rounded-2xl backdrop-blur-xl transition-all group flex flex-col justify-between h-full border border-emerald-500/30 bg-gradient-to-br from-zinc-950 via-[#042114] to-zinc-950 shadow-xl hover:border-emerald-400/60 hover:shadow-2xl overflow-hidden interactive-card"
+              className="relative rounded-2xl backdrop-blur-xl transition-all group flex flex-col justify-between h-full border border-emerald-500/30 bg-gradient-to-br from-zinc-950 via-[#042114] to-zinc-950 shadow-xl hover:border-emerald-400/60 hover:shadow-2xl overflow-hidden interactive-card"
             >
-              <div className="p-2 sm:p-2.5 text-zinc-100">
+              {/* Subtle Top Hue Effect */}
+              <div className={`absolute top-0 left-0 right-0 h-16 bg-gradient-to-b ${getHueColor(cat.iconName)} to-transparent opacity-40 group-hover:opacity-70 transition-opacity duration-500 pointer-events-none`} />
+              
+              <div className="relative z-10 p-2 sm:p-2.5 text-zinc-100">
                 {/* Card Header with Icon, Title, and Pillar Badge */}
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <div className="flex items-start gap-2 min-w-0">

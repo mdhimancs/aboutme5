@@ -1659,7 +1659,7 @@ The era of quantum-vulnerable cryptography is drawing to a close. While "Q-Day" 
     tags: ["PQC", "NIST FIPS 203", "ML-KEM", "ML-DSA", "Hybrid TLS 1.3", "Enterprise PKI", "Cryptography"],
     author: {
       name: "Munish Dhiman",
-      role: "Principal Cybersecurity & IAM Architect - IAM, Digital Security, Directory",
+      role: "Principal Cybersecurity & IAM Architect - IAM, Digital Security, Directory Entitlements",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
     },
     views: 3840,
