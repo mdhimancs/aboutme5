@@ -107,34 +107,62 @@ This publication presents a production-grade enterprise security architecture fo
 
 ---
 
-### Architectural Design: MCP Policy Decision & Enforcement Layer
+### High-Level Design (HLD): MCP Policy Decision & Enforcement Architecture
 
 \`\`\`
-  ┌──────────────────────────────────────────────────────────────────────────────────────────────┐
-  │                   MODEL CONTEXT PROTOCOL (MCP) SECURITY GOVERNANCE FABRIC                    │
-  └──────────────────────────────────────────────────────────────────────────────────────────────┘
+  ┌──────────────────────────────────────────────────────────────┐
+  │       MCP SECURITY GOVERNANCE FABRIC (RBAC & PBAC)           │
+  └──────────────────────────────────────────────────────────────┘
 
-     [ AI CLIENT AGENT ] ─── (JSON-RPC Tool Request / Context Query) ───► 
-                                                                        │
-                                                                        ▼
-     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
-     │                      MCP POLICY ENFORCEMENT POINT (PEP) PROXY                            │
-     │ • Validates User JWT & OIDC Identity Claims                                              │
-     │ • Intercepts MCP Tool Calls & Resource Reads                                             │
-     └──────────────────────────┬───────────────────────────────────────────────┘
-                                │
-                                ▼ (Dynamic Attribute Evaluation)
-     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
-     │                      CENTRAL POLICY ENGINE (PBAC & RBAC Evaluator)                       │
-     │ • Evaluates Role Claims (e.g., 'Finance-Auditor', 'DevOps-Engineer')                     │
-     │ • Evaluates Context Attributes (Time, Data Classification, Tenant ID)                    │
-     └──────────────────────────┬───────────────────────────────────────────────┘
-                                │
-                                ▼ (Allowed / Filtered / Denied)
-     ┌──────────────────────────────────────────────────────────────────────────────────────────┐
-     │                          TARGET MCP SERVER & TOOL ENCLAVE                                │
-     │ • Database Query Tool   • Filesystem Resource Reader   • Kubernetes Cluster Tool         │
-     └──────────────────────────────────────────────────────────────────────────────────────────┘
+    ┌──────────────────────────────────────────────────────────┐
+    │ 1. MCP HOST & AI CLIENT AGENT (IDE / Copilot / Agent)    │
+    │    • JSON-RPC 2.0 (tools/call, resources/read)           │
+    │    • Attaches OIDC Identity JWT + DPoP Proof             │
+    └────────────────────────────┬─────────────────────────────┘
+                                 │
+                                 ▼ (mTLS + Signed JSON-RPC)
+    ┌──────────────────────────────────────────────────────────┐
+    │ 2. MCP POLICY ENFORCEMENT POINT (PEP) GATEWAY            │
+    │    • Validates OIDC JWT, Token Binding & SPIFFE SVID     │
+    │    • Blocks Prompt Injection & Unauthorized Tool Calls   │
+    └────────────────────────────┬─────────────────────────────┘
+                                 │
+                                 ▼ (Context & Identity Eval)
+    ┌──────────────────────────────────────────────────────────┐
+    │ 3. CENTRAL POLICY ENGINE (PDP) — RBAC & PBAC (OPA/Cedar) │
+    │    • RBAC: Role Claims ('Finance-Auditor', 'SecOps')     │
+    │    • PBAC: Dynamic Attributes (Class, Risk Score, Time)  │
+    └────────────────────────────┬─────────────────────────────┘
+                                 │
+            ┌────────────────────┼────────────────────┐
+            ▼ (Row-Masked)       ▼ (Repo-Scoped)      ▼ (JIT / MFA)
+    ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
+    │  MCP DB SERVER   │ │ MCP CODE SERVER  │ │  MCP K8S SERVER  │
+    │ • Read-Only SQL  │ │ • Scoped Git/PR  │ │ • Pod Mutation   │
+    │ • PII Redaction  │ │ • Team RBAC ACL  │ │ • Step-Up Auth   │
+    └──────────────────┘ └──────────────────┘ └──────────────────┘
+\`\`\`
+
+---
+
+### Low-Level Design (LLD): MCP JSON-RPC 2.0 RBAC/PBAC Authorization Sequence
+
+\`\`\`
+ [AI Agent]       [MCP PEP Proxy]      [OPA/Cedar PDP]     [MCP Server]
+     │                   │                    │                  │
+     │ 1. tools/call     │                    │                  │
+     │    (JWT + DPoP)   │                    │                  │
+     ├──────────────────►│                    │                  │
+     │                   │ 2. Eval(RBAC/PBAC) │                  │
+     │                   ├───────────────────►│                  │
+     │                   │ 3. ALLOW + Masking │                  │
+     │                   │◄───────────────────┤                  │
+     │                   │ 4. Scoped RPC Call                    │
+     │                   ├──────────────────────────────────────►│
+     │                   │ 5. Raw Tool Output                    │
+     │                   │◄──────────────────────────────────────┤
+     │ 6. Redacted Data  │ (DLP Filter + SIEM Audit)             │
+     │◄──────────────────┤                    │                  │
 \`\`\`
 
 ---
@@ -143,11 +171,11 @@ This publication presents a production-grade enterprise security architecture fo
 
 #### 1. Role-Based Access Control (RBAC) in MCP Tool Execution
 * **Granular Tool Scoping**: Not all agents or users require access to all MCP tools. RBAC restricts tool execution (e.g., \`execute_sql_query\`, \`restart_k8s_pod\`) strictly to verified administrative roles.
-* **Least Privilege Agent Personas**: Dynamically bounding agent capabilities based on the authenticated human user initiating the session.
+* **Least Privilege Agent Personas**: Dynamically bounding agent capabilities based on the authenticated human user initiating the session so an agent never exceeds the caller's native privilege boundary (preventing "Confused Deputy" exploits).
 
 #### 2. Policy-Based Access Control (PBAC) for Context Filtering
-* **Attribute-Based Context Redaction**: PBAC evaluates real-time attributes—such as data classification (Confidential vs. Public), user department, and time of day—to automatically filter and redact sensitive PII or financial records from the LLM context window.
-* **Dynamic Guardrails**: Preventing data exfiltration by inspecting outgoing tool payloads for regex matches (e.g., credit card numbers, AWS keys).
+* **Attribute-Based Context Redaction**: PBAC evaluates real-time attributes—such as data classification (Confidential vs. Public), user department, and session risk score—to automatically filter and redact sensitive PII or financial records from the LLM context window.
+* **Dynamic Guardrails**: Preventing data exfiltration by inspecting outgoing tool payloads for regex and semantic matches (e.g., credit card numbers, private cryptographic keys, AWS secrets).
 
 #### 3. Audit Logging & Non-Repudiation
 * Every MCP JSON-RPC transaction, tool invocation, and context access is cryptographically signed and streamed to immutable SIEM storage for compliance auditing.
@@ -174,7 +202,7 @@ This publication presents a production-grade enterprise security architecture fo
     content: `
 # Securing Non-Human Identities (NHI) & Service Principals in Multi-Cloud CI/CD Pipelines
 
-![Non-Human Identity Architecture](https://images.unsplash.com/photo-1618401471353-b98aedd04e11?q=80&w=800&auto=format&fit=crop)
+![Non-Human Identity Architecture](/src/assets/images/nhi_architecture_1790787674263.jpg)
 
 ### Executive Summary & The NHI Threat Vector
 In modern cloud-native enterprises, **Non-Human Identities (NHIs)**—such as service principals, API keys, OAuth client credentials, CI/CD runners, and cloud IAM roles—outnumber human user identities by a factor of 50 to 1. Yet, organizations frequently apply rigorous MFA and governance to human accounts while leaving service principals with permanent, unrotated credentials and over-privileged permissions.
@@ -1631,7 +1659,7 @@ The era of quantum-vulnerable cryptography is drawing to a close. While "Q-Day" 
     tags: ["PQC", "NIST FIPS 203", "ML-KEM", "ML-DSA", "Hybrid TLS 1.3", "Enterprise PKI", "Cryptography"],
     author: {
       name: "Munish Dhiman",
-      role: "Principal Cybersecurity & IAM Architect",
+      role: "Principal Cybersecurity & IAM Architect - IAM, Digital Security, Directory",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
     },
     views: 3840,

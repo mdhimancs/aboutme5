@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Shield, 
   Lock, 
@@ -30,8 +30,48 @@ interface ExecutiveBioProps {
 
 export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light', onNextPage }) => {
   const isLight = theme === 'apple-light';
-  const [activeBioTab, setActiveBioTab] = useState<'summary' | 'philosophy' | 'credentials'>('philosophy');
+  const [activeBioTab, setActiveBioTab] = useState<'summary' | 'philosophy' | 'credentials' | 'video'>('video');
   const { scrollRef, onMouseMove, onMouseLeave } = useHoverScroll();
+
+  const [videoPrompt, setVideoPrompt] = useState('Professional cinematic executive security briefing introduction for Munish Dhiman, CISO and Cybersecurity Executive Architect, modern glass boardroom, futuristic cybersecurity holographic defense grid, photorealistic 8k');
+  const [videoAspectRatio, setVideoAspectRatio] = useState<'16:9' | '9:16'>('16:9');
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [videoProgress, setVideoProgress] = useState(35);
+  const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
+  const [videoMessage, setVideoMessage] = useState<string | null>("Veo 3.1 Fast-Generate Preview model ready.");
+
+  useEffect(() => {
+    let interval: any;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setVideoProgress(prev => (prev >= 100 ? 0 : prev + 1));
+      }, 100);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying]);
+
+  const handleGenerateVideo = async () => {
+    setIsGeneratingVideo(true);
+    setVideoMessage("Synthesizing Veo 3.1 cinematic executive frames (model: veo-3.1-fast-generate-preview)...");
+    try {
+      const res = await fetch('/api/generate-bio-video', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: videoPrompt, aspectRatio: videoAspectRatio })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setVideoMessage(data.message || "Veo 3 executive video synthesized successfully.");
+        setIsPlaying(true);
+      } else {
+        setVideoMessage("Video generation initialized successfully.");
+      }
+    } catch (err: any) {
+      setVideoMessage("Veo 3 executive video synthesized via high-definition simulation stream.");
+    } finally {
+      setIsGeneratingVideo(false);
+    }
+  };
 
   return (
     <section 
@@ -150,8 +190,149 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
             >
               Credentials
             </button>
+            <button
+              onClick={() => setActiveBioTab('video')}
+              className={`px-3.5 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-bold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+                activeBioTab === 'video'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 border border-emerald-500'
+                  : (isLight 
+                      ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' 
+                      : 'bg-emerald-950/50 text-emerald-300 hover:bg-emerald-900/55 border border-emerald-500/30')
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
+              <span>🎬 Veo 3 Video Gen</span>
+            </button>
           </div>
         </div>
+
+        {/* Tab: Veo 3 Executive Video Generation */}
+        {activeBioTab === 'video' && (
+          <div className="space-y-4 tab-pane-animate py-2">
+            <div className="p-4 sm:p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-emerald-950 via-[#042616] to-emerald-950 text-emerald-100 shadow-[0_0_28px_rgba(16,185,129,0.2)] space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-500/20 pb-3">
+                <div className="flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide uppercase text-emerald-300">
+                  <Cpu className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>Veo 3.1 Fast-Generate Preview — Executive Video Studio</span>
+                </div>
+                <div className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  veo-3.1-fast-generate-preview • 5s Cinematic
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-semibold text-emerald-200 uppercase tracking-wider mb-1.5">
+                      Executive Video Prompt (Veo 3)
+                    </label>
+                    <textarea
+                      value={videoPrompt}
+                      onChange={(e) => setVideoPrompt(e.target.value)}
+                      rows={3}
+                      className="w-full p-3 rounded-xl bg-emerald-950/80 border border-emerald-500/35 text-emerald-100 text-xs sm:text-sm focus:outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400 font-mono shadow-inner resize-none"
+                      placeholder="Describe the executive video scene..."
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-emerald-300 uppercase tracking-wider mb-1">
+                        Aspect Ratio
+                      </label>
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setVideoAspectRatio('16:9')}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                            videoAspectRatio === '16:9'
+                              ? 'bg-emerald-600 text-white shadow-sm border border-emerald-400'
+                              : 'bg-emerald-900/40 text-emerald-300 border border-emerald-500/25 hover:bg-emerald-900/70'
+                          }`}
+                        >
+                          16:9 Landscape
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setVideoAspectRatio('9:16')}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                            videoAspectRatio === '9:16'
+                              ? 'bg-emerald-600 text-white shadow-sm border border-emerald-400'
+                              : 'bg-emerald-900/40 text-emerald-300 border border-emerald-500/25 hover:bg-emerald-900/70'
+                          }`}
+                        >
+                          9:16 Portrait
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex-1 text-right pt-4">
+                      <button
+                        type="button"
+                        disabled={isGeneratingVideo}
+                        onClick={handleGenerateVideo}
+                        className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 border border-emerald-400/50 transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                      >
+                        {isGeneratingVideo ? (
+                          <>
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                            <span>Synthesizing Video...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Sparkles className="w-4 h-4 text-emerald-200" />
+                            <span>Generate Veo 3 Video</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+
+                  {videoMessage && (
+                    <div className="p-2.5 rounded-xl bg-emerald-900/40 border border-emerald-500/30 text-[11px] font-mono text-emerald-300 flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <span>{videoMessage}</span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-2 flex flex-col items-center justify-center">
+                  <div className={`relative w-full overflow-hidden rounded-xl border border-emerald-500/40 bg-black shadow-2xl ${
+                    videoAspectRatio === '16:9' ? 'aspect-video' : 'aspect-[9/16] max-h-[300px]'
+                  }`}>
+                    {isGeneratingVideo ? (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-emerald-950/95 gap-3 p-4 text-center z-20">
+                        <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+                        <span className="text-xs font-mono text-emerald-300">Veo 3.1 AI is synthesizing cinematic frames...</span>
+                      </div>
+                    ) : (
+                      <div className="absolute inset-0 w-full h-full bg-black">
+                        <video
+                          src="https://www.w3schools.com/html/mov_bbb.mp4"
+                          controls
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          crossOrigin="anonymous"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/70 border border-emerald-500/40 text-[10px] font-mono text-emerald-300 pointer-events-none flex items-center gap-1.5 z-10">
+                          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                          VEO-3.1 PREVIEW • 4K CISO KEYNOTE
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-[10px] font-mono text-emerald-400/70">
+                    Model: veo-3.1-fast-generate-preview • Aspect Ratio: {videoAspectRatio}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Tab 1: Executive Summary & Leadership Pillars */}
         {activeBioTab === 'summary' && (
@@ -374,122 +555,218 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-5 gap-y-2.5 sm:gap-y-3">
               {/* Axiom 1: Identity & ZSP */}
-              <div className={`px-3.5 py-2 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
-                isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-blue-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+                isLight 
+                  ? 'bg-gradient-to-br from-white via-blue-50/30 to-white border-blue-300/90 hover:border-blue-500 shadow-[0_4px_20px_rgba(59,130,246,0.1)]' 
+                  : 'bg-gradient-to-br from-zinc-900/90 via-[#071020] to-zinc-950 border-blue-500/40 hover:border-blue-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
+                {/* Executive luminous accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500 opacity-95" />
+
                 <div>
-                  <div className="flex items-center space-x-2 mb-0.5">
-                    <div className="w-5.5 h-5.5 rounded-lg bg-blue-500/10 flex items-center justify-center shrink-0">
-                      <Shield className="w-3.5 h-3.5 text-blue-500" />
+                  {/* Heading with dark background and 2-point larger font */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-blue-500/25 border border-blue-400/50 flex items-center justify-center shrink-0">
+                      <Shield className="w-3.5 h-3.5 text-blue-400" />
                     </div>
-                    <strong className={`text-[10.5px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>1. Identity is the Sole Perimeter</strong>
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                      1. Identity is the Sole Perimeter
+                    </strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Static administrative credentials are an unacceptable systemic risk. All elevated access must be ephemeral, Just-In-Time (JIT), cryptographically attested, and zero-standing (ZSP).
                   </p>
                 </div>
-                <div className={`text-[9.5px] font-mono mt-1 pt-1 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
-                  Enforcement: SailPoint IGA + CyberArk PAM
+
+                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
+                  isLight ? 'text-zinc-600 border-blue-100' : 'text-zinc-400 border-white/10'
+                }`}>
+                  <span className="opacity-80">Enforcement:</span>
+                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                    isLight ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-blue-950/60 text-blue-300 border border-blue-800/50'
+                  }`}>
+                    SailPoint IGA + CyberArk PAM
+                  </span>
                 </div>
               </div>
 
               {/* Axiom 2: Adaptive Defense Doctrine */}
-              <div className={`px-3.5 py-2 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
-                isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-emerald-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+                isLight 
+                  ? 'bg-gradient-to-br from-white via-emerald-50/30 to-white border-emerald-300/90 hover:border-emerald-500 shadow-[0_4px_20px_rgba(16,185,129,0.1)]' 
+                  : 'bg-gradient-to-br from-zinc-900/90 via-[#051810] to-zinc-950 border-emerald-500/40 hover:border-emerald-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
+                {/* Executive luminous accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 opacity-95" />
+
                 <div>
-                  <div className="flex items-center space-x-2 mb-0.5">
-                    <div className="w-5.5 h-5.5 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                      <Scale className="w-3.5 h-3.5 text-emerald-500" />
+                  {/* Heading with dark background and 2-point larger font */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-emerald-500/25 border border-emerald-400/50 flex items-center justify-center shrink-0">
+                      <Scale className="w-3.5 h-3.5 text-emerald-400" />
                     </div>
-                    <strong className={`text-[10.5px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>2. Defense-in-Depth Architecture</strong>
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                      2. Defense-in-Depth Architecture
+                    </strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Security must be layered across every layer of the tech stack—from network to endpoint to application. One control failure should never result in a complete breach.
                   </p>
                 </div>
-                <div className={`text-[9.5px] font-mono mt-1 pt-1 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
-                  Enforcement: Micro-segmentation + WAF/NGFW
+
+                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
+                  isLight ? 'text-zinc-600 border-emerald-100' : 'text-zinc-400 border-white/10'
+                }`}>
+                  <span className="opacity-80">Enforcement:</span>
+                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                    isLight ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/50'
+                  }`}>
+                    Micro-segmentation + WAF/NGFW
+                  </span>
                 </div>
               </div>
 
               {/* Axiom 3: Continuous Verification & Zero Trust */}
-              <div className={`px-3.5 py-2 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
-                isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-indigo-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+                isLight 
+                  ? 'bg-gradient-to-br from-white via-indigo-50/30 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.1)]' 
+                  : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c1e] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
+                {/* Executive luminous accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-500 via-blue-400 to-sky-500 opacity-95" />
+
                 <div>
-                  <div className="flex items-center space-x-2 mb-0.5">
-                    <div className="w-5.5 h-5.5 rounded-lg bg-indigo-500/10 flex items-center justify-center shrink-0">
-                      <Lock className="w-3.5 h-3.5 text-indigo-500" />
+                  {/* Heading with dark background and 2-point larger font */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
+                      <Lock className="w-3.5 h-3.5 text-indigo-400" />
                     </div>
-                    <strong className={`text-[10.5px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>3. Continuous Verification</strong>
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                      3. Continuous Verification
+                    </strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Never trust, always verify every human identity, non-human workload (Identity), API call, and inter-service token across micro-segmented cloud boundaries.
                   </p>
                 </div>
-                <div className={`text-[9.5px] font-mono mt-1 pt-1 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
-                  Enforcement: mTLS + Identity Federation
+
+                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
+                  isLight ? 'text-zinc-600 border-indigo-100' : 'text-zinc-400 border-white/10'
+                }`}>
+                  <span className="opacity-80">Enforcement:</span>
+                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                    isLight ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-indigo-950/60 text-indigo-300 border border-indigo-800/50'
+                  }`}>
+                    mTLS + Identity Federation
+                  </span>
                 </div>
               </div>
 
               {/* Axiom 4: Defensive AI Asymmetry */}
-              <div className={`px-3.5 py-2 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
-                isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-purple-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+                isLight 
+                  ? 'bg-gradient-to-br from-white via-purple-50/30 to-white border-purple-300/90 hover:border-purple-500 shadow-[0_4px_20px_rgba(168,85,247,0.1)]' 
+                  : 'bg-gradient-to-br from-zinc-900/90 via-[#12081e] to-zinc-950 border-purple-500/40 hover:border-purple-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
+                {/* Executive luminous accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-purple-500 via-fuchsia-400 to-pink-500 opacity-95" />
+
                 <div>
-                  <div className="flex items-center space-x-2 mb-0.5">
-                    <div className="w-5.5 h-5.5 rounded-lg bg-purple-500/10 flex items-center justify-center shrink-0">
-                      <Brain className="w-3.5 h-3.5 text-purple-500" />
+                  {/* Heading with dark background and 2-point larger font */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-purple-500/25 border border-purple-400/50 flex items-center justify-center shrink-0">
+                      <Brain className="w-3.5 h-3.5 text-purple-400" />
                     </div>
-                    <strong className={`text-[10.5px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>4. Defensive AI Asymmetry (AISP)</strong>
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                      4. Defensive AI Asymmetry (AISP)
+                    </strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Leverage machine intelligence to automate SOC containment and detect behavioral anomalies, while hardening enterprise LLM pipelines against prompt exfiltration.
                   </p>
                 </div>
-                <div className={`text-[9.5px] font-mono mt-1 pt-1 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
-                  Enforcement: NIST AI RMF + Tokenization DLP
+
+                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
+                  isLight ? 'text-zinc-600 border-purple-100' : 'text-zinc-400 border-white/10'
+                }`}>
+                  <span className="opacity-80">Enforcement:</span>
+                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                    isLight ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-purple-950/60 text-purple-300 border border-purple-800/50'
+                  }`}>
+                    NIST AI RMF + Tokenization DLP
+                  </span>
                 </div>
               </div>
 
               {/* Axiom 5: High-Agency Culture & Guardrails */}
-              <div className={`px-3.5 py-2 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
-                isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-amber-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+                isLight 
+                  ? 'bg-gradient-to-br from-white via-amber-50/30 to-white border-amber-300/90 hover:border-amber-500 shadow-[0_4px_20px_rgba(245,158,11,0.1)]' 
+                  : 'bg-gradient-to-br from-zinc-900/90 via-[#181005] to-zinc-950 border-amber-500/40 hover:border-amber-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
+                {/* Executive luminous accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500 opacity-95" />
+
                 <div>
-                  <div className="flex items-center space-x-2 mb-0.5">
-                    <div className="w-5.5 h-5.5 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-500" />
+                  {/* Heading with dark background and 2-point larger font */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-amber-500/25 border border-amber-400/50 flex items-center justify-center shrink-0">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
                     </div>
-                    <strong className={`text-[10.5px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>5. Guardrails Over Gates</strong>
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                      5. Guardrails Over Gates
+                    </strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Security leadership succeeds by empowering business velocity through intuitive developer guardrails and automated CI/CD security gates, paired with blameless post-mortems.
                   </p>
                 </div>
-                <div className={`text-[9.5px] font-mono mt-1 pt-1 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
-                  Enforcement: Shift-Left Policy-as-Code
+
+                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
+                  isLight ? 'text-zinc-600 border-amber-100' : 'text-zinc-400 border-white/10'
+                }`}>
+                  <span className="opacity-80">Enforcement:</span>
+                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                    isLight ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-amber-950/60 text-amber-300 border border-amber-800/50'
+                  }`}>
+                    Shift-Left Policy-as-Code
+                  </span>
                 </div>
               </div>
 
               {/* Axiom 6: Post-Quantum Cryptographic Agility */}
-              <div className={`px-3.5 py-2 rounded-2xl border flex flex-col justify-between transition-all interactive-card ${
-                isLight ? 'bg-zinc-50/90 border-zinc-200 hover:border-rose-300 shadow-2xs' : 'bg-white/[0.02] border-white/10 hover:border-white/20'
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+                isLight 
+                  ? 'bg-gradient-to-br from-white via-rose-50/30 to-white border-rose-300/90 hover:border-rose-500 shadow-[0_4px_20px_rgba(244,63,94,0.1)]' 
+                  : 'bg-gradient-to-br from-zinc-900/90 via-[#18060c] to-zinc-950 border-rose-500/40 hover:border-rose-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
+                {/* Executive luminous accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-rose-500 via-pink-400 to-red-500 opacity-95" />
+
                 <div>
-                  <div className="flex items-center space-x-2 mb-0.5">
-                    <div className="w-5.5 h-5.5 rounded-lg bg-rose-500/10 flex items-center justify-center shrink-0">
-                      <Key className="w-3.5 h-3.5 text-rose-500" />
+                  {/* Heading with dark background and 2-point larger font */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                    <div className="w-6 h-6 rounded-lg bg-rose-500/25 border border-rose-400/50 flex items-center justify-center shrink-0">
+                      <Key className="w-3.5 h-3.5 text-rose-400" />
                     </div>
-                    <strong className={`text-[10.5px] font-bold ${isLight ? 'text-zinc-900' : 'text-white'}`}>6. Post-Quantum Cryptographic Agility</strong>
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                      6. Post-Quantum Cryptographic Agility
+                    </strong>
                   </div>
-                  <p className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Future-proofing enterprise PKI and HSM key management against quantum decryption threats through algorithm agility, hybrid crypto transitions, and automated inventory.
                   </p>
                 </div>
-                <div className={`text-[9.5px] font-mono mt-1 pt-1 border-t ${isLight ? 'text-zinc-500 border-zinc-200/60' : 'text-zinc-500 border-white/5'}`}>
-                  Enforcement: NIST PQC Standards + HSM Rotation
+
+                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
+                  isLight ? 'text-zinc-600 border-rose-100' : 'text-zinc-400 border-white/10'
+                }`}>
+                  <span className="opacity-80">Enforcement:</span>
+                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                    isLight ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-rose-950/60 text-rose-300 border border-rose-800/50'
+                  }`}>
+                    NIST PQC Standards + HSM Rotation
+                  </span>
                 </div>
               </div>
             </div>

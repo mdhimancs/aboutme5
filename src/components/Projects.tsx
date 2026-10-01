@@ -213,7 +213,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
 
         <div className="relative flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3 flex-wrap">
-            <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight transition-all ${
+            <h2 className={`text-[22px] sm:text-[28px] lg:text-[34px] font-extrabold tracking-tight transition-all ${
               isLight 
                 ? 'text-zinc-900 drop-shadow-[0_2px_16px_rgba(59,130,246,0.18)]' 
                 : 'text-white drop-shadow-[0_0_28px_rgba(96,165,250,0.40)]'

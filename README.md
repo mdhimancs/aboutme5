@@ -4,7 +4,7 @@
 [![Security Standard](https://img.shields.io/badge/Zero%20Trust-NIST%20800--207-blue?style=flat-square)](https://github.com/mdhimancs)
 [![Architecture](https://img.shields.io/badge/React%2018-Vite%20%7C%20Tailwind-purple?style=flat-square)](https://github.com/mdhimancs)
 
-> **CISO / dyCISO Track | Principal Cybersecurity & IAM Architect | Former SVP, Goldman Sachs**
+> **CISO / dyCISO Track | Principal Cybersecurity & IAM Architect - IAM, Digital Security, Directory | Former SVP, Goldman Sachs**
 > 
 > Transforming enterprise security posture through Zero Trust Architecture, Scalable IAM Governance & AI-Driven Risk Resilience. 21+ years protecting Fortune 100 infrastructures across Goldman Sachs and global tech leaders.
 

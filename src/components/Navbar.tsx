@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { Menu, X, ArrowRight, Github, Linkedin, Mail, Sliders, Shield, Swords, Music, ChevronLeft, ChevronRight, Lock, ShieldCheck } from 'lucide-react';
+import { 
+  Menu, X, ArrowRight, Github, Linkedin, Mail, Sliders, Shield, Swords, Music, 
+  ChevronLeft, ChevronRight, Lock, ShieldCheck, 
+  LayoutDashboard, UserCheck, Target, Briefcase, Layers, BookOpen, Coffee, Brain, Archive 
+} from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { MusicPlayer } from './MusicPlayer';
 import { UserTelemetry } from './UserTelemetry';
@@ -31,15 +35,15 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { user, isAuthorized, isAdmin, setGateModalOpen } = useAuth();
 
   const navLinks = [
-    { id: 'overview', name: 'Overview', href: '#overview', num: '1' },
-    { id: 'bio', name: 'Executive Bio', href: '#bio', num: '2' },
-    { id: 'competencies', name: 'Competencies', href: '#competencies', num: '3' },
-    { id: 'career', name: 'Career Journey', href: '#career', num: '4' },
-    { id: 'projects', name: 'Case Studies', href: '#projects', num: '5' },
-    { id: 'blog', name: 'Publications', href: '#blog', num: '6' },
-    { id: 'offkeyboard', name: 'Off Keyboard', href: '#offkeyboard', num: '7' },
-    { id: 'philosophy', name: 'Philosophy', href: '#philosophy', num: '8' },
-    { id: 'archive', name: 'Archives', href: '#archive', num: '9' },
+    { id: 'overview', name: 'Overview', href: '#overview', num: '1', icon: <LayoutDashboard className="w-4 h-4" /> },
+    { id: 'bio', name: 'Executive Bio', href: '#bio', num: '2', icon: <UserCheck className="w-4 h-4" /> },
+    { id: 'competencies', name: 'Competencies', href: '#competencies', num: '3', icon: <Target className="w-4 h-4" /> },
+    { id: 'career', name: 'Career Journey', href: '#career', num: '4', icon: <Briefcase className="w-4 h-4" /> },
+    { id: 'projects', name: 'Case Studies', href: '#projects', num: '5', icon: <Layers className="w-4 h-4" /> },
+    { id: 'blog', name: 'Publications', href: '#blog', num: '6', icon: <BookOpen className="w-4 h-4" /> },
+    { id: 'offkeyboard', name: 'Off Keyboard', href: '#offkeyboard', num: '7', icon: <Coffee className="w-4 h-4" /> },
+    { id: 'philosophy', name: 'Philosophy', href: '#philosophy', num: '8', icon: <Brain className="w-4 h-4" /> },
+    { id: 'archive', name: 'Archives', href: '#archive', num: '9', icon: <Archive className="w-4 h-4" /> },
   ];
 
   const handleLinkClick = (e: React.MouseEvent, sectionId: string) => {
@@ -158,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     }}
                     data-nav-link
                     className={`flex items-center rounded-xl text-xs sm:text-[12.5px] font-medium transition-all duration-150 group cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
-                      isSidebarCollapsed ? 'justify-center p-2 w-10' : 'justify-between pl-3.5 pr-2.5 py-1.5 w-[80%] text-left'
+                      isSidebarCollapsed ? 'justify-center p-2 w-10' : 'justify-between pl-3 pr-2.5 py-1.5 w-[80%] text-left'
                     } ${
                       isActive
                         ? isLight
@@ -169,13 +173,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                           : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06]'
                     }`}
                   >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className={`shrink-0 transition-colors ${isActive ? 'text-blue-500' : isLight ? 'text-zinc-400 group-hover:text-zinc-700' : 'text-zinc-500 group-hover:text-zinc-300'}`}>
+                        {link.icon}
+                      </span>
+                      {!isSidebarCollapsed && (
+                        <span className="whitespace-nowrap tracking-tight truncate">{link.name}</span>
+                      )}
+                    </div>
                     {!isSidebarCollapsed ? (
-                      <>
-                        <span className="whitespace-nowrap tracking-tight">{link.name}</span>
-                        {isActive && (
-                          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] shrink-0 ml-1" aria-hidden="true" />
-                        )}
-                      </>
+                      isActive && (
+                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] shrink-0 ml-1" aria-hidden="true" />
+                      )
                     ) : (
                       <div className={`rounded-full transition-all duration-300 ${
                         isActive 

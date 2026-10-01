@@ -33,13 +33,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenContact }) => {
                 <Github className="w-4 h-4" />
               </a>
               <a href={PERSONAL_INFO.linkedin} target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white rounded-full border border-white/10 transition-colors">
-                <Linkedin className="w-4 h-4" />
+                <Linkedin className="w-4 h-4 text-blue-500" />
               </a>
               <a href={PERSONAL_INFO.twitter} target="_blank" rel="noopener noreferrer" className="p-2.5 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white rounded-full border border-white/10 transition-colors">
                 <Twitter className="w-4 h-4" />
               </a>
               <button onClick={onOpenContact} className="p-2.5 bg-white/[0.04] hover:bg-white/10 text-zinc-300 hover:text-white rounded-full border border-white/10 transition-colors">
-                <Mail className="w-4 h-4" />
+                <Mail className="w-4 h-4 text-red-500" />
               </button>
             </div>
           </div>

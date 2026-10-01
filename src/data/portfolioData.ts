@@ -3,7 +3,7 @@ import { NEW_BLOG_POSTS } from './blogArticles';
 
 export const PERSONAL_INFO = {
   name: "Munish Dhiman",
-  title: "CISO / dyCISO Track | Principal Cybersecurity & IAM Architect | Former SVP, Goldman Sachs",
+  title: "CISO / dyCISO Track | Principal Cybersecurity & IAM Architect - IAM, Digital Security, Directory | Former SVP, Goldman Sachs",
   tagline: "Transforming enterprise security posture through Zero Trust Architecture, Scalable IAM Governance & AI-Driven Risk Resilience. 21+ years securing Fortune 100 multi-cloud perimeters, modernizing identity fabrics, and aligning digital defense with enterprise risk governance.",
   bioShort: "Cybersecurity Executive & Enterprise Architect with 21+ years protecting Fortune 100 infrastructures across Goldman Sachs and global tech leaders. Trusted to direct Zero Trust IAM, lead high-performing global teams, and deliver an unblemished 100% clean regulatory audit record.",
   location: "Bengaluru, India",
@@ -103,9 +103,10 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
     company: "Confidential",
     location: "Bengaluru, India",
     period: "2025 — 2026",
-    category: "Identity, Authentication, Zero Trust, Digital Trust",
+    category: "Identity, Authentication, Zero Trust, Digital Trust, CASB, SASE, CNAP, CSP",
     summary: "Shaped enterprise Identity and Cybersecurity architecture, translating business priorities into secure target-state roadmaps, defining SSO/Federation standards, and architecting authentication for 5M+ identities and ~20M daily transactions with 99.9% platform availability.",
     achievements: [
+      "Architected enterprise cloud perimeter defense and multi-cloud posture across CASB, SASE, CNAP, and CSP environments, enforcing continuous verification.",
       "Shaped enterprise Identity and Cybersecurity architecture, translating business priorities into secure target-state roadmaps and reducing technology and security risk.",
       "Defined SSO, Federation, Authentication & Authorization standards across IAM, PAM, MFA, RBAC and PKI, strengthening enterprise access security and consistency.",
       "Architected authentication for 5M+ identities and ~20M daily transactions, delivering 99.9% platform availability and scalable access.",
@@ -117,11 +118,11 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
       "Authored comprehensive High-Level Designs (HLD) and Low-Level Designs (LLD) for multi-region zero-trust authentication fabrics.",
       "Established rigorous metrics of value (MOV) and point of view (POV) evaluation models for enterprise identity modernization."
     ],
-    technologies: ["Zero Trust", "IAM", "PAM", "MFA", "FIDO2 / Passkeys", "SSO / Federation", "PKI / RBAC", "AI Security", "DevSecOps", "PQC/PKI"]
+    technologies: ["Zero Trust", "IAM", "PAM", "MFA", "FIDO2 / Passkeys", "SSO / Federation", "PKI / RBAC", "AI Security", "DevSecOps", "PQC/PKI", "CASB", "SASE", "CNAP", "CSP"]
   },
   {
     id: "gs-svp",
-    role: "Principal Cybersecurity & IAM Architect | Sr. Vice President",
+    role: "Principal Cybersecurity & IAM Architect - IAM, Digital Security, Directory | Sr. Vice President",
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Nov 2020 — Dec 2025",

@@ -110,59 +110,51 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
           return (
             <div
               key={idx}
-              className={`rounded-2xl p-3 sm:p-3.5 backdrop-blur-xl transition-all group flex flex-col justify-between h-full border interactive-card ${
-                isLight 
-                  ? 'bg-white border-zinc-200 shadow-2xs hover:border-zinc-300 hover:shadow-xs' 
-                  : 'bg-white/[0.02] border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
-              }`}
+              className="rounded-2xl backdrop-blur-xl transition-all group flex flex-col justify-between h-full border border-emerald-500/30 bg-gradient-to-br from-zinc-950 via-[#042114] to-zinc-950 shadow-xl hover:border-emerald-400/60 hover:shadow-2xl overflow-hidden interactive-card"
             >
-              <div>
+              <div className="p-2 sm:p-2.5 text-zinc-100">
                 {/* Card Header with Icon, Title, and Pillar Badge */}
-                <div className="flex items-start justify-between gap-2 mb-1.5">
+                <div className="flex items-start justify-between gap-2 mb-1">
                   <div className="flex items-start gap-2 min-w-0">
-                    <div className={`p-1.5 rounded-lg border shrink-0 mt-0.5 group-hover:scale-105 transition-transform ${
-                      isLight ? 'bg-zinc-100 border-zinc-200' : 'bg-white/[0.05] border-white/10'
-                    }`}>
+                    <div className="p-1 rounded-md border border-emerald-500/40 bg-emerald-950/80 shrink-0 mt-0.5 group-hover:scale-105 transition-transform shadow-inner">
                       {getIcon(cat.iconName)}
                     </div>
-                    <h3 className={`text-[12px] sm:text-[12.5px] font-bold tracking-tight leading-snug break-words ${isLight ? 'text-zinc-900' : 'text-white'}`}>
+                    <h3 className="text-xs sm:text-sm font-bold tracking-tight leading-snug break-words text-white">
                       {cat.title}
                     </h3>
                   </div>
-                  <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full border shrink-0 mt-0.5 whitespace-nowrap ${
-                    isLight ? 'bg-zinc-100 border-zinc-200 text-zinc-600' : 'bg-white/[0.05] border-white/10 text-zinc-400'
-                  }`}>
+                  <span className="text-[9.5px] font-mono font-bold px-1.5 py-0.2 rounded-full border border-emerald-500/40 bg-emerald-900/50 text-emerald-300 shrink-0 mt-0.5 whitespace-nowrap shadow-xs">
                     Pillar {idx + 1}
                   </span>
                 </div>
  
-                {/* Description with aligned best-fit height */}
-                <p className={`text-[10px] sm:text-[10.5px] mb-2 leading-relaxed break-words min-h-[28px] sm:min-h-[30px] ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
+                {/* Description with 1-point reduced font and word wrap */}
+                <p className="text-[9.5px] sm:text-[10px] leading-relaxed break-words whitespace-normal text-zinc-300">
                   {cat.description}
                 </p>
               </div>
  
-              {/* Skills List Sorted Highest % on Top to Lowest at Bottom */}
-              <div className={`space-y-1.5 pt-2 border-t ${isLight ? 'border-zinc-100' : 'border-white/5'}`}>
+              {/* Skills List - Light Colored Below Part with increased font */}
+              <div className="space-y-2 p-3.5 sm:p-4 bg-zinc-50/95 text-zinc-900 border-t border-emerald-500/25 rounded-b-2xl shadow-inner">
                 {sortedSkills.map((skill, sIdx) => (
-                  <div key={sIdx} className="flex items-center justify-between gap-1.5 text-xs py-0.5">
-                    <div className="flex items-center gap-1.5 flex-1 min-w-0 pr-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                  <div key={sIdx} className="flex items-center justify-between gap-2.5 text-xs py-0.5">
+                    <div className="flex items-center gap-2 flex-1 min-w-0 pr-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-600 shrink-0 shadow-xs" />
                       <span 
                         title={skill.name}
-                        className={`text-[10.5px] leading-tight truncate ${isLight ? 'text-zinc-800 font-medium' : 'text-zinc-300'}`}
+                        className="text-xs sm:text-[13px] font-medium leading-tight truncate text-zinc-900"
                       >
                         {skill.name}
                       </span>
                     </div>
-                    <div className="flex items-center gap-2 shrink-0 ml-auto">
-                      <div className={`w-8 sm:w-10 h-1.5 rounded-full overflow-hidden shrink-0 shimmer-track ${isLight ? 'bg-sky-100/90 border border-sky-200/60' : 'bg-white/10 border border-white/10'}`}>
+                    <div className="flex items-center gap-3 shrink-0 ml-auto">
+                      <div className="w-10 sm:w-14 h-2 rounded-full overflow-hidden shrink-0 bg-zinc-200 border border-zinc-300">
                         <div
-                          className="h-full bg-gradient-to-r from-sky-400 via-blue-400 to-indigo-300 rounded-full shadow-[0_0_8px_rgba(56,189,248,0.45)] transition-all duration-500 ease-out"
+                          className="h-full bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full shadow-xs transition-all duration-500 ease-out"
                           style={{ width: `${skill.level}%` }}
                         />
                       </div>
-                      <span className="text-[9.5px] font-semibold text-blue-600 dark:text-blue-400 w-6 text-right tabular-nums shrink-0">
+                      <span className="text-xs font-bold text-emerald-700 w-8 text-right tabular-nums shrink-0">
                         {skill.level}%
                       </span>
                     </div>

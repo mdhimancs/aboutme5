@@ -30,8 +30,8 @@ export const EXECUTIVE_CASE_STUDIES: ExecutiveCaseStudy[] = [
     tags: ['Zero Trust', 'IGA', 'PAM', 'SailPoint', 'CyberArk', 'Entra ID', 'SOX 404'],
     status: 'Enterprise Standard',
     leadershipRole: 'Executive Security Architect & Program Lead (governing 32 cross-functional engineers, identity specialists, and GRC auditors).',
-    imageUrl: './images/zero_trust_iam.jpg',
-    imageAlt: 'Enterprise Zero Trust & Identity Command Center Enclave',
+    imageUrl: '/images/zero_trust_iam.jpg?v=2',
+    imageAlt: 'Modernized Enterprise Zero Trust IAM & Cryptographic Privilege Command Center',
     fullBriefingMarkdown: `
 # Executive Defense Briefing: Enterprise Identity Fabric & Zero Trust Privilege Modernization
 

@@ -96,11 +96,16 @@ const SnapSection: React.FC<SnapSectionProps> = ({ id, children }) => {
   return (
     <div id={id} className="snap-section w-full">
       <motion.div
-        initial={{ opacity: 0.1, scale: 0.98, y: 24 }}
+        initial={{ opacity: 0, scale: 0.97, y: 35 }}
         whileInView={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0.1, scale: 0.98, y: -24 }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        exit={{ opacity: 0, scale: 0.97, y: -35 }}
+        viewport={{ once: false, amount: 0.15 }}
+        transition={{ 
+          duration: 0.7, 
+          ease: [0.16, 1, 0.3, 1],
+          staggerChildren: 0.1,
+          delayChildren: 0.05
+        }}
         className="w-full h-full"
       >
         {children}
@@ -172,15 +177,17 @@ export default function App() {
     }
   }, []);
 
-  // Handle initial hash on mount
+  // Handle initial mount / refresh: always show overview page and reset URL hash
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '') as SectionId;
-    if (hash && SECTIONS.includes(hash)) {
-      setTimeout(() => {
-        navigateToSection(hash);
-      }, 300);
+    if (window.location.hash) {
+      window.history.replaceState(null, '', window.location.pathname);
     }
-  }, [navigateToSection]);
+    setActiveSection('overview');
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
 
   // Sync activeSection with URL hash on scroll
   useEffect(() => {

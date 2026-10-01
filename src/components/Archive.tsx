@@ -538,7 +538,7 @@ export const Archive: React.FC<ArchiveProps> = ({
           </p>
           <div style={{ height: '3pt', width: '100%' }} />
 
-          <div className="flex flex-wrap items-center justify-start pt-1.5 gap-1.5 pb-0 -mt-2 sm:-mt-3" style={{ paddingTop: '6px', paddingBottom: '0px', marginBottom: '1px' }}>
+          <div className="flex flex-wrap items-center justify-start pt-1.5 gap-1.5 pb-0 -mt-2 sm:-mt-3" style={{ paddingTop: '6px', paddingBottom: '0px', marginBottom: '1px', marginLeft: '1px' }}>
             <button
               onClick={() => setActiveTab('blueprints')}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all ${
@@ -607,12 +607,15 @@ export const Archive: React.FC<ArchiveProps> = ({
           </div>
         </div>
 
+        {/* Tab Content Boxes Wrapper */}
+        <div className="relative w-full">
+
         {/* Tab 1: Standardized Executive Blueprints */}
         {activeTab === 'blueprints' && (
           <div className="relative w-full">
-            <div className="overflow-y-auto min-h-0 max-h-[380px] sm:max-h-[410px] lg:max-h-[430px] pr-1 pb-5 space-y-2.5 scrollbar-thin animate-in fade-in duration-300">
+            <div className="overflow-y-auto min-h-0 max-h-[380px] sm:max-h-[410px] lg:max-h-[430px] pr-1 pb-5 space-y-2.5 scrollbar-thin animate-in fade-in duration-300" style={{ marginLeft: '-36px', paddingLeft: '0px' }}>
               {/* Blueprints Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 w-full" style={{ width: '1204.93px', marginLeft: '32px' }}>
                 {EXECUTIVE_BLUEPRINTS.map((bp) => {
                   const locked = isItemLocked(bp.id, 'archive');
                   const hasSpecificClearance = currentUserEntry?.scope === 'specific' && currentUserEntry.allowedItems?.includes(bp.id);
@@ -1495,14 +1498,14 @@ export const Archive: React.FC<ArchiveProps> = ({
         {activeTab === 'archive' && (
           <div className="flex-1 flex flex-col min-h-0 animate-in fade-in duration-300">
             {/* Filters Bar */}
-            <div className={`max-w-4xl mx-auto mb-2 flex flex-wrap items-center justify-center gap-1.5 p-1.5 rounded-lg backdrop-blur-xl border w-full shrink-0 ${
+            <div className={`max-w-4xl mb-2 flex flex-wrap items-center justify-start gap-1.5 p-1.5 rounded-lg backdrop-blur-xl border w-full shrink-0 ${
               isLight ? 'bg-white border-zinc-200 shadow-2xs' : 'bg-white/[0.02] border-white/10'
             }`}>
               <div 
                 ref={typeScroll.scrollRef}
                 onMouseMove={typeScroll.onMouseMove}
                 onMouseLeave={typeScroll.onMouseLeave}
-                className="flex flex-nowrap items-center justify-center gap-1 overflow-x-auto cursor-ew-resize select-none"
+                className="flex flex-nowrap items-center justify-start gap-1 overflow-x-auto cursor-ew-resize select-none"
               >
                 <span className={`text-[10px] font-medium mr-1 flex items-center space-x-1 whitespace-nowrap ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                   <Filter className="w-3 h-3" />
@@ -1529,7 +1532,7 @@ export const Archive: React.FC<ArchiveProps> = ({
                 ref={yearScroll.scrollRef}
                 onMouseMove={yearScroll.onMouseMove}
                 onMouseLeave={yearScroll.onMouseLeave}
-                className="flex flex-nowrap items-center justify-center gap-1 overflow-x-auto cursor-ew-resize select-none"
+                className="flex flex-nowrap items-center justify-start gap-1 overflow-x-auto cursor-ew-resize select-none"
               >
                 <span className={`text-[10px] font-medium mr-1 flex items-center space-x-1 whitespace-nowrap ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                   <Calendar className="w-3 h-3" />
@@ -1553,7 +1556,7 @@ export const Archive: React.FC<ArchiveProps> = ({
 
             {/* Scrollable Archive Grid */}
             <div className="max-h-[46vh] sm:max-h-[48vh] overflow-y-auto pr-1 sm:pr-2 flex-1">
-              <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-2">
                 {filteredArchive.map((item) => {
                   const locked = isItemLocked(item.id, 'archive');
                   const hasSpecificClearance = currentUserEntry?.scope === 'specific' && currentUserEntry.allowedItems?.includes(item.id);
@@ -1697,6 +1700,7 @@ export const Archive: React.FC<ArchiveProps> = ({
             </div>
           </div>
         )}
+        </div>
       </div>
 
       {/* Timeless Lesson Detail Modal */}

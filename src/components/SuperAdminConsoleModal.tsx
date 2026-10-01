@@ -381,20 +381,19 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
   const [authError, setAuthError] = useState('');
 
   // Logic for generating deep, realistic live visitor telemetry & interaction data
-  useEffect(() => {
-    if (isOpen) {
-      const currentUptime = `${Math.floor(Math.random() * 2 + 1)}h ${Math.floor(Math.random() * 40 + 10)}m`;
-      
-      // Capture actual real browser/device telemetry
-      const realScreenRes = `${window.screen.width}x${window.screen.height} @ ${window.devicePixelRatio || 1}x DPR (Viewport: ${window.innerWidth}x${window.innerHeight})`;
-      const realTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
-      const realUsername = user?.email || 'live.visitor@enterprise.secure';
-      const realUserAgent = navigator.userAgent;
-      const isMobile = /Mobi|Android/i.test(realUserAgent);
-      const realDevice = isMobile ? 'Mobile Device / Responsive Viewport' : navigator.platform || 'Desktop Workstation';
-      const realBrowser = realUserAgent.includes('Chrome') ? 'Google Chrome / Chromium' : realUserAgent.includes('Firefox') ? 'Mozilla Firefox' : realUserAgent.includes('Safari') ? 'Apple Safari' : 'Secure Browser Client';
+  const generateSessions = useCallback((): VisitorSession[] => {
+    const currentUptime = `${Math.floor(Math.random() * 2 + 1)}h ${Math.floor(Math.random() * 40 + 10)}m`;
+    
+    // Capture actual real browser/device telemetry
+    const realScreenRes = typeof window !== 'undefined' ? `${window.screen.width}x${window.screen.height} @ ${window.devicePixelRatio || 1}x DPR (Viewport: ${window.innerWidth}x${window.innerHeight})` : '1920x1080 (Desktop)';
+    const realTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    const realUsername = user?.email || 'live.visitor@enterprise.secure';
+    const realUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : '';
+    const isMobile = /Mobi|Android/i.test(realUserAgent);
+    const realDevice = isMobile ? 'Mobile Device / Responsive Viewport' : (typeof navigator !== 'undefined' ? navigator.platform : 'Desktop Workstation') || 'Desktop Workstation';
+    const realBrowser = realUserAgent.includes('Chrome') ? 'Google Chrome / Chromium' : realUserAgent.includes('Firefox') ? 'Mozilla Firefox' : realUserAgent.includes('Safari') ? 'Apple Safari' : 'Secure Browser Client';
 
-      const initialSessions: VisitorSession[] = [
+    return [
         {
           sessionId: `SES-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
           ip: clientIp || '104.28.19.42 (Edge Proxy - Live)',
@@ -580,30 +579,45 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
             { time: '14:15:30', event: 'Verified MIT, Stanford, Harvard Executive Credentials', type: 'view' }
           ]
         }
-      ];
-      setSessions(initialSessions);
-    }
-  }, [isOpen, isAdmin, clientIp]);
+    ];
+  }, [user?.email, clientIp, isAdmin]);
 
-  // Auto-close console after 2 hours (removed in favor of 15-min idle/visibility logout)
-  /*
-  useEffect(() => {
-    if (!isOpen) return;
+  // 30-Second Auto-Refresh Interval & Manual Refresh
+  const [autoRefreshCountdown, setAutoRefreshCountdown] = useState(30);
 
-    const timer = setTimeout(() => {
-      onClose();
-    }, 7200000);
-
-    return () => clearTimeout(timer);
-  }, [isOpen, onClose]);
-  */
-
-  const handleRefresh = () => {
+  const handleRefresh = useCallback(() => {
     setIsRefreshing(true);
+    setSessions(generateSessions());
+    setAutoRefreshCountdown(30);
     setTimeout(() => {
       setIsRefreshing(false);
     }, 600);
-  };
+  }, [generateSessions]);
+
+  // Initial load when opening console
+  useEffect(() => {
+    if (isOpen) {
+      setSessions(generateSessions());
+      setAutoRefreshCountdown(30);
+    }
+  }, [isOpen, generateSessions]);
+
+  // Automated 30-second refresh countdown and trigger
+  useEffect(() => {
+    if (!isOpen || !isAdmin) return;
+
+    const interval = setInterval(() => {
+      setAutoRefreshCountdown((prev) => {
+        if (prev <= 1) {
+          handleRefresh();
+          return 30;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isOpen, isAdmin, handleRefresh]);
 
   const exportAuditReportJSON = () => {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(sessions, null, 2));
@@ -794,7 +808,7 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-1 sm:p-2.5 md:p-3 overflow-hidden bg-black/65 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="relative w-full max-w-[1440px] h-[95vh] sm:h-[96vh] bg-white border border-zinc-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col text-zinc-900 translate-x-[20%]">
+      <div className="relative w-full max-w-[1440px] h-[95vh] sm:h-[96vh] bg-white border border-zinc-200 rounded-2xl shadow-2xl overflow-hidden flex flex-col text-zinc-900">
         
         {/* Header Bar */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-zinc-200 bg-zinc-900 text-white shrink-0">
@@ -824,9 +838,19 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
               </span>
             </div>
             
+            {/* 30s Automated Refresh Countdown Indicator */}
+            <div 
+              title={`Continuous 30-second telemetry refresh active • Next auto-refresh in ${autoRefreshCountdown}s`}
+              className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10.5px] font-mono select-none"
+            >
+              <span className={`w-1.5 h-1.5 rounded-full bg-emerald-400 ${isRefreshing ? 'animate-ping' : 'animate-pulse'}`} />
+              <span className="font-semibold uppercase tracking-wider text-[9px] text-emerald-300/80">Auto-Refresh</span>
+              <span className="font-bold tabular-nums text-emerald-400">{autoRefreshCountdown}s</span>
+            </div>
+
             <button
               onClick={handleRefresh}
-              title="Refresh telemetry streams"
+              title={`Refresh telemetry streams now (Auto-refreshes every 30s • next in ${autoRefreshCountdown}s)`}
               className={`p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-all cursor-pointer ${isRefreshing ? 'animate-spin' : ''}`}
             >
               <RefreshCw className="w-4 h-4" />

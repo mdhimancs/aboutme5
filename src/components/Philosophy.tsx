@@ -79,86 +79,98 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
           style={{ paddingTop: '6px' }}
         >
           {/* Pillar 1 */}
-          <div className={`p-4 sm:p-4.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
               ? 'bg-white/95 border-zinc-200/80 hover:border-blue-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
               : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-blue-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2 text-blue-500">
-                  <div className="p-1.5 rounded-lg bg-blue-500/10">
-                    <BookOpen className="w-4 h-4" />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2.5 text-blue-500">
+                  <div className="p-2 rounded-lg bg-blue-500/10 shrink-0">
+                    <BookOpen className="w-5 h-5" />
                   </div>
-                  <h3 className={`text-sm sm:text-[14.5px] font-semibold tracking-tight ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                  <h3 className={`w-[236px] max-w-[calc(100%-55px)] h-10 inline-flex items-center px-3.5 rounded-xl border shadow-xs whitespace-nowrap text-[16.5px] sm:text-[18px] font-bold tracking-tight ${
+                    isLight 
+                      ? 'bg-zinc-900 text-white border-zinc-800' 
+                      : 'bg-black/90 text-white border-zinc-700/60 shadow-[0_0_12px_rgba(0,0,0,0.5)]'
+                  }`}>
                     Intellectual Foundation
                   </h3>
                 </div>
                 <StarsCounter pageId="philosophy-pillar-1" isLight={isLight} compact />
               </div>
-              <p className={`text-[12px] sm:text-[12.5px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-sm sm:text-base leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 True wisdom lies in acknowledging our knowledge is but a drop in an infinite ocean. Inspired by Stoic equanimity and existential inquiry, growth thrives at the intersection of disciplined action and radical curiosity.
               </p>
             </div>
-            <div className={`text-[10.5px] font-mono mt-3 pt-2.5 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
+            <div className={`text-xs font-mono mt-4 pt-3 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
               <span>Stoicism • Humility</span>
-              <span className="text-[9px] uppercase opacity-75">Pillar I</span>
+              <span className="text-[10px] uppercase opacity-75">Pillar I</span>
             </div>
           </div>
 
           {/* Pillar 2 */}
-          <div className={`p-4 sm:p-4.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
               ? 'bg-white/95 border-zinc-200/80 hover:border-rose-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
               : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-rose-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2 text-rose-500">
-                  <div className="p-1.5 rounded-lg bg-rose-500/10">
-                    <Heart className="w-4 h-4" />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2.5 text-rose-500">
+                  <div className="p-2 rounded-lg bg-rose-500/10 shrink-0">
+                    <Heart className="w-5 h-5" />
                   </div>
-                  <h3 className={`text-sm sm:text-[14.5px] font-semibold tracking-tight ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                  <h3 className={`w-[236px] max-w-[calc(100%-55px)] h-10 inline-flex items-center px-3.5 rounded-xl border shadow-xs whitespace-nowrap text-[16.5px] sm:text-[18px] font-bold tracking-tight ${
+                    isLight 
+                      ? 'bg-zinc-900 text-white border-zinc-800' 
+                      : 'bg-black/90 text-white border-zinc-700/60 shadow-[0_0_12px_rgba(0,0,0,0.5)]'
+                  }`}>
                     Five Generations
                   </h3>
                 </div>
                 <StarsCounter pageId="philosophy-pillar-2" isLight={isLight} compact />
               </div>
-              <p className={`text-[12px] sm:text-[12.5px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-sm sm:text-base leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 Deepest gratitude to near and extended family—elders, young ones, and contemporaries spanning 5 overlapping generations for their enduring foundation, unconditional love, and companionship through all tides.
               </p>
             </div>
-            <div className={`text-[10.5px] font-mono mt-3 pt-2.5 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
+            <div className={`text-xs font-mono mt-4 pt-3 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
               <span>Heritage • Enduring Love</span>
-              <span className="text-[9px] uppercase opacity-75">Pillar II</span>
+              <span className="text-[10px] uppercase opacity-75">Pillar II</span>
             </div>
           </div>
 
           {/* Pillar 3 */}
-          <div className={`p-4 sm:p-4.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
               ? 'bg-white/95 border-zinc-200/80 hover:border-emerald-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
               : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-emerald-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center space-x-2 text-emerald-500">
-                  <div className="p-1.5 rounded-lg bg-emerald-500/10">
-                    <Users className="w-4 h-4" />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2.5 text-emerald-500">
+                  <div className="p-2 rounded-lg bg-emerald-500/10 shrink-0">
+                    <Users className="w-5 h-5" />
                   </div>
-                  <h3 className={`text-sm sm:text-[14.5px] font-semibold tracking-tight ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
+                  <h3 className={`w-[236px] max-w-[calc(100%-55px)] h-10 inline-flex items-center px-3.5 rounded-xl border shadow-xs whitespace-nowrap text-[16.5px] sm:text-[18px] font-bold tracking-tight ${
+                    isLight 
+                      ? 'bg-zinc-900 text-white border-zinc-800' 
+                      : 'bg-black/90 text-white border-zinc-700/60 shadow-[0_0_12px_rgba(0,0,0,0.5)]'
+                  }`}>
                     Mentors & Community
                   </h3>
                 </div>
                 <StarsCounter pageId="philosophy-pillar-3" isLight={isLight} compact />
               </div>
-              <p className={`text-[12px] sm:text-[12.5px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-sm sm:text-base leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 Enduring appreciation to academic guides, institutional leaders at Goldman Sachs, and the global cybersecurity open-source research community whose collective brilliance illuminates the defense craft.
               </p>
             </div>
-            <div className={`text-[10.5px] font-mono mt-3 pt-2.5 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
+            <div className={`text-xs font-mono mt-4 pt-3 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
               <span>Mentorship • Open Source</span>
-              <span className="text-[9px] uppercase opacity-75">Pillar III</span>
+              <span className="text-[10px] uppercase opacity-75">Pillar III</span>
             </div>
           </div>
         </div>

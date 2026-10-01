@@ -69,6 +69,9 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
 
   const progressPercent = Math.round(scrollProgress);
 
+  // Remove leading H1 title from content to prevent duplicate title repetition with modal header
+  const sanitizedContent = post.content ? post.content.replace(/^#\s+[^\n]+\n+/, '') : '';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/60 backdrop-blur-xl animate-in fade-in duration-200">
       <div className="relative w-full max-w-4xl bg-white border border-zinc-200 rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-zinc-900">
@@ -209,15 +212,134 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
                   ),
                   th: ({ node, ...props }) => <th className="bg-zinc-100 p-3 text-zinc-900 font-semibold border-b border-zinc-200" {...props} />,
                   td: ({ node, ...props }) => <td className="p-3 border-b border-zinc-100 text-zinc-700" {...props} />,
+                  img: ({ node, ...props }) => {
+                    const isMcpArticle = post.id === 'bp-2026-mcp-rbac-pbac-ai-governance';
+                    const isNhiArticle = post.id === 'bp-2026-non-human-identities-cicd';
+                    return (
+                      <span className="block my-4 space-y-3">
+                        <span className="block relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-900 shadow-sm max-w-xl mx-auto">
+                          <img
+                            {...props}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-24 sm:h-32 object-cover opacity-90"
+                            loading="lazy"
+                          />
+                          {props.alt && (
+                            <span className="block px-3 py-1.5 bg-zinc-900/90 text-[11px] font-mono text-zinc-300 border-t border-zinc-800 text-center">
+                              {props.alt}
+                            </span>
+                          )}
+                        </span>
+
+                        {isNhiArticle && (
+                          <span className="block p-4 sm:p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-emerald-950 via-[#042616] to-emerald-950 text-emerald-100 shadow-[0_0_28px_rgba(16,185,129,0.2)] space-y-4">
+                            <span className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-500/20 pb-3">
+                              <span className="flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide uppercase text-emerald-300">
+                                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                                <span>NHI &amp; SPIFFE/SPIRE Workload Identity Architecture</span>
+                              </span>
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                Zero Static Keys • Ephemeral SVIDs
+                              </span>
+                            </span>
+
+                            <span className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                              <span className="p-3.5 rounded-xl bg-emerald-900/30 border border-emerald-500/25 flex flex-col justify-between shadow-inner">
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">1. Workload Pod / CI Runner</span>
+                                <span className="font-bold text-white mt-0.5">GitHub Actions / K8s Pod</span>
+                                <span className="text-[11px] text-emerald-200/80 mt-1">Initiates node attestation &amp; cryptographic identity proof request.</span>
+                              </span>
+
+                              <span className="p-3.5 rounded-xl bg-emerald-900/40 border border-emerald-500/35 flex flex-col justify-between shadow-inner">
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 font-bold">2. SPIRE Aggregator Server</span>
+                                <span className="font-bold text-white mt-0.5">Workload Attestation</span>
+                                <span className="text-[11px] text-emerald-200/80 mt-1">Verifies X.509 SVIDs and issues short-lived ephemeral workload tokens.</span>
+                              </span>
+
+                              <span className="p-3.5 rounded-xl bg-emerald-900/50 border border-emerald-400/40 flex flex-col justify-between shadow-inner">
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-200 font-bold">3. Multi-Cloud IAM Federation</span>
+                                <span className="font-bold text-white mt-0.5">AWS / Azure / GCP AssumeRole</span>
+                                <span className="text-[11px] text-emerald-200/90 mt-1">Zero static credentials; automated least privilege scope enforcement.</span>
+                              </span>
+                            </span>
+                          </span>
+                        )}
+
+                        {isMcpArticle && (
+                          <span className="block p-4 sm:p-6 rounded-2xl border border-emerald-500/40 bg-gradient-to-br from-emerald-950 via-[#042616] to-emerald-950 text-emerald-100 shadow-[0_0_28px_rgba(16,185,129,0.2)] space-y-4">
+                            <span className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-500/20 pb-3">
+                              <span className="flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide uppercase text-emerald-300">
+                                <Cpu className="w-4 h-4 text-emerald-400 shrink-0" />
+                                <span>MCP Reference Architecture (Bottle Green Enterprise Governance)</span>
+                              </span>
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm flex items-center gap-1.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                JSON-RPC 2.0 • Zero-Trust PEP/PDP
+                              </span>
+                            </span>
+
+                            {/* Tier 1: Host & AI Client Agent */}
+                            <span className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                              <span className="p-3.5 rounded-xl bg-emerald-900/30 border border-emerald-500/25 flex flex-col justify-between shadow-inner">
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">1. MCP Host & Client</span>
+                                <span className="font-bold text-white mt-0.5">Autonomous AI Agent / IDE</span>
+                                <span className="text-[11px] text-emerald-200/80 mt-1">Initiates JSON-RPC <code className="text-emerald-300 bg-emerald-950/80 px-1 py-0.5 rounded">tools/call</code> &amp; <code className="text-emerald-300 bg-emerald-950/80 px-1 py-0.5 rounded">resources/read</code> with user OIDC JWT + DPoP proof.</span>
+                              </span>
+
+                              {/* Tier 2: MCP PEP Gateway */}
+                              <span className="p-3.5 rounded-xl bg-emerald-900/40 border border-emerald-500/35 flex flex-col justify-between shadow-inner">
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 font-bold">2. Policy Enforcement (PEP)</span>
+                                <span className="font-bold text-white mt-0.5">MCP Security Proxy Gateway</span>
+                                <span className="text-[11px] text-emerald-200/80 mt-1">Intercepts JSON-RPC payloads, verifies mTLS &amp; token binding, blocks prompt-injection tool hijacking.</span>
+                              </span>
+
+                              {/* Tier 3: RBAC & PBAC PDP Engine */}
+                              <span className="p-3.5 rounded-xl bg-emerald-900/50 border border-emerald-400/40 flex flex-col justify-between shadow-inner">
+                                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-200 font-bold">3. Policy Decision (PDP)</span>
+                                <span className="font-bold text-white mt-0.5">OPA / Cedar RBAC &amp; PBAC</span>
+                                <span className="text-[11px] text-emerald-200/90 mt-1">Evaluates Role Claims (RBAC) + Dynamic Attributes (PBAC: Data Classification, Risk Score, Tenant).</span>
+                              </span>
+                            </span>
+
+                            {/* Flow Connector */}
+                            <span className="flex items-center justify-center gap-2 text-[10px] font-mono text-emerald-300 py-1 font-semibold tracking-wider bg-emerald-950/60 rounded-lg border border-emerald-500/20">
+                              <span>▼ Scoped Capability Grant + Real-Time Context DLP Redaction ▼</span>
+                            </span>
+
+                            {/* Tier 4: Target MCP Servers & SIEM */}
+                            <span className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-[11px]">
+                              <span className="p-3 rounded-xl bg-emerald-950/75 border border-emerald-500/30 text-center shadow-sm">
+                                <span className="block font-bold text-emerald-200">Postgres / Snowflake</span>
+                                <span className="block text-[10px] text-emerald-300/80 font-mono mt-0.5">Read-Only / Row-Mask PBAC</span>
+                              </span>
+                              <span className="p-3 rounded-xl bg-emerald-950/75 border border-emerald-500/30 text-center shadow-sm">
+                                <span className="block font-bold text-emerald-200">GitHub / Codebase MCP</span>
+                                <span className="block text-[10px] text-emerald-300/80 font-mono mt-0.5">Repo-Scoped RBAC</span>
+                              </span>
+                              <span className="p-3 rounded-xl bg-emerald-950/75 border border-emerald-500/30 text-center shadow-sm">
+                                <span className="block font-bold text-emerald-200">Kubernetes / Cloud API</span>
+                                <span className="block text-[10px] text-emerald-300/80 font-mono mt-0.5">JIT Step-Up MFA Required</span>
+                              </span>
+                              <span className="p-3 rounded-xl bg-emerald-950/75 border border-emerald-500/30 text-center shadow-sm">
+                                <span className="block font-bold text-emerald-200">Immutable SIEM Audit</span>
+                                <span className="block text-[10px] text-emerald-300/80 font-mono mt-0.5">Signed JSON-RPC Telemetry</span>
+                              </span>
+                            </span>
+                          </span>
+                        )}
+                      </span>
+                    );
+                  },
                   code({ node, inline, className, children, ...props }: any) {
                     const match = /language-(\w+)/.exec(className || '');
                     return !inline ? (
-                      <div className="my-6 rounded-2xl overflow-hidden border border-zinc-200 bg-zinc-900 text-zinc-100 shadow-sm">
-                        <div className="flex items-center justify-between px-4 py-2 bg-zinc-800 border-b border-zinc-700 text-xs text-zinc-300 font-mono">
+                      <div className="my-5 rounded-2xl overflow-hidden border border-zinc-200 bg-zinc-50 text-zinc-800 shadow-sm max-w-2xl mx-auto">
+                        <div className="flex items-center justify-between px-4.5 py-2.5 bg-zinc-100 border-b border-zinc-200 text-xs text-zinc-700 font-mono">
                           <span>{match ? match[1].toUpperCase() : 'CODE'}</span>
-                          <Terminal className="w-3.5 h-3.5 text-blue-400" />
+                          <Terminal className="w-3.5 h-3.5 text-blue-600" />
                         </div>
-                        <pre className="p-4 overflow-x-auto text-xs sm:text-sm font-mono text-emerald-300">
+                        <pre className="p-4 sm:p-4.5 overflow-x-auto font-mono text-zinc-800 text-[11px] sm:text-xs leading-snug">
                           <code className={className} {...props}>
                             {children}
                           </code>
@@ -231,7 +353,7 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
                   }
                 }}
               >
-                {post.content}
+                {sanitizedContent}
               </ReactMarkdown>
             </div>
           ) : (
