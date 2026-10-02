@@ -879,6 +879,11 @@ export default function App() {
             />
           </SnapSection>
 
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
+
           {/* Stop 2: Executive Bio */}
           <SnapSection id="bio">
             <ExecutiveBio 
@@ -887,12 +892,22 @@ export default function App() {
             />
           </SnapSection>
 
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
+
           {/* Stop 3: Core Technical Competencies */}
           <SnapSection id="competencies">
             <CoreCompetencies 
               theme={theme} 
             />
           </SnapSection>
+
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
 
           {/* Stop 4: Career Journey */}
           <SnapSection id="career">
@@ -901,6 +916,11 @@ export default function App() {
             />
           </SnapSection>
 
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
+
           {/* Stop 5: Case Studies (Projects) */}
           <SnapSection id="projects">
             <Projects 
@@ -908,6 +928,11 @@ export default function App() {
             />
           </SnapSection>
           
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
+
           {/* Stop 6: Technical Blog */}
           <SnapSection id="blog">
             <TechnicalBlog 
@@ -915,12 +940,22 @@ export default function App() {
             />
           </SnapSection>
 
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
+
           {/* Stop 7: Off Keyboard */}
           <SnapSection id="offkeyboard">
             <OffKeyboard 
               theme={theme} 
             />
           </SnapSection>
+
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
 
           {/* Stop 8: Philosophy */}
           <SnapSection id="philosophy">
@@ -930,6 +965,11 @@ export default function App() {
             />
           </SnapSection>
           
+          {/* Section Separator */}
+          <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+          </div>
+
           {/* Stop 9: Archives & Patents + Integrated Footer */}
           <SnapSection id="archive">
             <Archive 
