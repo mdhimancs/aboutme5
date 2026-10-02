@@ -43,7 +43,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'blog', name: 'Publications', href: '#blog', num: '6', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'offkeyboard', name: 'Off Keyboard', href: '#offkeyboard', num: '7', icon: <Coffee className="w-4 h-4" /> },
     { id: 'philosophy', name: 'Philosophy', href: '#philosophy', num: '8', icon: <Brain className="w-4 h-4" /> },
-    { id: 'archive', name: 'Archives', href: '#archive', num: '9', icon: <Archive className="w-4 h-4" /> },
+    { id: 'cosmic', name: 'Cosmic Insights', href: '#cosmic', num: '9', icon: <Sparkles className="w-4 h-4" /> },
+    { id: 'archive', name: 'Archives', href: '#archive', num: '10', icon: <Archive className="w-4 h-4" /> },
   ];
 
   const handleLinkClick = (e: React.MouseEvent, sectionId: string) => {

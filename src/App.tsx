@@ -881,7 +881,7 @@ export default function App() {
 
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 2: Executive Bio */}
@@ -894,7 +894,7 @@ export default function App() {
 
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 3: Core Technical Competencies */}
@@ -906,7 +906,7 @@ export default function App() {
 
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 4: Career Journey */}
@@ -918,7 +918,7 @@ export default function App() {
 
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 5: Case Studies (Projects) */}
@@ -930,7 +930,7 @@ export default function App() {
           
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 6: Technical Blog */}
@@ -942,7 +942,7 @@ export default function App() {
 
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 7: Off Keyboard */}
@@ -954,7 +954,7 @@ export default function App() {
 
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 8: Philosophy */}
@@ -967,7 +967,7 @@ export default function App() {
           
           {/* Section Separator */}
           <div className="w-full flex items-center justify-center py-1 bg-transparent pointer-events-none select-none">
-            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/30 to-transparent' : 'from-transparent via-cyan-500/30 to-transparent'}`} />
+            <div className={`w-3/4 max-w-4xl h-[1px] bg-gradient-to-r ${isLight ? 'from-transparent via-blue-400/50 to-transparent' : 'from-transparent via-cyan-500/50 to-transparent'}`} />
           </div>
 
           {/* Stop 9: Archives & Patents + Integrated Footer */}
