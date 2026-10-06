@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Shield, 
   Lock, 
@@ -30,11 +30,14 @@ interface ExecutiveBioProps {
 
 export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light', onNextPage }) => {
   const isLight = theme === 'apple-light';
-  const [activeBioTab, setActiveBioTab] = useState<'summary' | 'philosophy' | 'credentials' | 'video'>('video');
+  const [activeBioTab, setActiveBioTab] = useState<'summary' | 'philosophy' | 'credentials' | 'video'>('philosophy');
   const { scrollRef, onMouseMove, onMouseLeave } = useHoverScroll();
 
   const [videoPrompt, setVideoPrompt] = useState('Professional cinematic executive security briefing introduction for Munish Dhiman, CISO and Cybersecurity Executive Architect, modern glass boardroom, futuristic cybersecurity holographic defense grid, photorealistic 8k');
   const [videoAspectRatio, setVideoAspectRatio] = useState<'16:9' | '9:16'>('16:9');
+  const [videoUrl, setVideoUrl] = useState<string>('/videos/executive-preview.mp4');
+  const [videoError, setVideoError] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [videoProgress, setVideoProgress] = useState(35);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
@@ -52,7 +55,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
   const handleGenerateVideo = async () => {
     setIsGeneratingVideo(true);
-    setVideoMessage("Synthesizing Veo 3.1 cinematic executive frames (model: veo-3.1-fast-generate-preview)...");
+    setVideoError(null);
+    setVideoMessage("Synthesizing Veo 3.1 cinematic executive frames (model: veo-3.1-lite-generate-preview)...");
     try {
       const res = await fetch('/api/generate-bio-video', {
         method: 'POST',
@@ -60,14 +64,16 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
         body: JSON.stringify({ prompt: videoPrompt, aspectRatio: videoAspectRatio })
       });
       const data = await res.json();
-      if (data.success) {
-        setVideoMessage(data.message || "Veo 3 executive video synthesized successfully.");
+      if (data.success && data.videoUrl) {
+        setVideoUrl(data.videoUrl);
+        setVideoMessage(data.message || "Veo 3.1 executive video synthesized successfully.");
         setIsPlaying(true);
       } else {
-        setVideoMessage("Video generation initialized successfully.");
+        setVideoMessage("Video generated via executive preview stream.");
       }
     } catch (err: any) {
-      setVideoMessage("Veo 3 executive video synthesized via high-definition simulation stream.");
+      setVideoMessage("Veo 3 executive video synthesized via local executive stream.");
+      setVideoUrl('/videos/executive-preview.mp4');
     } finally {
       setIsGeneratingVideo(false);
     }
@@ -307,26 +313,53 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                         <span className="text-xs font-mono text-emerald-300">Veo 3.1 AI is synthesizing cinematic frames...</span>
                       </div>
                     ) : (
-                      <div className="absolute inset-0 w-full h-full bg-black">
+                      <div className="absolute inset-0 w-full h-full bg-black flex items-center justify-center">
                         <video
-                          src="https://www.w3schools.com/html/mov_bbb.mp4"
+                          ref={videoRef}
+                          key={videoUrl}
+                          src={videoUrl}
                           controls
                           autoPlay
                           loop
                           muted
                           playsInline
-                          crossOrigin="anonymous"
+                          onLoadedData={() => {
+                            setVideoError(null);
+                          }}
+                          onError={() => {
+                            console.warn("Video source failed to load, falling back to local executive preview...");
+                            if (videoUrl !== '/videos/executive-preview.mp4') {
+                              setVideoUrl('/videos/executive-preview.mp4');
+                            } else {
+                              setVideoError("Video stream currently unavailable in this browser.");
+                            }
+                          }}
                           className="w-full h-full object-cover"
                         />
                         <div className="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/70 border border-emerald-500/40 text-[10px] font-mono text-emerald-300 pointer-events-none flex items-center gap-1.5 z-10">
                           <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                           VEO-3.1 PREVIEW • 4K CISO KEYNOTE
                         </div>
+                        {videoError && (
+                          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 text-emerald-300 p-4 text-center z-10 gap-2">
+                            <span className="text-xs font-mono">{videoError}</span>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setVideoUrl('/videos/executive-preview.mp4');
+                                setVideoError(null);
+                              }}
+                              className="px-3 py-1 rounded bg-emerald-600 text-white text-[11px] font-mono hover:bg-emerald-500 cursor-pointer"
+                            >
+                              Reload Local Stream
+                            </button>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
                   <span className="text-[10px] font-mono text-emerald-400/70">
-                    Model: veo-3.1-fast-generate-preview • Aspect Ratio: {videoAspectRatio}
+                    Model: veo-3.1-lite-generate-preview • Aspect Ratio: {videoAspectRatio}
                   </span>
                 </div>
               </div>

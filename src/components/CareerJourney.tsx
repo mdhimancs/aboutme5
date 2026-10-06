@@ -59,6 +59,19 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       ]
     },
     {
+      company: 'Global Analytics (GA) / Confidential',
+      period: '2013–2014 · 2 Yrs',
+      roles: [
+        {
+          value: 'ga-confidential-director',
+          role: 'Director of Architecture & Confidential Analytics',
+          years: '2013–2014',
+          shortLabel: 'Director / GA Confidential',
+          milestoneId: 'ga-confidential-director'
+        }
+      ]
+    },
+    {
       company: 'Computer Associates (Broadcom)',
       period: '2009–2011 · 2 Yrs',
       roles: [
@@ -115,6 +128,14 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
         <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-950/90 text-amber-300 border border-amber-500/40 shadow-xs">
           <Building2 className="w-3 h-3 text-amber-400 shrink-0" />
           <span>Goldman Sachs</span>
+        </span>
+      );
+    }
+    if (company.includes('Global Analytics') || company.includes('Confidential')) {
+      return (
+        <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-indigo-950/90 text-indigo-300 border border-indigo-500/40 shadow-xs">
+          <Building2 className="w-3 h-3 text-indigo-400 shrink-0" />
+          <span>GA Confidential / Director</span>
         </span>
       );
     }

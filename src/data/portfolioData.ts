@@ -150,6 +150,21 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
     technologies: ["SSO", "SAML", "Active Directory", "LDAP", "Kerberos", "Java", "Linux", "Perl / Shell"]
   },
   {
+    id: "ga-confidential-director",
+    role: "Director of Architecture & Confidential Global Analytics Solutions",
+    company: "Global Analytics (GA) / Confidential",
+    location: "Bengaluru, India",
+    period: "Jan 2013 — Dec 2014",
+    category: "Director & Analytics",
+    summary: "Directed enterprise analytics architecture, data security enclaves, and confidential global analytics solutions for financial services and digital platforms.",
+    achievements: [
+      "Directed cross-functional engineering and analytics teams building secure, high-throughput data processing pipelines and confidential enterprise platforms.",
+      "Established rigorous data privacy, encryption-at-rest/in-transit, and access governance frameworks adhering to international financial regulations.",
+      "Architected scalable distributed storage and real-time analytics engines with strict role-based and attribute-based access controls."
+    ],
+    technologies: ["Big Data Security", "Confidential Computing", "Enterprise Architecture", "Distributed Systems", "Analytics", "Risk Governance"]
+  },
+  {
     id: "gs-tech-analyst",
     role: "Senior Technology Analyst / Associate",
     company: "Goldman Sachs",

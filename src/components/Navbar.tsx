@@ -43,8 +43,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'blog', name: 'Publications', href: '#blog', num: '6', icon: <BookOpen className="w-4 h-4" /> },
     { id: 'offkeyboard', name: 'Off Keyboard', href: '#offkeyboard', num: '7', icon: <Coffee className="w-4 h-4" /> },
     { id: 'philosophy', name: 'Philosophy', href: '#philosophy', num: '8', icon: <Brain className="w-4 h-4" /> },
-    { id: 'cosmic', name: 'Cosmic Insights', href: '#cosmic', num: '9', icon: <Sparkles className="w-4 h-4" /> },
-    { id: 'archive', name: 'Archives', href: '#archive', num: '10', icon: <Archive className="w-4 h-4" /> },
+    { id: 'archive', name: 'Archives', href: '#archive', num: '9', icon: <Archive className="w-4 h-4" /> },
   ];
 
   const handleLinkClick = (e: React.MouseEvent, sectionId: string) => {
@@ -61,25 +60,26 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <>
-      {/* Desktop Left Sidebar */}
+      {/* Desktop Left Sidebar (Navigation Plane) */}
       <aside 
         style={{
           width: isSidebarCollapsed ? '72px' : '295px',
-          paddingLeft: isSidebarCollapsed ? undefined : '32px',
-          paddingRight: isSidebarCollapsed ? undefined : '28px',
+          paddingLeft: isSidebarCollapsed ? '12px' : '32px',
+          paddingRight: isSidebarCollapsed ? '12px' : '28px',
           paddingTop: '30px',
           paddingBottom: '20px',
           marginTop: '0px',
           marginLeft: '0px',
           marginRight: '0px'
         }}
-        className={`hidden md:flex fixed top-0 left-0 bottom-0 z-50 flex-col border-r backdrop-blur-2xl transition-all duration-300 ease-in-out ${
-        isSidebarCollapsed ? 'px-2 items-center py-6' : ''
-      } ${
-        isLight
-          ? 'bg-white/90 border-zinc-200 text-zinc-900 shadow-sm'
-          : 'bg-[#050507]/90 border-white/10 text-white shadow-2xl'
-      }`}>
+        className={`hidden md:flex fixed top-0 left-0 bottom-0 z-50 flex-col border-r backdrop-blur-2xl transition-all duration-300 ease-in-out no-scrollbar ${
+          isSidebarCollapsed ? 'items-center' : ''
+        } ${
+          isLight
+            ? 'bg-white/90 border-zinc-200 text-zinc-900 shadow-sm'
+            : 'bg-[#050507]/90 border-white/10 text-white shadow-2xl'
+        }`}
+      >
         {/* Top: Name & Logo */}
         <div className="shrink-0 relative w-full">
           <div className={`flex items-center gap-1.5 w-full ${isSidebarCollapsed ? 'justify-center' : 'justify-between'}`}>
@@ -89,14 +89,37 @@ export const Navbar: React.FC<NavbarProps> = ({
               className={`flex items-center group cursor-pointer min-w-0 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 rounded-xl ${isSidebarCollapsed ? 'justify-center p-1' : 'space-x-3 flex-1'}`}
               title="Overview"
             >
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white shadow-lg shadow-blue-500/35 flex-shrink-0 relative overflow-hidden group-hover:scale-105 transition-transform border border-white/25">
-                {/* Thin, razor-sharp Crossed Swords behind Shield */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-85">
-                  <Swords className="w-6 h-6 text-blue-200 transform scale-110" strokeWidth={1.5} />
+              {/* Enhanced Luminous Executive Cybersecurity Crest */}
+              <div className="w-11 h-11 rounded-[14px] bg-gradient-to-br from-[#0284c7] via-[#1d4ed8] to-[#0a1224] flex items-center justify-center text-white shadow-[0_0_24px_rgba(37,99,235,0.45)] ring-1 ring-cyan-400/40 border border-white/30 flex-shrink-0 relative overflow-hidden group-hover:scale-105 group-hover:shadow-[0_0_32px_rgba(56,189,248,0.75)] group-hover:border-cyan-300/60 transition-all duration-300">
+                {/* Specular Radial Core Glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(255,255,255,0.4),transparent_65%)] pointer-events-none" />
+                
+                {/* Upper Glass Specular Arc */}
+                <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/25 to-transparent pointer-events-none" />
+
+                {/* Razor-Sharp Crossed Swords Accent in Background */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45 z-0">
+                  <Swords className="w-8 h-8 text-cyan-200 transform scale-110" strokeWidth={1.8} />
                 </div>
-                {/* Security Shield Check in foreground */}
-                <ShieldCheck className="w-5 h-5 text-white relative z-10 drop-shadow-md fill-white/20" strokeWidth={2.2} />
+
+                {/* High-Clarity Vector Shield Crest in Foreground (Larger) */}
+                <svg viewBox="0 0 32 32" className="w-8 h-8 relative z-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" fill="none">
+                  <defs>
+                    <linearGradient id="navShieldLeft" x1="6" y1="3" x2="16" y2="28" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#38bdf8"/>
+                      <stop offset="100%" stopColor="#1e40af"/>
+                    </linearGradient>
+                    <linearGradient id="navShieldRight" x1="16" y1="3" x2="26" y2="28" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#60a5fa"/>
+                      <stop offset="100%" stopColor="#1d4ed8"/>
+                    </linearGradient>
+                  </defs>
+                  {/* Dual Facet 3D Cybersecurity Shield */}
+                  <path d="M16 3 L6 7.5 C6 16 10.5 23.5 16 28.5 C21.5 23.5 26 16 26 7.5 Z" fill="url(#navShieldLeft)" stroke="#38bdf8" strokeWidth="1.4" strokeLinejoin="round"/>
+                  <path d="M16 3 L26 7.5 C26 16 21.5 23.5 16 28.5 Z" fill="url(#navShieldRight)" stroke="#38bdf8" strokeWidth="1.4" strokeLinejoin="round"/>
+                </svg>
               </div>
+
               {!isSidebarCollapsed && (
                 <div className="flex flex-col min-w-0">
                   <div className="flex items-center gap-1.5 min-w-0">
@@ -112,28 +135,44 @@ export const Navbar: React.FC<NavbarProps> = ({
             </a>
           </div>
 
-          {/* Slim Divider Line */}
-          <div className={`h-px w-full mt-6 ${isLight ? 'bg-zinc-200' : 'bg-white/10'}`} />
+          {/* Horizontal Divider Line with Adjoining Collapse Icon */}
+          <div className="relative mt-6 w-full flex items-center">
+            {/* The horizontal divider line spanning across the pane */}
+            <div className={`h-px flex-1 ${isLight ? 'bg-gradient-to-r from-transparent via-zinc-200 to-zinc-300' : 'bg-gradient-to-r from-transparent via-white/10 to-white/20'}`} />
+
+            {/* Line segment reaching the outer border */}
+            <div 
+              className={`h-px ${isLight ? 'bg-zinc-300' : 'bg-white/20'}`}
+              style={{
+                width: isSidebarCollapsed ? '12px' : '28px',
+                marginRight: isSidebarCollapsed ? '-12px' : '-28px'
+              }}
+            />
+
+            {/* Collapsing Icon Adjoining Directly to the Horizontal Line */}
+            {onToggleSidebar && (
+              <button
+                type="button"
+                onClick={onToggleSidebar}
+                title={isSidebarCollapsed ? "Expand navigation pane (Ctrl+B)" : "Collapse navigation pane (Ctrl+B)"}
+                aria-label={isSidebarCollapsed ? "Expand navigation pane" : "Collapse navigation pane"}
+                style={{
+                  right: isSidebarCollapsed ? '-26px' : '-42px',
+                }}
+                className={`absolute top-1/2 -translate-y-1/2 z-50 flex items-center justify-center w-7 h-7 rounded-full border shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ${
+                  isLight
+                    ? 'bg-white border-zinc-300 text-zinc-700 hover:text-blue-600 shadow-zinc-300/80 hover:border-blue-400'
+                    : 'bg-[#121217] border-white/25 text-zinc-200 hover:text-white shadow-black/90 hover:border-blue-500/60'
+                }`}
+              >
+                {isSidebarCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+              </button>
+            )}
+          </div>
         </div>
 
-        {/* Collapsing Button on the Outer Edge of the Navigation Plane */}
-        {onToggleSidebar && (
-          <button
-            onClick={onToggleSidebar}
-            title={isSidebarCollapsed ? "Expand sidebar (Ctrl+B)" : "Collapse sidebar (Ctrl+B)"}
-            aria-label="Toggle sidebar"
-            className={`absolute -right-3.5 top-12 z-50 flex items-center justify-center w-7 h-7 rounded-full border shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ${
-              isLight
-                ? 'bg-white border-zinc-300 text-zinc-700 hover:text-zinc-900 shadow-zinc-200/80'
-                : 'bg-[#18181b] border-zinc-700 text-zinc-300 hover:text-white shadow-black/60'
-            }`}
-          >
-            {isSidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-          </button>
-        )}
-
         {/* Center: Navigation Links & Social Icons vertically aligned to top */}
-        <div className="flex-1 flex flex-col justify-start pt-6 pb-2 min-h-0 w-full overflow-y-auto">
+        <div className="flex-1 flex flex-col justify-start pt-6 pb-2 min-h-0 w-full overflow-y-auto no-scrollbar">
           <nav className={`space-y-1.5 w-full ${isSidebarCollapsed ? 'flex flex-col items-center' : ''}`} aria-label="Main Navigation">
             {!isSidebarCollapsed && (
               <div className="text-[10px] font-semibold tracking-wider uppercase text-zinc-400 pl-4 pr-2.5 mb-2 flex items-center justify-between" aria-hidden="true">
@@ -339,11 +378,15 @@ export const Navbar: React.FC<NavbarProps> = ({
           onClick={(e) => handleLinkClick(e, 'overview')}
           className="flex items-center space-x-2.5 pl-2"
         >
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-400 via-indigo-400 to-blue-300 flex items-center justify-center text-white shadow-md shadow-blue-400/25 flex-shrink-0 relative overflow-hidden">
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-90">
-              <Swords className="w-5 h-5 text-white transform scale-110" strokeWidth={1} />
+          <div className="w-9 h-9 rounded-[12px] bg-gradient-to-br from-[#0284c7] via-[#1d4ed8] to-[#0a1224] flex items-center justify-center text-white shadow-[0_0_16px_rgba(37,99,235,0.45)] ring-1 ring-cyan-400/40 border border-white/30 flex-shrink-0 relative overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(255,255,255,0.4),transparent_65%)] pointer-events-none" />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45 z-0">
+              <Swords className="w-7 h-7 text-cyan-200" strokeWidth={1.8} />
             </div>
-            <Shield className="w-4 h-4 text-white relative z-10 drop-shadow-sm fill-white/20" strokeWidth={2} />
+            <svg viewBox="0 0 32 32" className="w-7 h-7 relative z-10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]" fill="none">
+              <path d="M16 3 L6 7.5 C6 16 10.5 23.5 16 28.5 C21.5 23.5 26 16 26 7.5 Z" fill="#38bdf8" stroke="#38bdf8" strokeWidth="1.4" strokeLinejoin="round"/>
+              <path d="M16 3 L26 7.5 C26 16 21.5 23.5 16 28.5 Z" fill="#1d4ed8" stroke="#38bdf8" strokeWidth="1.4" strokeLinejoin="round"/>
+            </svg>
           </div>
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1.5 min-w-0">

@@ -14,17 +14,17 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
   return (
     <section 
       id="philosophy" 
-      className={`relative min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t transition-colors duration-500 ${
+      className={`relative min-h-screen lg:h-screen w-full flex flex-col justify-start pt-3 sm:pt-6 pb-3 sm:pb-4 lg:pb-5 px-6 sm:px-12 lg:px-16 max-w-[920px] lg:max-w-[1260px] mx-auto overflow-hidden border-t transition-colors duration-500 ${
         isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Soothing Ambient Atmospheric Aura Effects */}
       <SectionBackgroundAura theme={theme} auraLevel={3} />
 
-      <div className="relative w-full max-w-[1400px] mx-auto flex flex-col flex-1 justify-center space-y-4 sm:space-y-5">
+      <div className="relative w-[90%] max-w-[1260px] mx-auto flex flex-col flex-1 justify-start space-y-2.5 sm:space-y-3 pt-1.5">
         
         {/* Header */}
-        <div className="relative text-left space-y-1.5 shrink-0 -mt-4">
+        <div className="relative text-left space-y-1 shrink-0 mt-0">
           {/* Luminous aura behind heading */}
           <div 
             className={`absolute -top-3 -left-2 sm:-left-4 w-72 sm:w-96 h-24 sm:h-28 rounded-full blur-2xl pointer-events-none transition-all ${
@@ -36,7 +36,7 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
 
           <div 
             style={{ fontSize: '11px' }}
-            className={`relative inline-flex items-center gap-1.5 px-3 py-1 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-1 shadow-xs ${
+            className={`relative inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full font-semibold tracking-wider uppercase border backdrop-blur-md mb-0.5 shadow-xs ${
             isLight 
               ? 'bg-blue-50/90 border-blue-200 text-blue-700' 
               : 'bg-blue-500/10 border-blue-500/20 text-blue-400 shadow-[0_0_14px_rgba(59,130,246,0.18)]'
@@ -53,14 +53,14 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
             Philosophy & Gratitude
           </h2>
           <p 
-            style={{ fontSize: '11px', paddingBottom: '6px' }}
+            style={{ fontSize: '11px', paddingBottom: '2px' }}
             className={`relative max-w-3xl font-normal text-left text-[11px] leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}
           >
             An executive journey grounded in intellectual humility, relentless curiosity and profound gratitude.
           </p>
         </div>
 
-        <div className={`py-2 px-3.5 sm:py-2.5 sm:px-4 rounded-xl border flex items-center gap-3 shrink-0 transition-all duration-300 backdrop-blur-sm -mt-2 sm:-mt-3 ${
+        <div className={`py-1.5 px-3.5 sm:py-2 sm:px-4 rounded-xl border flex items-center gap-2.5 shrink-0 transition-all duration-300 backdrop-blur-sm -mt-0.5 ${
           isLight 
             ? 'bg-gradient-to-r from-blue-50/80 via-indigo-50/50 to-white/90 border-blue-200/80 text-zinc-900 shadow-xs' 
             : 'bg-gradient-to-r from-blue-950/25 via-zinc-900/60 to-indigo-950/20 border-white/10 text-zinc-100 shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
@@ -68,109 +68,97 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
           <div className={`p-1.5 rounded-lg shrink-0 ${isLight ? 'bg-blue-500/10 text-blue-600' : 'bg-blue-500/15 text-blue-400'}`}>
             <Quote className="w-3.5 h-3.5" />
           </div>
-          <p className="text-xs sm:text-[12.5px] italic font-serif leading-relaxed tracking-wide">
+          <p className="text-xs sm:text-[12px] italic font-serif leading-relaxed tracking-wide">
             "Self-discovery through selfless pursuit of knowledge is the way to illumination." — <span className="font-semibold not-italic text-blue-500">Buddha</span>
           </p>
         </div>
 
         {/* 3 Refined Pillars Grid */}
         <div 
-          className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4 shrink-0"
-          style={{ paddingTop: '6px' }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-3 shrink-0"
+          style={{ paddingTop: '4px' }}
         >
           {/* Pillar 1 */}
-          <div className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
               ? 'bg-white/95 border-zinc-200/80 hover:border-blue-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
               : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-blue-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center space-x-2.5 text-blue-500">
-                  <div className="p-2 rounded-lg bg-blue-500/10 shrink-0">
-                    <BookOpen className="w-5 h-5" />
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-1.5 text-blue-500">
+                  <div className="p-1.5 rounded-lg bg-blue-500/10 shrink-0">
+                    <BookOpen className="w-4 h-4" />
                   </div>
-                  <h3 className={`w-[236px] max-w-[calc(100%-55px)] h-10 inline-flex items-center px-3.5 rounded-xl border shadow-xs whitespace-nowrap text-[16.5px] sm:text-[18px] font-bold tracking-tight ${
-                    isLight 
-                      ? 'bg-zinc-900 text-white border-zinc-800' 
-                      : 'bg-black/90 text-white border-zinc-700/60 shadow-[0_0_12px_rgba(0,0,0,0.5)]'
-                  }`}>
+                  <h3 className="w-[190px] max-w-[calc(100%-46px)] h-8 inline-flex items-center px-2.5 rounded-xl border shadow-md whitespace-nowrap text-[13.5px] sm:text-[14.5px] font-bold tracking-tight bg-gradient-to-r from-blue-700 via-indigo-700 to-sky-600 text-white border-blue-400/50 shadow-[0_4px_16px_rgba(29,78,216,0.35)]">
                     Intellectual Foundation
                   </h3>
                 </div>
                 <StarsCounter pageId="philosophy-pillar-1" isLight={isLight} compact />
               </div>
-              <p className={`text-sm sm:text-base leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-[11px] sm:text-[13px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 True wisdom lies in acknowledging our knowledge is but a drop in an infinite ocean. Inspired by Stoic equanimity and existential inquiry, growth thrives at the intersection of disciplined action and radical curiosity.
               </p>
             </div>
-            <div className={`text-xs font-mono mt-4 pt-3 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
+            <div className={`text-[10px] font-mono mt-3 pt-2 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
               <span>Stoicism • Humility</span>
-              <span className="text-[10px] uppercase opacity-75">Pillar I</span>
+              <span className="text-[8.5px] uppercase opacity-75">Pillar I</span>
             </div>
           </div>
 
           {/* Pillar 2 */}
-          <div className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
               ? 'bg-white/95 border-zinc-200/80 hover:border-rose-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
               : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-rose-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center space-x-2.5 text-rose-500">
-                  <div className="p-2 rounded-lg bg-rose-500/10 shrink-0">
-                    <Heart className="w-5 h-5" />
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-1.5 text-rose-500">
+                  <div className="p-1.5 rounded-lg bg-rose-500/10 shrink-0">
+                    <Heart className="w-4 h-4" />
                   </div>
-                  <h3 className={`w-[236px] max-w-[calc(100%-55px)] h-10 inline-flex items-center px-3.5 rounded-xl border shadow-xs whitespace-nowrap text-[16.5px] sm:text-[18px] font-bold tracking-tight ${
-                    isLight 
-                      ? 'bg-zinc-900 text-white border-zinc-800' 
-                      : 'bg-black/90 text-white border-zinc-700/60 shadow-[0_0_12px_rgba(0,0,0,0.5)]'
-                  }`}>
+                  <h3 className="w-[190px] max-w-[calc(100%-46px)] h-8 inline-flex items-center px-2.5 rounded-xl border shadow-md whitespace-nowrap text-[13.5px] sm:text-[14.5px] font-bold tracking-tight bg-gradient-to-r from-rose-700 via-pink-700 to-red-600 text-white border-rose-400/50 shadow-[0_4px_16px_rgba(225,29,72,0.35)]">
                     Five Generations
                   </h3>
                 </div>
                 <StarsCounter pageId="philosophy-pillar-2" isLight={isLight} compact />
               </div>
-              <p className={`text-sm sm:text-base leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-[11px] sm:text-[13px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 Deepest gratitude to near and extended family—elders, young ones, and contemporaries spanning 5 overlapping generations for their enduring foundation, unconditional love, and companionship through all tides.
               </p>
             </div>
-            <div className={`text-xs font-mono mt-4 pt-3 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
+            <div className={`text-[10px] font-mono mt-3 pt-2 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
               <span>Heritage • Enduring Love</span>
-              <span className="text-[10px] uppercase opacity-75">Pillar II</span>
+              <span className="text-[8.5px] uppercase opacity-75">Pillar II</span>
             </div>
           </div>
 
           {/* Pillar 3 */}
-          <div className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
             isLight 
               ? 'bg-white/95 border-zinc-200/80 hover:border-emerald-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
               : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-emerald-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center space-x-2.5 text-emerald-500">
-                  <div className="p-2 rounded-lg bg-emerald-500/10 shrink-0">
-                    <Users className="w-5 h-5" />
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-1.5 text-emerald-500">
+                  <div className="p-1.5 rounded-lg bg-emerald-500/10 shrink-0">
+                    <Users className="w-4 h-4" />
                   </div>
-                  <h3 className={`w-[236px] max-w-[calc(100%-55px)] h-10 inline-flex items-center px-3.5 rounded-xl border shadow-xs whitespace-nowrap text-[16.5px] sm:text-[18px] font-bold tracking-tight ${
-                    isLight 
-                      ? 'bg-zinc-900 text-white border-zinc-800' 
-                      : 'bg-black/90 text-white border-zinc-700/60 shadow-[0_0_12px_rgba(0,0,0,0.5)]'
-                  }`}>
+                  <h3 className="w-[190px] max-w-[calc(100%-46px)] h-8 inline-flex items-center px-2.5 rounded-xl border shadow-md whitespace-nowrap text-[13.5px] sm:text-[14.5px] font-bold tracking-tight bg-gradient-to-r from-emerald-700 via-teal-700 to-cyan-600 text-white border-emerald-400/50 shadow-[0_4px_16px_rgba(16,185,129,0.35)]">
                     Mentors & Community
                   </h3>
                 </div>
                 <StarsCounter pageId="philosophy-pillar-3" isLight={isLight} compact />
               </div>
-              <p className={`text-sm sm:text-base leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+              <p className={`text-[11px] sm:text-[13px] leading-relaxed font-serif italic ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                 Enduring appreciation to academic guides, institutional leaders at Goldman Sachs, and the global cybersecurity open-source research community whose collective brilliance illuminates the defense craft.
               </p>
             </div>
-            <div className={`text-xs font-mono mt-4 pt-3 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
+            <div className={`text-[10px] font-mono mt-3 pt-2 border-t tracking-wide flex items-center justify-between ${isLight ? 'text-zinc-500 border-zinc-100' : 'text-zinc-400 border-white/5'}`}>
               <span>Mentorship • Open Source</span>
-              <span className="text-[10px] uppercase opacity-75">Pillar III</span>
+              <span className="text-[8.5px] uppercase opacity-75">Pillar III</span>
             </div>
           </div>
         </div>

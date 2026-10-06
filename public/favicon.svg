@@ -1,33 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
-  <!-- Shield Outline & High-Contrast Backdrop -->
-  <path d="M16 2.5L5.5 6.8V14.5c0 7.2 4.5 13.8 10.5 15.8 6-2 10.5-8.6 10.5-15.8V6.8L16 2.5z" 
-        fill="#090d16" 
-        stroke="#3b82f6" 
-        stroke-width="1.8" 
-        stroke-linejoin="round" />
-  
-  <!-- Inner White Shield Contour -->
-  <path d="M16 4.8L7.5 8.2V14.5c0 5.8 3.6 11.2 8.5 13 4.9-1.8 8.5-7.2 8.5-13V8.2L16 4.8z" 
-        fill="#0f172a" 
-        stroke="#ffffff" 
-        stroke-width="0.8" 
-        stroke-opacity="0.6" 
-        stroke-linejoin="round" />
+  <defs>
+    <!-- High-Tech Executive Sapphire to Electric Cyan Gradient -->
+    <linearGradient id="tileGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="42%" stop-color="#1d4ed8"/>
+      <stop offset="100%" stop-color="#0a1224"/>
+    </linearGradient>
 
-  <!-- Crossed Swords (Pure Crisp White) -->
-  <g stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-    <!-- Sword 1 (Top-Left to Bottom-Right) -->
-    <line x1="10" y1="10" x2="22" y2="22" />
-    <line x1="9.5" y1="13.5" x2="13.5" y2="9.5" />
-    <circle cx="8.5" cy="8.5" r="1.1" fill="#ffffff" stroke="none" />
+    <!-- Glowing Cyber Perimeter Rim -->
+    <linearGradient id="rimGrad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#bae6fd"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
 
-    <!-- Sword 2 (Top-Right to Bottom-Left) -->
-    <line x1="22" y1="10" x2="10" y2="22" />
-    <line x1="18.5" y1="9.5" x2="22.5" y2="13.5" />
-    <circle cx="23.5" cy="8.5" r="1.1" fill="#ffffff" stroke="none" />
-  </g>
+    <!-- Shield Face Left Facet (Light Azure) -->
+    <linearGradient id="facetLeft" x1="7" y1="6" x2="16" y2="25" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#1e40af"/>
+    </linearGradient>
 
-  <!-- Center Core Defense Emblem -->
-  <polygon points="16,13.2 17.8,16 16,18.8 14.2,16" fill="#ffffff" />
-  <circle cx="16" cy="16" r="0.8" fill="#0f172a" />
+    <!-- Shield Face Right Facet (Deep Sapphire) -->
+    <linearGradient id="facetRight" x1="16" y1="6" x2="25" y2="25" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <!-- Top Specular Glass Reflection -->
+    <linearGradient id="glassTop" x1="16" y1="2" x2="16" y2="14" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Crisp Squircle Tile Base: Unmatched Clarity & Punch on Dark and Light Browser Tabs -->
+  <rect x="1" y="1" width="30" height="30" rx="7.5" fill="url(#tileGrad)" stroke="url(#rimGrad)" stroke-width="1.6"/>
+
+  <!-- Top Glass Highlight -->
+  <path d="M2 8 C2 4.2 4.2 2 8 2 L24 2 C27.8 2 30 4.2 30 8 L30 13 C22 16 11 15 2 10.5 Z" fill="url(#glassTop)"/>
+
+  <!-- Left Facet of Cybersecurity Shield -->
+  <path d="M16 6 L8.5 9.5 C8.5 16 11.5 21.5 16 25 Z" fill="url(#facetLeft)" stroke="#38bdf8" stroke-width="1.2" stroke-linejoin="round"/>
+
+  <!-- Right Facet of Cybersecurity Shield -->
+  <path d="M16 6 L23.5 9.5 C23.5 16 20.5 21.5 16 25 Z" fill="url(#facetRight)" stroke="#38bdf8" stroke-width="1.2" stroke-linejoin="round"/>
+
+  <!-- Center Metallic Crest Ridge -->
+  <line x1="16" y1="6" x2="16" y2="25" stroke="#ffffff" stroke-width="0.8" opacity="0.85"/>
+
+  <!-- Razor-Sharp Pure White Verified Zero-Trust Checkmark -->
+  <path d="M11.6 15.6 L14.8 18.8 L20.6 12.2" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Radiant Cyan Cyber Beacon in Lower Right Corner -->
+  <circle cx="24" cy="24" r="2.3" fill="#22d3ee" stroke="#0a1224" stroke-width="1.2"/>
+  <circle cx="24" cy="24" r="1.1" fill="#ffffff"/>
 </svg>

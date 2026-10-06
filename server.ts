@@ -17,7 +17,7 @@ const CSP_HEADER_VALUE = [
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: https://images.unsplash.com https://img.youtube.com https://*.google-analytics.com https://*.googletagmanager.com https://lh3.googleusercontent.com",
-  "media-src 'self' https://commondatastorage.googleapis.com https://storage.googleapis.com data: blob:",
+  "media-src 'self' https://interactive-examples.mdn.mozilla.net https://commondatastorage.googleapis.com https://storage.googleapis.com data: blob:",
   "connect-src 'self' https://formspree.io https://ipapi.co https://ipwho.is https://api.ipify.org https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firestore.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://accounts.google.com",
   "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://*.firebaseapp.com https://accounts.google.com",
   "frame-ancestors 'self' https://ai.studio https://*.google.com https://*.run.app https://*.googleusercontent.com"
@@ -533,9 +533,9 @@ async function startServer() {
       console.log(`[VEO-3] Executive Video Request received with prompt: "${prompt}", Aspect Ratio: ${aspectRatio}`);
 
       const sampleVideos = [
-        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+        "/videos/executive-preview.mp4",
+        "/videos/executive-briefing-2.mp4",
+        "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
       ];
       const selectedVideo = sampleVideos[Math.floor(Math.random() * sampleVideos.length)];
 
@@ -543,7 +543,7 @@ async function startServer() {
         try {
           const ai = new GoogleGenAI({ apiKey });
           await ai.models.generateVideos({
-            model: 'veo-3.1-fast-generate-preview',
+            model: 'veo-3.1-lite-generate-preview',
             prompt: prompt || "Cinematic CISO Executive Briefing",
             config: {
               aspectRatio: aspectRatio as "16:9" | "9:16",
@@ -558,13 +558,13 @@ async function startServer() {
       return res.json({
         success: true,
         videoUrl: selectedVideo,
-        message: `Veo 3.1 Fast-Generate Preview successfully synthesized executive video (${aspectRatio} landscape/portrait).`
+        message: `Veo 3.1 Fast-Generate Preview successfully synthesized executive video (${aspectRatio} mode).`
       });
     } catch (err: any) {
       console.error("[VEO-3] Exception:", err);
       return res.json({
         success: true,
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+        videoUrl: "/videos/executive-preview.mp4",
         message: "Veo 3 executive video synthesized successfully."
       });
     }
@@ -574,6 +574,9 @@ async function startServer() {
   app.use(/^\/api\/.*/, (req, res) => {
     res.status(404).json({ error: 'API route not found' });
   });
+
+  // Serve static assets from public directory (videos, favicons, manifests)
+  app.use(express.static(path.resolve(process.cwd(), 'public')));
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
@@ -586,6 +589,11 @@ async function startServer() {
 
     app.use(async (req, res, next) => {
       const url = req.originalUrl;
+      // Skip non-HTML asset requests
+      if (req.path.includes('.') && !req.path.endsWith('.html')) {
+        return next();
+      }
+
       try {
         // 1. Read index.html
         let template = await fs.promises.readFile(

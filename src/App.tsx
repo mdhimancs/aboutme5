@@ -136,9 +136,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('overview');
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  const [theme, setTheme] = useState<ThemeMode>('apple-light');
-  const [accent, setAccent] = useState<AccentColor>('blue');
-  const [font, setFont] = useState<FontStyle>('inter');
+  // Persistent Sidebar Collapsed state with Ctrl+B shortcut support
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
     try {
       return localStorage.getItem('executive_sidebar_collapsed') === 'true';
@@ -147,7 +145,7 @@ export default function App() {
     }
   });
 
-  const handleToggleSidebar = useCallback(() => {
+  const toggleSidebar = useCallback(() => {
     setIsSidebarCollapsed(prev => {
       const next = !prev;
       try {
@@ -156,6 +154,22 @@ export default function App() {
       return next;
     });
   }, []);
+
+  // Keyboard shortcut Ctrl+B / Cmd+B to toggle navigation pane
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+        e.preventDefault();
+        toggleSidebar();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [toggleSidebar]);
+
+  const [theme, setTheme] = useState<ThemeMode>('apple-light');
+  const [accent, setAccent] = useState<AccentColor>('blue');
+  const [font, setFont] = useState<FontStyle>('inter');
 
   const containerRef = useRef<HTMLDivElement>(null);
   const isTransitioningRef = useRef(false);
@@ -644,15 +658,12 @@ export default function App() {
       } else if (e.key === 'End') {
         e.preventDefault();
         navigateToIndex(SECTIONS.length - 1);
-      } else if ((e.ctrlKey || e.metaKey) && (e.key === 'b' || e.key === 'B')) {
-        e.preventDefault();
-        handleToggleSidebar();
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleNextPage, handlePrevPage, navigateToIndex, handleToggleSidebar]);
+  }, [handleNextPage, handlePrevPage, navigateToIndex]);
 
   // Security: Content protection removed per user request to allow copying/cutting/selecting
   useEffect(() => {
@@ -840,7 +851,7 @@ export default function App() {
         theme={theme}
         onNavigate={(id) => navigateToSection(id as SectionId)}
         isSidebarCollapsed={isSidebarCollapsed}
-        onToggleSidebar={handleToggleSidebar}
+        onToggleSidebar={toggleSidebar}
       />
       
       {/* Main Snap Scroll Container */}
@@ -852,8 +863,9 @@ export default function App() {
         onClick={() => {
           if (interfaceModalOpen) setInterfaceModalOpen(false);
         }}
-        style={{ marginLeft: isSidebarCollapsed ? '72px' : '295px' }}
-        className="h-screen overflow-y-auto scroll-container select-text transition-[margin] duration-300 ease-in-out relative"
+        className={`h-screen overflow-y-auto scroll-container select-text relative transition-[margin] duration-300 ease-in-out ${
+          isSidebarCollapsed ? 'md:ml-[72px]' : 'md:ml-[295px]'
+        }`}
       >
         <StatusBanner theme={theme} />
         
