@@ -596,7 +596,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
                 <div>
                   {/* Heading with rich executive color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-400 border border-blue-400/60 shadow-md text-white mb-2">
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-blue-500/25 border border-blue-400/50 flex items-center justify-center shrink-0">
                       <Shield className="w-3.5 h-3.5 text-blue-400" />
                     </div>
@@ -632,7 +632,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
                 <div>
                   {/* Heading with rich executive color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-400 border border-emerald-400/60 shadow-md text-white mb-2">
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-emerald-500/25 border border-emerald-400/50 flex items-center justify-center shrink-0">
                       <Scale className="w-3.5 h-3.5 text-emerald-400" />
                     </div>
@@ -668,7 +668,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
                 <div>
                   {/* Heading with rich executive color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-500 via-blue-500 to-sky-400 border border-indigo-400/60 shadow-md text-white mb-2">
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
                       <Lock className="w-3.5 h-3.5 text-indigo-400" />
                     </div>
@@ -704,7 +704,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
                 <div>
                   {/* Heading with rich executive color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-400 border border-purple-400/60 shadow-md text-white mb-2">
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-purple-500/25 border border-purple-400/50 flex items-center justify-center shrink-0">
                       <Brain className="w-3.5 h-3.5 text-purple-400" />
                     </div>
@@ -740,7 +740,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
                 <div>
                   {/* Heading with rich executive color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 border border-amber-400/60 shadow-md text-white mb-2">
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-amber-500/25 border border-amber-400/50 flex items-center justify-center shrink-0">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
                     </div>
