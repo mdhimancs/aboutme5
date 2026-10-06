@@ -63,11 +63,11 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       period: '2013–2014 · 2 Yrs',
       roles: [
         {
-          value: 'ga-confidential-director',
+          value: 'ga-confidential-director-v2',
           role: 'Director of Architecture & Confidential Analytics',
           years: '2013–2014',
           shortLabel: 'Director / GA Confidential',
-          milestoneId: 'ga-confidential-director'
+          milestoneId: 'ga-confidential-director-v2'
         }
       ]
     },

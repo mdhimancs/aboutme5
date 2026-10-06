@@ -543,7 +543,7 @@ async function startServer() {
         try {
           const ai = new GoogleGenAI({ apiKey });
           await ai.models.generateVideos({
-            model: 'veo-3.1-lite-generate-preview',
+            model: 'veo-3',
             prompt: prompt || "Cinematic CISO Executive Briefing",
             config: {
               aspectRatio: aspectRatio as "16:9" | "9:16",

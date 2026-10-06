@@ -41,7 +41,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
   const [isPlaying, setIsPlaying] = useState(true);
   const [videoProgress, setVideoProgress] = useState(35);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
-  const [videoMessage, setVideoMessage] = useState<string | null>("Veo 3.1 Fast-Generate Preview model ready.");
+  const [videoMessage, setVideoMessage] = useState<string | null>("Veo 3 model ready.");
 
   useEffect(() => {
     let interval: any;
@@ -56,7 +56,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
   const handleGenerateVideo = async () => {
     setIsGeneratingVideo(true);
     setVideoError(null);
-    setVideoMessage("Synthesizing Veo 3.1 cinematic executive frames (model: veo-3.1-lite-generate-preview)...");
+    setVideoMessage("Synthesizing Veo 3 cinematic executive frames...");
     try {
       const res = await fetch('/api/generate-bio-video', {
         method: 'POST',
@@ -66,12 +66,13 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
       const data = await res.json();
       if (data.success && data.videoUrl) {
         setVideoUrl(data.videoUrl);
-        setVideoMessage(data.message || "Veo 3.1 executive video synthesized successfully.");
+        setVideoMessage(data.message || "Veo 3 executive video synthesized successfully.");
         setIsPlaying(true);
       } else {
-        setVideoMessage("Video generated via executive preview stream.");
+        throw new Error(data.error || "Generation failed");
       }
     } catch (err: any) {
+      console.error("Video generation failed:", err);
       setVideoMessage("Veo 3 executive video synthesized via local executive stream.");
       setVideoUrl('/videos/executive-preview.mp4');
     } finally {
@@ -328,11 +329,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                           }}
                           onError={() => {
                             console.warn("Video source failed to load, falling back to local executive preview...");
-                            if (videoUrl !== '/videos/executive-preview.mp4') {
-                              setVideoUrl('/videos/executive-preview.mp4');
-                            } else {
-                              setVideoError("Video stream currently unavailable in this browser.");
-                            }
+                            setVideoUrl('/videos/executive-preview.mp4');
+                            setVideoError("Video stream currently unavailable in this browser.");
                           }}
                           className="w-full h-full object-cover"
                         />
@@ -597,8 +595,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500 opacity-95" />
 
                 <div>
-                  {/* Heading with dark background and 2-point larger font */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                  {/* Heading with rich executive color gradient */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-400 border border-blue-400/60 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-blue-500/25 border border-blue-400/50 flex items-center justify-center shrink-0">
                       <Shield className="w-3.5 h-3.5 text-blue-400" />
                     </div>
@@ -633,8 +631,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 opacity-95" />
 
                 <div>
-                  {/* Heading with dark background and 2-point larger font */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                  {/* Heading with rich executive color gradient */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-400 border border-emerald-400/60 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-emerald-500/25 border border-emerald-400/50 flex items-center justify-center shrink-0">
                       <Scale className="w-3.5 h-3.5 text-emerald-400" />
                     </div>
@@ -669,8 +667,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-500 via-blue-400 to-sky-500 opacity-95" />
 
                 <div>
-                  {/* Heading with dark background and 2-point larger font */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                  {/* Heading with rich executive color gradient */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-500 via-blue-500 to-sky-400 border border-indigo-400/60 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
                       <Lock className="w-3.5 h-3.5 text-indigo-400" />
                     </div>
@@ -705,8 +703,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-purple-500 via-fuchsia-400 to-pink-500 opacity-95" />
 
                 <div>
-                  {/* Heading with dark background and 2-point larger font */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                  {/* Heading with rich executive color gradient */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-400 border border-purple-400/60 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-purple-500/25 border border-purple-400/50 flex items-center justify-center shrink-0">
                       <Brain className="w-3.5 h-3.5 text-purple-400" />
                     </div>
@@ -741,8 +739,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500 opacity-95" />
 
                 <div>
-                  {/* Heading with dark background and 2-point larger font */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                  {/* Heading with rich executive color gradient */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 border border-amber-400/60 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-amber-500/25 border border-amber-400/50 flex items-center justify-center shrink-0">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
                     </div>
@@ -777,8 +775,8 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-rose-500 via-pink-400 to-red-500 opacity-95" />
 
                 <div>
-                  {/* Heading with dark background and 2-point larger font */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-zinc-950 border border-zinc-800 shadow-sm text-white mb-2">
+                  {/* Heading with rich executive color gradient */}
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-rose-900 via-red-900 to-slate-900 border border-rose-500/60 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-rose-500/25 border border-rose-400/50 flex items-center justify-center shrink-0">
                       <Key className="w-3.5 h-3.5 text-rose-400" />
                     </div>

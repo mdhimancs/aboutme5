@@ -103,7 +103,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </div>
 
                 {/* High-Clarity Vector Shield Crest in Foreground (Larger) */}
-                <svg viewBox="0 0 32 32" className="w-8 h-8 relative z-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" fill="none">
+                <svg viewBox="0 0 32 32" className="w-[30.4px] h-[30.4px] relative z-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" fill="none">
                   <defs>
                     <linearGradient id="navShieldLeft" x1="6" y1="3" x2="16" y2="28" gradientUnits="userSpaceOnUse">
                       <stop offset="0%" stopColor="#38bdf8"/>
@@ -383,7 +383,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-45 z-0">
               <Swords className="w-7 h-7 text-cyan-200" strokeWidth={1.8} />
             </div>
-            <svg viewBox="0 0 32 32" className="w-7 h-7 relative z-10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]" fill="none">
+            <svg viewBox="0 0 32 32" className="w-[26.6px] h-[26.6px] relative z-10 drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]" fill="none">
               <path d="M16 3 L6 7.5 C6 16 10.5 23.5 16 28.5 C21.5 23.5 26 16 26 7.5 Z" fill="#38bdf8" stroke="#38bdf8" strokeWidth="1.4" strokeLinejoin="round"/>
               <path d="M16 3 L26 7.5 C26 16 21.5 23.5 16 28.5 Z" fill="#1d4ed8" stroke="#38bdf8" strokeWidth="1.4" strokeLinejoin="round"/>
             </svg>
