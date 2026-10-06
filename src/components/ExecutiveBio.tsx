@@ -16,12 +16,14 @@ import {
   Cpu,
   Compass,
   Key,
-  UserCheck
+  UserCheck,
+  ChevronDown
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { useHoverScroll } from '../lib/utils';
 import { StarsCounter } from './StarsCounter';
 import { SectionBackgroundAura } from './SectionBackgroundAura';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface ExecutiveBioProps {
   theme?: string;
@@ -31,6 +33,7 @@ interface ExecutiveBioProps {
 export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light', onNextPage }) => {
   const isLight = theme === 'apple-light';
   const [activeBioTab, setActiveBioTab] = useState<'summary' | 'philosophy' | 'credentials' | 'video'>('philosophy');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const { scrollRef, onMouseMove, onMouseLeave } = useHoverScroll();
 
   const [videoPrompt, setVideoPrompt] = useState('Professional cinematic executive security briefing introduction for Munish Dhiman, CISO and Cybersecurity Executive Architect, modern glass boardroom, futuristic cybersecurity holographic defense grid, photorealistic 8k');
@@ -155,9 +158,9 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 : 'bg-zinc-900/80 border-white/10'
             }`}
           >
-            <button
+             <button
               onClick={() => setActiveBioTab('philosophy')}
-              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap transition-all duration-200 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap exec-transition cursor-pointer ${
                 activeBioTab === 'philosophy'
                   ? (isLight 
                       ? 'bg-white text-zinc-900 shadow-xs border border-zinc-200/80 font-semibold' 
@@ -171,7 +174,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
             </button>
             <button
               onClick={() => setActiveBioTab('summary')}
-              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap transition-all duration-200 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap exec-transition cursor-pointer ${
                 activeBioTab === 'summary'
                   ? (isLight 
                       ? 'bg-white text-zinc-900 shadow-xs border border-zinc-200/80 font-semibold' 
@@ -185,7 +188,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
             </button>
             <button
               onClick={() => setActiveBioTab('credentials')}
-              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap transition-all duration-200 cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap exec-transition cursor-pointer ${
                 activeBioTab === 'credentials'
                   ? (isLight 
                       ? 'bg-white text-zinc-900 shadow-xs border border-zinc-200/80 font-semibold' 
@@ -199,15 +202,17 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
             </button>
             <button
               onClick={() => setActiveBioTab('video')}
-              className={`px-3.5 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-bold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-bold whitespace-nowrap exec-transition cursor-pointer flex items-center gap-1.5 ${
                 activeBioTab === 'video'
-                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30 border border-emerald-500'
+                  ? (isLight 
+                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 border border-blue-500' 
+                      : 'bg-blue-700 text-white shadow-md shadow-blue-700/30 border border-blue-500')
                   : (isLight 
-                      ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' 
-                      : 'bg-emerald-950/50 text-emerald-300 hover:bg-emerald-900/55 border border-emerald-500/30')
+                      ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200' 
+                      : 'bg-blue-950/50 text-blue-300 hover:bg-blue-900/55 border border-blue-500/30')
               }`}
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
+              <Sparkles className="w-3.5 h-3.5 text-blue-300 animate-pulse" />
               <span>🎬 Veo 3 Video Gen</span>
             </button>
           </div>
@@ -586,7 +591,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 sm:gap-x-5 gap-y-2.5 sm:gap-y-3">
               {/* Axiom 1: Identity & ZSP */}
-              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col transition-all duration-300 relative overflow-hidden interactive-card ${
                 isLight 
                   ? 'bg-gradient-to-br from-white via-blue-50/30 to-white border-blue-300/90 hover:border-blue-500 shadow-[0_4px_20px_rgba(59,130,246,0.1)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#071020] to-zinc-950 border-blue-500/40 hover:border-blue-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
@@ -594,35 +599,48 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 {/* Executive luminous accent line */}
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500 opacity-95" />
 
-                <div>
+                <div className="cursor-pointer" onClick={() => setExpandedId(expandedId === 'axiom-1' ? null : 'axiom-1')}>
                   {/* Heading with rich executive color gradient */}
                   <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-blue-500/25 border border-blue-400/50 flex items-center justify-center shrink-0">
+                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
                       <Shield className="w-3.5 h-3.5 text-blue-400" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs flex-1">
                       1. Identity is the Sole Perimeter
                     </strong>
+                    <ChevronDown className={`w-4 h-4 text-white transition-transform ${expandedId === 'axiom-1' ? 'rotate-180' : ''}`} />
                   </div>
-                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                    Static administrative credentials are an unacceptable systemic risk. All elevated access must be ephemeral, Just-In-Time (JIT), cryptographically attested, and zero-standing (ZSP).
-                  </p>
                 </div>
 
-                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
-                  isLight ? 'text-zinc-600 border-blue-100' : 'text-zinc-400 border-white/10'
-                }`}>
-                  <span className="opacity-80">Enforcement:</span>
-                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
-                    isLight ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-blue-950/60 text-blue-300 border border-blue-800/50'
-                  }`}>
-                    SailPoint IGA + CyberArk PAM
-                  </span>
-                </div>
+                <AnimatePresence>
+                  {expandedId === 'axiom-1' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <p className={`text-[10.5px] sm:text-[11px] leading-relaxed mb-2 ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                        Static administrative credentials are an unacceptable systemic risk. All elevated access must be ephemeral, Just-In-Time (JIT), cryptographically attested, and zero-standing (ZSP).
+                      </p>
+
+                      <div className={`flex items-center justify-between text-[10px] font-mono pt-2 border-t ${
+                        isLight ? 'text-zinc-600 border-blue-100' : 'text-zinc-400 border-white/10'
+                      }`}>
+                        <span className="opacity-80">Enforcement:</span>
+                        <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                          isLight ? 'bg-blue-50 text-blue-700 border border-blue-200' : 'bg-blue-950/60 text-blue-300 border border-blue-800/50'
+                        }`}>
+                          SailPoint IGA + CyberArk PAM
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Axiom 2: Adaptive Defense Doctrine */}
-              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col transition-all duration-300 relative overflow-hidden interactive-card ${
                 isLight 
                   ? 'bg-gradient-to-br from-white via-emerald-50/30 to-white border-emerald-300/90 hover:border-emerald-500 shadow-[0_4px_20px_rgba(16,185,129,0.1)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#051810] to-zinc-950 border-emerald-500/40 hover:border-emerald-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
@@ -630,35 +648,48 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 {/* Executive luminous accent line */}
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 opacity-95" />
 
-                <div>
+                <div className="cursor-pointer" onClick={() => setExpandedId(expandedId === 'axiom-2' ? null : 'axiom-2')}>
                   {/* Heading with rich executive color gradient */}
                   <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-emerald-500/25 border border-emerald-400/50 flex items-center justify-center shrink-0">
                       <Scale className="w-3.5 h-3.5 text-emerald-400" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs flex-1">
                       2. Defense-in-Depth Architecture
                     </strong>
+                    <ChevronDown className={`w-4 h-4 text-white transition-transform ${expandedId === 'axiom-2' ? 'rotate-180' : ''}`} />
                   </div>
-                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                    Security must be layered across every layer of the tech stack—from network to endpoint to application. One control failure should never result in a complete breach.
-                  </p>
                 </div>
 
-                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
-                  isLight ? 'text-zinc-600 border-emerald-100' : 'text-zinc-400 border-white/10'
-                }`}>
-                  <span className="opacity-80">Enforcement:</span>
-                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
-                    isLight ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/50'
-                  }`}>
-                    Micro-segmentation + WAF/NGFW
-                  </span>
-                </div>
+                <AnimatePresence>
+                  {expandedId === 'axiom-2' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <p className={`text-[10.5px] sm:text-[11px] leading-relaxed mb-2 ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                        Security must be layered across every layer of the tech stack—from network to endpoint to application. One control failure should never result in a complete breach.
+                      </p>
+
+                      <div className={`flex items-center justify-between text-[10px] font-mono pt-2 border-t ${
+                        isLight ? 'text-zinc-600 border-emerald-100' : 'text-zinc-400 border-white/10'
+                      }`}>
+                        <span className="opacity-80">Enforcement:</span>
+                        <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                          isLight ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-emerald-950/60 text-emerald-300 border border-emerald-800/50'
+                        }`}>
+                          Micro-segmentation + WAF/NGFW
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Axiom 3: Continuous Verification & Zero Trust */}
-              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col transition-all duration-300 relative overflow-hidden interactive-card ${
                 isLight 
                   ? 'bg-gradient-to-br from-white via-indigo-50/30 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.1)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c1e] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
@@ -666,35 +697,48 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 {/* Executive luminous accent line */}
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-500 via-blue-400 to-sky-500 opacity-95" />
 
-                <div>
+                <div className="cursor-pointer" onClick={() => setExpandedId(expandedId === 'axiom-3' ? null : 'axiom-3')}>
                   {/* Heading with rich executive color gradient */}
                   <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
                       <Lock className="w-3.5 h-3.5 text-indigo-400" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs flex-1">
                       3. Continuous Verification
                     </strong>
+                    <ChevronDown className={`w-4 h-4 text-white transition-transform ${expandedId === 'axiom-3' ? 'rotate-180' : ''}`} />
                   </div>
-                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                    Never trust, always verify every human identity, non-human workload (Identity), API call, and inter-service token across micro-segmented cloud boundaries.
-                  </p>
                 </div>
 
-                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
-                  isLight ? 'text-zinc-600 border-indigo-100' : 'text-zinc-400 border-white/10'
-                }`}>
-                  <span className="opacity-80">Enforcement:</span>
-                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
-                    isLight ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-indigo-950/60 text-indigo-300 border border-indigo-800/50'
-                  }`}>
-                    mTLS + Identity Federation
-                  </span>
-                </div>
+                <AnimatePresence>
+                  {expandedId === 'axiom-3' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <p className={`text-[10.5px] sm:text-[11px] leading-relaxed mb-2 ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                        Never trust, always verify every human identity, non-human workload (Identity), API call, and inter-service token across micro-segmented cloud boundaries.
+                      </p>
+
+                      <div className={`flex items-center justify-between text-[10px] font-mono pt-2 border-t ${
+                        isLight ? 'text-zinc-600 border-indigo-100' : 'text-zinc-400 border-white/10'
+                      }`}>
+                        <span className="opacity-80">Enforcement:</span>
+                        <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                          isLight ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-indigo-950/60 text-indigo-300 border border-indigo-800/50'
+                        }`}>
+                          mTLS + Identity Federation
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Axiom 4: Defensive AI Asymmetry */}
-              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col transition-all duration-300 relative overflow-hidden interactive-card ${
                 isLight 
                   ? 'bg-gradient-to-br from-white via-purple-50/30 to-white border-purple-300/90 hover:border-purple-500 shadow-[0_4px_20px_rgba(168,85,247,0.1)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#12081e] to-zinc-950 border-purple-500/40 hover:border-purple-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
@@ -702,35 +746,48 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 {/* Executive luminous accent line */}
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-purple-500 via-fuchsia-400 to-pink-500 opacity-95" />
 
-                <div>
+                <div className="cursor-pointer" onClick={() => setExpandedId(expandedId === 'axiom-4' ? null : 'axiom-4')}>
                   {/* Heading with rich executive color gradient */}
                   <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-purple-500/25 border border-purple-400/50 flex items-center justify-center shrink-0">
                       <Brain className="w-3.5 h-3.5 text-purple-400" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs flex-1">
                       4. Defensive AI Asymmetry (AISP)
                     </strong>
+                    <ChevronDown className={`w-4 h-4 text-white transition-transform ${expandedId === 'axiom-4' ? 'rotate-180' : ''}`} />
                   </div>
-                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                    Leverage machine intelligence to automate SOC containment and detect behavioral anomalies, while hardening enterprise LLM pipelines against prompt exfiltration.
-                  </p>
                 </div>
 
-                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
-                  isLight ? 'text-zinc-600 border-purple-100' : 'text-zinc-400 border-white/10'
-                }`}>
-                  <span className="opacity-80">Enforcement:</span>
-                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
-                    isLight ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-purple-950/60 text-purple-300 border border-purple-800/50'
-                  }`}>
-                    NIST AI RMF + Tokenization DLP
-                  </span>
-                </div>
+                <AnimatePresence>
+                  {expandedId === 'axiom-4' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <p className={`text-[10.5px] sm:text-[11px] leading-relaxed mb-2 ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                        Leverage machine intelligence to automate SOC containment and detect behavioral anomalies, while hardening enterprise LLM pipelines against prompt exfiltration.
+                      </p>
+
+                      <div className={`flex items-center justify-between text-[10px] font-mono pt-2 border-t ${
+                        isLight ? 'text-zinc-600 border-purple-100' : 'text-zinc-400 border-white/10'
+                      }`}>
+                        <span className="opacity-80">Enforcement:</span>
+                        <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                          isLight ? 'bg-purple-50 text-purple-700 border border-purple-200' : 'bg-purple-950/60 text-purple-300 border border-purple-800/50'
+                        }`}>
+                          NIST AI RMF + Tokenization DLP
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Axiom 5: High-Agency Culture & Guardrails */}
-              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col transition-all duration-300 relative overflow-hidden interactive-card ${
                 isLight 
                   ? 'bg-gradient-to-br from-white via-amber-50/30 to-white border-amber-300/90 hover:border-amber-500 shadow-[0_4px_20px_rgba(245,158,11,0.1)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#181005] to-zinc-950 border-amber-500/40 hover:border-amber-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
@@ -738,35 +795,48 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 {/* Executive luminous accent line */}
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500 opacity-95" />
 
-                <div>
+                <div className="cursor-pointer" onClick={() => setExpandedId(expandedId === 'axiom-5' ? null : 'axiom-5')}>
                   {/* Heading with rich executive color gradient */}
                   <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-amber-500/25 border border-amber-400/50 flex items-center justify-center shrink-0">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-400" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs flex-1">
                       5. Guardrails Over Gates
                     </strong>
+                    <ChevronDown className={`w-4 h-4 text-white transition-transform ${expandedId === 'axiom-5' ? 'rotate-180' : ''}`} />
                   </div>
-                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                    Security leadership succeeds by empowering business velocity through intuitive developer guardrails and automated CI/CD security gates, paired with blameless post-mortems.
-                  </p>
                 </div>
 
-                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
-                  isLight ? 'text-zinc-600 border-amber-100' : 'text-zinc-400 border-white/10'
-                }`}>
-                  <span className="opacity-80">Enforcement:</span>
-                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
-                    isLight ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-amber-950/60 text-amber-300 border border-amber-800/50'
-                  }`}>
-                    Shift-Left Policy-as-Code
-                  </span>
-                </div>
+                <AnimatePresence>
+                  {expandedId === 'axiom-5' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <p className={`text-[10.5px] sm:text-[11px] leading-relaxed mb-2 ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                        Security leadership succeeds by empowering business velocity through intuitive developer guardrails and automated CI/CD security gates, paired with blameless post-mortems.
+                      </p>
+
+                      <div className={`flex items-center justify-between text-[10px] font-mono pt-2 border-t ${
+                        isLight ? 'text-zinc-600 border-amber-100' : 'text-zinc-400 border-white/10'
+                      }`}>
+                        <span className="opacity-80">Enforcement:</span>
+                        <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                          isLight ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-amber-950/60 text-amber-300 border border-amber-800/50'
+                        }`}>
+                          Shift-Left Policy-as-Code
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
 
               {/* Axiom 6: Post-Quantum Cryptographic Agility */}
-              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 relative overflow-hidden interactive-card ${
+              <div className={`px-3.5 py-2.5 rounded-2xl border flex flex-col transition-all duration-300 relative overflow-hidden interactive-card ${
                 isLight 
                   ? 'bg-gradient-to-br from-white via-rose-50/30 to-white border-rose-300/90 hover:border-rose-500 shadow-[0_4px_20px_rgba(244,63,94,0.1)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#18060c] to-zinc-950 border-rose-500/40 hover:border-rose-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
@@ -774,31 +844,44 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 {/* Executive luminous accent line */}
                 <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-rose-500 via-pink-400 to-red-500 opacity-95" />
 
-                <div>
+                <div className="cursor-pointer" onClick={() => setExpandedId(expandedId === 'axiom-6' ? null : 'axiom-6')}>
                   {/* Heading with rich executive color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-rose-900 via-red-900 to-slate-900 border border-rose-500/60 shadow-md text-white mb-2">
+                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-900 via-violet-900 to-indigo-950 border border-indigo-700 shadow-md text-white mb-2">
                     <div className="w-6 h-6 rounded-lg bg-rose-500/25 border border-rose-400/50 flex items-center justify-center shrink-0">
                       <Key className="w-3.5 h-3.5 text-rose-400" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
+                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs flex-1">
                       6. Post-Quantum Cryptographic Agility
                     </strong>
+                    <ChevronDown className={`w-4 h-4 text-white transition-transform ${expandedId === 'axiom-6' ? 'rotate-180' : ''}`} />
                   </div>
-                  <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
-                    Future-proofing enterprise PKI and HSM key management against quantum decryption threats through algorithm agility, hybrid crypto transitions, and automated inventory.
-                  </p>
                 </div>
 
-                <div className={`flex items-center justify-between text-[10px] font-mono mt-2 pt-2 border-t ${
-                  isLight ? 'text-zinc-600 border-rose-100' : 'text-zinc-400 border-white/10'
-                }`}>
-                  <span className="opacity-80">Enforcement:</span>
-                  <span className={`px-2 py-0.5 rounded-md font-semibold ${
-                    isLight ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-rose-950/60 text-rose-300 border border-rose-800/50'
-                  }`}>
-                    NIST PQC Standards + HSM Rotation
-                  </span>
-                </div>
+                <AnimatePresence>
+                  {expandedId === 'axiom-6' && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <p className={`text-[10.5px] sm:text-[11px] leading-relaxed mb-2 ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
+                        Future-proofing enterprise PKI and HSM key management against quantum decryption threats through algorithm agility, hybrid crypto transitions, and automated inventory.
+                      </p>
+
+                      <div className={`flex items-center justify-between text-[10px] font-mono pt-2 border-t ${
+                        isLight ? 'text-zinc-600 border-rose-100' : 'text-zinc-400 border-white/10'
+                      }`}>
+                        <span className="opacity-80">Enforcement:</span>
+                        <span className={`px-2 py-0.5 rounded-md font-semibold ${
+                          isLight ? 'bg-rose-50 text-rose-700 border border-rose-200' : 'bg-rose-950/60 text-rose-300 border border-rose-800/50'
+                        }`}>
+                          NIST PQC Standards + HSM Rotation
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </div>

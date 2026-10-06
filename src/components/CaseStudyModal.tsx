@@ -115,17 +115,17 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudy, onClo
 
         {/* Modal Top Bar */}
         <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 border-b border-zinc-200 bg-zinc-50/90 backdrop-blur-md shrink-0">
-          <div className="flex items-center space-x-2 text-xs font-medium text-blue-700">
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[11px] font-bold ${catTheme.badgeClass}`}>
+          <div className="flex items-center space-x-2 text-xs font-medium text-zinc-600">
+            <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold ${catTheme.titleAccent}`}>
               {catTheme.icon}
               <span>{caseStudy.category}</span>
             </span>
-            <span className="text-zinc-400">•</span>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono border bg-emerald-50 border-emerald-200 text-emerald-700 font-bold">
+            <span className="text-zinc-400" aria-hidden="true">·</span>
+            <span className="text-[10px] font-mono text-emerald-700 font-bold">
               {caseStudy.status}
             </span>
-            <span className="text-zinc-400">•</span>
-            <span className="px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 font-mono text-[10px] font-bold">
+            <span className="text-zinc-400" aria-hidden="true">·</span>
+            <span className="text-emerald-700 font-mono text-[10px] font-bold tabular-nums">
               {progressPercent}% read
             </span>
           </div>
@@ -133,14 +133,14 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudy, onClo
           <div className="flex items-center gap-2">
             <button
               onClick={handleShare}
-              className="p-1.5 sm:p-2 rounded-full transition-colors text-zinc-600 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
+              className="p-1.5 sm:p-2 rounded-full exec-transition text-zinc-600 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
               title="Copy link"
             >
               {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4" />}
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 rounded-full transition-colors text-zinc-600 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
+              className="p-1.5 sm:p-2 rounded-full exec-transition text-zinc-600 hover:text-zinc-900 bg-zinc-100 hover:bg-zinc-200"
             >
               <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
@@ -159,7 +159,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudy, onClo
               <Sparkles className="w-3.5 h-3.5" />
               <span>Enterprise Defense Briefing & Program Transformation</span>
             </div>
-            <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight text-zinc-900">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight text-zinc-900 [text-wrap:balance]">
               {caseStudy.title}
             </h1>
             <p className="text-sm sm:text-base leading-relaxed text-zinc-600 font-normal">
@@ -183,7 +183,7 @@ export const CaseStudyModal: React.FC<CaseStudyModalProps> = ({ caseStudy, onClo
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 py-4 px-4 bg-zinc-50 rounded-2xl border border-zinc-200">
             {caseStudy.impactMetrics.map((metric, idx) => (
               <div key={idx} className="space-y-1">
-                <div className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight">
+                <div className="text-xl sm:text-2xl font-black text-blue-600 tracking-tight tabular-nums">
                   {metric.value}
                 </div>
                 <div className="text-xs font-bold text-zinc-900">

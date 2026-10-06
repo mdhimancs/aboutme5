@@ -399,7 +399,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center space-x-1.5">
           <button
             onClick={onOpenInterfaceOptions}
-            className={`p-1.5 rounded-lg border transition-colors ${
+            className={`p-1.5 rounded-lg border exec-transition ${
               isLight 
                 ? 'bg-[#f4f4f6] border-zinc-300 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/70' 
                 : 'bg-[#18181b] border-zinc-700 text-zinc-300 hover:text-white'
@@ -416,7 +416,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <UserTelemetry theme={theme} isMobile={true} />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`p-1.5 rounded-full border ${isLight ? 'bg-[#f4f4f6] border-zinc-300 text-zinc-700 hover:bg-zinc-200/70' : 'bg-white/5 border-white/10 text-zinc-300'}`}
+            className={`p-1.5 rounded-full border exec-transition ${isLight ? 'bg-[#f4f4f6] border-zinc-300 text-zinc-700 hover:bg-zinc-200/70' : 'bg-white/5 border-white/10 text-zinc-300'}`}
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>

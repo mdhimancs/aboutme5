@@ -211,51 +211,50 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       </div>
 
       <div 
-        style={{ paddingBottom: '4pt' }}
-        className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2 mb-[4pt] shrink-0 w-full mt-1 sm:mt-1.5`}
+        className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4 mb-4 shrink-0 w-full mt-2 sm:mt-4`}
       >
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-1.5 px-2 rounded-lg border text-center transition-all bg-white opacity-100 border-zinc-200/90 shadow-2xs"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center exec-transition bg-white opacity-100 border-zinc-200/90 shadow-2xs"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-amber-600 uppercase tracking-wider">Goldman Sachs Tenure</div>
-          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">14 Yrs · 4 Promotions</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">14 Yrs · 4 Promotions</div>
           <div className="text-[9px] text-zinc-500 font-mono">Sr. Analyst ➔ VP ➔ SVP</div>
         </div>
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-1.5 px-2 rounded-lg border text-center transition-all bg-white opacity-100 border-zinc-200/90 shadow-2xs"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center exec-transition bg-white opacity-100 border-zinc-200/90 shadow-2xs"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-blue-600 uppercase tracking-wider">Leadership Scale</div>
-          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">30+ Global Engineers</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">30+ Global Engineers</div>
           <div className="text-[9px] text-zinc-500 font-mono">SecOps, SOC, IAM & GRC</div>
         </div>
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-1.5 px-2 rounded-lg border text-center transition-all bg-white opacity-100 border-zinc-200/90 shadow-2xs"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center exec-transition bg-white opacity-100 border-zinc-200/90 shadow-2xs"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-emerald-600 uppercase tracking-wider">Audit & Compliance</div>
-          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">100% Clean Attestations</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">100% Clean Attestations</div>
           <div className="text-[9px] text-zinc-500 font-mono">SOX 404, SOC 2 & ISO 27001</div>
         </div>
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-1.5 px-2 rounded-lg border text-center transition-all bg-white opacity-100 border-zinc-200/90 shadow-2xs"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center exec-transition bg-white opacity-100 border-zinc-200/90 shadow-2xs"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-indigo-600 uppercase tracking-wider">Transaction Defense</div>
-          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">$100B–$500B+ Flow</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">$100B–$500B+ Flow</div>
           <div className="text-[9px] text-zinc-500 font-mono">$1T+ Tier-1 Clearing Scale</div>
         </div>
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="col-span-2 sm:col-span-1 relative z-10 py-1.5 px-2 rounded-lg border text-center transition-all bg-white opacity-100 border-zinc-200/90 shadow-2xs"
+          className="col-span-2 sm:col-span-1 relative z-10 py-2 px-3 rounded-lg border text-center exec-transition bg-white opacity-100 border-zinc-200/90 shadow-2xs"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-purple-600 uppercase tracking-wider">Privilege Exposure</div>
-          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900">-98.4% Zero Standing</div>
+          <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">-98.4% Zero Standing</div>
           <div className="text-[9px] text-zinc-500 font-mono">SailPoint + CyberArk JIT</div>
         </div>
       </div>
@@ -363,15 +362,13 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                           </h3>
                         </div>
 
-                        {/* Category Highlight Badges */}
-                        <div className="flex flex-wrap items-center justify-start gap-1 w-full">
+                        {/* Category Highlight Tags as Clean Typographic Text */}
+                        <div className="flex flex-wrap items-center justify-start gap-1.5 w-full text-[10px] font-mono text-emerald-300">
                           {milestone.category.split(',').map((catTag, cIdx) => (
-                            <span 
-                              key={cIdx}
-                              className="text-[9.5px] sm:text-[10px] font-medium px-2 py-0.5 rounded-md border whitespace-nowrap shadow-2xs inline-block bg-emerald-900/60 text-emerald-200 border-emerald-500/30"
-                            >
-                              {catTag.trim()}
-                            </span>
+                            <React.Fragment key={cIdx}>
+                              {cIdx > 0 && <span className="opacity-40" aria-hidden="true">·</span>}
+                              <span>{catTag.trim()}</span>
+                            </React.Fragment>
                           ))}
                         </div>
                       </div>

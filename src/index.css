@@ -538,3 +538,8 @@ span.accent-swatch {
   transition: background-color 0.4s ease, border-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
 }
 
+/* 6. Standard Executive Interaction Transition */
+.exec-transition {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+

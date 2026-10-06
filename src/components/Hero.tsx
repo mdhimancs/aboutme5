@@ -263,7 +263,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
                 isLight ? 'bg-gradient-to-tr from-blue-400/25 via-indigo-300/20 to-sky-400/25' : 'bg-gradient-to-tr from-blue-500/35 via-cyan-400/25 to-indigo-500/35'
               }`} />
 
-              <div className={`relative z-10 text-sm sm:text-base lg:text-lg font-extrabold tracking-tight transition-colors truncate w-full ${isLight ? 'text-zinc-900 group-hover:text-blue-600' : 'text-white group-hover:text-cyan-300'}`}>
+              <div className={`relative z-10 text-sm sm:text-base lg:text-lg font-extrabold tracking-tight transition-colors truncate w-full tabular-nums ${isLight ? 'text-zinc-900 group-hover:text-blue-600' : 'text-white group-hover:text-cyan-300'}`}>
                 {stat.value}
               </div>
               <div className={`relative z-10 text-[10px] sm:text-[10.5px] font-semibold mt-0.5 leading-snug line-clamp-1 ${isLight ? 'text-zinc-800' : 'text-zinc-200'}`}>
