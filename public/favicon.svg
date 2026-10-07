@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-  <!-- Deep Executive Violet Background Canvas -->
-  <rect x="0" y="0" width="32" height="32" rx="6.5" fill="#1e1b4b"/>
-  <!-- Precision Accent Frame -->
-  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="5.75" fill="none" stroke="#818cf8" stroke-width="0.75" opacity="0.85"/>
-  <!-- MD Initials scaled down 5% for optimal proportion -->
-  <text x="16" y="13.4" text-anchor="middle" dominant-baseline="central" font-family="system-ui, -apple-system, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif" font-weight="900" font-size="15.2" letter-spacing="-0.4" fill="#ffffff">MD</text>
-  <!-- Horizontal Underline maintaining precise relative position -->
-  <line x1="5.2" y1="23.5" x2="26.8" y2="23.5" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Dark Indigo Executive Background -->
+  <rect x="0" y="0" width="32" height="32" rx="6" fill="#1e1b4b"/>
+  <!-- Crisp Sharp Inner Border -->
+  <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.9"/>
+  <!-- Ultra-Sharp High-Contrast MD Text -->
+  <text x="16" y="13.2" text-anchor="middle" dominant-baseline="central" font-family="Arial, 'Helvetica Neue', 'SF Pro Display', sans-serif" font-weight="900" font-size="15.5" letter-spacing="-0.3" fill="#ffffff">MD</text>
+  <!-- 1-Point Thicker Sky-Blue Accent Underline (stroke-width 2.8) -->
+  <line x1="5" y1="23.5" x2="27" y2="23.5" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round"/>
 </svg>
