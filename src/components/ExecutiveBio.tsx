@@ -16,7 +16,9 @@ import {
   Cpu,
   Compass,
   Key,
-  UserCheck
+  UserCheck,
+  Film,
+  Video
 } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { useHoverScroll } from '../lib/utils';
@@ -33,7 +35,31 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
   const [activeBioTab, setActiveBioTab] = useState<'summary' | 'philosophy' | 'credentials' | 'video'>('philosophy');
   const { scrollRef, onMouseMove, onMouseLeave } = useHoverScroll();
 
-  const [videoPrompt, setVideoPrompt] = useState('Professional cinematic executive security briefing introduction for Munish Dhiman, CISO and Cybersecurity Executive Architect, modern glass boardroom, futuristic cybersecurity holographic defense grid, photorealistic 8k');
+  const [videoMode, setVideoMode] = useState<'veo' | 'animated'>('veo');
+  const [activeAnimatedScene, setActiveAnimatedScene] = useState<number>(0);
+
+  const VIDEO_PRESETS = [
+    {
+      id: 'animated-philosophy',
+      label: '3D Animated Motion Graphics (6 Axioms)',
+      type: 'animated',
+      prompt: 'Stylized 3D vector animation representing the 6 Executive Security Philosophy Axioms: Identity Perimeter, Defense-in-Depth, Continuous Verification, Defensive AI, Developer Guardrails, and Post-Quantum Cryptographic Agility. Glowing motion graphics grid, isometric vector animation, smooth 60fps.'
+    },
+    {
+      id: 'cinematic-ciso',
+      label: 'Cinematic Glass Boardroom Keynote',
+      type: 'veo',
+      prompt: 'Professional 8k cinematic video of Munish Dhiman delivering an Executive Security Philosophy keynote in a modern glass boardroom, dynamic 3D holographic threat intelligence grid.'
+    },
+    {
+      id: 'pqc-zero-trust',
+      label: 'Animated Post-Quantum & Zero-Trust Explainer',
+      type: 'animated',
+      prompt: 'Futuristic animated motion design video illustrating Post-Quantum Cryptographic Agility and Zero-Standing Privilege. Dynamic glowing lattice vectors, interactive identity tokens, dark-mode executive aesthetic.'
+    }
+  ];
+
+  const [videoPrompt, setVideoPrompt] = useState<string>(VIDEO_PRESETS[0].prompt);
   const [videoAspectRatio, setVideoAspectRatio] = useState<'16:9' | '9:16'>('16:9');
   const [videoUrl, setVideoUrl] = useState<string>('/videos/executive-preview.mp4');
   const [videoError, setVideoError] = useState<string | null>(null);
@@ -234,7 +260,34 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                 <div className="space-y-3">
                   <div>
                     <label className="block text-xs font-semibold text-emerald-200 uppercase tracking-wider mb-1.5">
-                      Executive Video Prompt (Veo 3)
+                      Executive Video Style Presets:
+                    </label>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2.5">
+                      {VIDEO_PRESETS.map((preset) => (
+                        <button
+                          key={preset.id}
+                          type="button"
+                          onClick={() => {
+                            setVideoPrompt(preset.prompt);
+                            setVideoMode(preset.type as 'veo' | 'animated');
+                          }}
+                          className={`p-2 rounded-xl text-left border text-[11px] font-medium transition-all cursor-pointer ${
+                            videoPrompt === preset.prompt
+                              ? 'bg-emerald-600 text-white border-emerald-400 shadow-md font-bold'
+                              : 'bg-emerald-950/60 text-emerald-300 border-emerald-500/30 hover:bg-emerald-900/60'
+                          }`}
+                        >
+                          <div className="font-bold flex items-center gap-1.5 mb-1">
+                            {preset.type === 'animated' ? <Film className="w-3.5 h-3.5 text-cyan-300 shrink-0" /> : <Video className="w-3.5 h-3.5 text-amber-300 shrink-0" />}
+                            <span className="truncate">{preset.label}</span>
+                          </div>
+                          <span className="text-[9.5px] opacity-80 block line-clamp-1">{preset.type === 'animated' ? 'Vector Motion Graphics' : 'Veo 3 AI Video'}</span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <label className="block text-xs font-semibold text-emerald-200 uppercase tracking-wider mb-1.5">
+                      Executive Video Prompt (Veo 3 & Motion Engine)
                     </label>
                     <textarea
                       value={videoPrompt}
@@ -248,30 +301,30 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   <div className="flex flex-wrap items-center gap-3">
                     <div>
                       <label className="block text-[11px] font-semibold text-emerald-300 uppercase tracking-wider mb-1">
-                        Aspect Ratio
+                        Format / Mode
                       </label>
                       <div className="flex gap-2">
                         <button
                           type="button"
-                          onClick={() => setVideoAspectRatio('16:9')}
+                          onClick={() => setVideoMode('veo')}
                           className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                            videoAspectRatio === '16:9'
+                            videoMode === 'veo'
                               ? 'bg-emerald-600 text-white shadow-sm border border-emerald-400'
                               : 'bg-emerald-900/40 text-emerald-300 border border-emerald-500/25 hover:bg-emerald-900/70'
                           }`}
                         >
-                          16:9 Landscape
+                          Veo 3 Stream
                         </button>
                         <button
                           type="button"
-                          onClick={() => setVideoAspectRatio('9:16')}
+                          onClick={() => setVideoMode('animated')}
                           className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                            videoAspectRatio === '9:16'
-                              ? 'bg-emerald-600 text-white shadow-sm border border-emerald-400'
+                            videoMode === 'animated'
+                              ? 'bg-cyan-600 text-white shadow-sm border border-cyan-400'
                               : 'bg-emerald-900/40 text-emerald-300 border border-emerald-500/25 hover:bg-emerald-900/70'
                           }`}
                         >
-                          9:16 Portrait
+                          Animated Motion
                         </button>
                       </div>
                     </div>
@@ -291,7 +344,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                         ) : (
                           <>
                             <Sparkles className="w-4 h-4 text-emerald-200" />
-                            <span>Generate Veo 3 Video</span>
+                            <span>Generate Executive Video</span>
                           </>
                         )}
                       </button>
@@ -313,7 +366,86 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     {isGeneratingVideo ? (
                       <div className="absolute inset-0 flex flex-col items-center justify-center bg-emerald-950/95 gap-3 p-4 text-center z-20">
                         <div className="w-10 h-10 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-                        <span className="text-xs font-mono text-emerald-300">Veo 3.1 AI is synthesizing cinematic frames...</span>
+                        <span className="text-xs font-mono text-emerald-300">Veo 3.1 AI is synthesizing cinematic & animated frames...</span>
+                      </div>
+                    ) : videoMode === 'animated' ? (
+                      /* Animated Motion Graphics Executive Philosophy Player */
+                      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-zinc-950 via-[#030d1a] to-zinc-950 flex flex-col justify-between p-4 overflow-hidden select-none">
+                        {/* Animated Grid Lines Background */}
+                        <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px] opacity-20" />
+                        
+                        {/* Header Badge */}
+                        <div className="relative z-10 flex items-center justify-between">
+                          <div className="px-2.5 py-1 rounded-lg bg-black/80 border border-cyan-500/50 text-[10px] font-mono text-cyan-300 flex items-center gap-1.5 shadow-md">
+                            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                            <span>ANIMATED EXECUTIVE PHILOSOPHY MOTION GRAPHICS</span>
+                          </div>
+                          <span className="text-[10px] font-mono text-cyan-400/80 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">
+                            60 FPS • VECTOR SYNTHESIS
+                          </span>
+                        </div>
+
+                        {/* Central Animated Axiom Scene */}
+                        <div className="relative z-10 my-auto text-center space-y-2 py-2">
+                          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-[0_0_24px_rgba(56,189,248,0.4)] animate-bounce">
+                            <div className="w-full h-full bg-zinc-950 rounded-[14px] flex items-center justify-center">
+                              {activeAnimatedScene === 0 && <Shield className="w-7 h-7 text-cyan-400" />}
+                              {activeAnimatedScene === 1 && <Scale className="w-7 h-7 text-emerald-400" />}
+                              {activeAnimatedScene === 2 && <Lock className="w-7 h-7 text-indigo-400" />}
+                              {activeAnimatedScene === 3 && <Brain className="w-7 h-7 text-purple-400" />}
+                              {activeAnimatedScene === 4 && <CheckCircle2 className="w-7 h-7 text-amber-400" />}
+                              {activeAnimatedScene === 5 && <Key className="w-7 h-7 text-indigo-300" />}
+                            </div>
+                          </div>
+
+                          <h4 className="text-sm sm:text-base font-extrabold text-white tracking-tight drop-shadow-md">
+                            {activeAnimatedScene === 0 && "1. Identity is the Sole Perimeter"}
+                            {activeAnimatedScene === 1 && "2. Defense-in-Depth Architecture"}
+                            {activeAnimatedScene === 2 && "3. Continuous Verification & Zero Trust"}
+                            {activeAnimatedScene === 3 && "4. Defensive AI Asymmetry (AISP)"}
+                            {activeAnimatedScene === 4 && "5. Guardrails Over Gates"}
+                            {activeAnimatedScene === 5 && "6. Post-Quantum Cryptographic Agility"}
+                          </h4>
+
+                          <p className="text-[11px] text-cyan-200/90 max-w-md mx-auto font-sans leading-relaxed">
+                            {activeAnimatedScene === 0 && "Ephemeral, Just-In-Time (JIT) access with zero standing privilege across all workloads."}
+                            {activeAnimatedScene === 1 && "Multi-layered defensive controls ensuring zero single points of failure across edge to application."}
+                            {activeAnimatedScene === 2 && "Never trust, always cryptographically verify every API token, workload identity, and user session."}
+                            {activeAnimatedScene === 3 && "Automated machine intelligence containment with tokenized LLM security pipelines."}
+                            {activeAnimatedScene === 4 && "Business velocity through developer policy-as-code guardrails and automated security gates."}
+                            {activeAnimatedScene === 5 && "Future-proofing enterprise PKI with algorithm agility and post-quantum lattice encryption."}
+                          </p>
+                        </div>
+
+                        {/* Interactive Scene Navigation Controls */}
+                        <div className="relative z-10 flex items-center justify-between gap-2 border-t border-cyan-500/30 pt-2.5">
+                          <div className="flex items-center gap-1">
+                            {[0, 1, 2, 3, 4, 5].map((idx) => (
+                              <button
+                                key={idx}
+                                type="button"
+                                onClick={() => setActiveAnimatedScene(idx)}
+                                className={`w-6 h-6 rounded-md text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                                  activeAnimatedScene === idx
+                                    ? 'bg-cyan-500 text-black font-extrabold scale-110 shadow-sm'
+                                    : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+                                }`}
+                              >
+                                {idx + 1}
+                              </button>
+                            ))}
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setActiveAnimatedScene((prev) => (prev + 1) % 6)}
+                              className="px-2.5 py-1 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 text-[10px] font-mono hover:bg-cyan-900 cursor-pointer"
+                            >
+                              Next Scene ➔
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     ) : (
                       <div className="absolute inset-0 w-full h-full bg-black flex items-center justify-center">
@@ -359,7 +491,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     )}
                   </div>
                   <span className="text-[10px] font-mono text-emerald-400/70">
-                    Model: veo-3.1-lite-generate-preview • Aspect Ratio: {videoAspectRatio}
+                    {videoMode === 'animated' ? 'Mode: Interactive Vector Motion Graphics' : `Model: veo-3.1-lite-generate-preview • Aspect Ratio: ${videoAspectRatio}`}
                   </span>
                 </div>
               </div>

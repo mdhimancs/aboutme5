@@ -828,12 +828,12 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
           </div>
 
           <div className="flex items-center space-x-3">
-            <div className="flex flex-col items-end mr-2 px-3 py-1 rounded-lg bg-red-500/10 border border-red-500/20">
-              <div className="flex items-center gap-1.5 text-[10px] font-bold text-red-400 uppercase tracking-tighter">
-                <Clock className="w-3 h-3" />
-                <span>Session Expiry</span>
+            <div className="flex items-center gap-2 mr-2 px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20">
+              <div className="flex items-center gap-1.5 text-[10.5px] font-bold text-red-400 uppercase tracking-tight">
+                <Clock className="w-3.5 h-3.5" />
+                <span>Session Expiry:</span>
               </div>
-              <span className="text-xs font-mono font-black text-red-500 tabular-nums">
+              <span className="text-xs font-mono font-black text-red-400 tabular-nums">
                 {formatTimeLeft(timeLeft)}
               </span>
             </div>
@@ -1704,22 +1704,22 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
               </div>
 
               {/* Main SVG Geographic Heatmap Canvas */}
-              <div className="relative rounded-2xl border border-zinc-200 bg-zinc-950 text-white overflow-hidden shadow-xl">
+              <div className="relative rounded-2xl border border-slate-200 bg-slate-50 text-slate-900 overflow-hidden shadow-lg">
                 {/* Top Status Bar Inside Map */}
                 <div className="absolute top-3 left-3 right-3 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-                  <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-[10.5px] pointer-events-auto">
-                    <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-                    <span className="font-mono text-zinc-300">Edge Telemetry Ingest: <strong className="text-emerald-400 font-bold">Live Stream Active</strong></span>
-                    <span className="text-zinc-500">•</span>
-                    <span className="text-zinc-400">Total Global Volume: <strong className="text-white font-mono">2,532 Sessions</strong></span>
+                  <div className="flex items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200 text-[10.5px] pointer-events-auto shadow-xs text-slate-800">
+                    <Radio className="w-3.5 h-3.5 text-blue-600 animate-pulse" />
+                    <span className="font-mono text-slate-600">Edge Telemetry Ingest: <strong className="text-emerald-700 font-bold">Live Stream Active</strong></span>
+                    <span className="text-slate-300">•</span>
+                    <span className="text-slate-600">Total Global Volume: <strong className="text-slate-900 font-mono">2,532 Sessions</strong></span>
                   </div>
 
-                  <div className="flex items-center gap-2 bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/10 text-[10px] pointer-events-auto">
-                    <span className="text-zinc-400">Heat Intensity:</span>
-                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-red-500" /> Apex (&gt;35%)</span>
-                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500" /> High (10-25%)</span>
-                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-500" /> Medium (5-10%)</span>
-                    <span className="inline-flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500" /> Moderate (&lt;5%)</span>
+                  <div className="flex items-center gap-2 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200 text-[10px] pointer-events-auto shadow-xs text-slate-700">
+                    <span className="text-slate-500 font-medium">Heat Intensity:</span>
+                    <span className="inline-flex items-center gap-1 font-medium"><span className="w-2 h-2 rounded-full bg-red-500" /> Apex (&gt;35%)</span>
+                    <span className="inline-flex items-center gap-1 font-medium"><span className="w-2 h-2 rounded-full bg-amber-500" /> High (10-25%)</span>
+                    <span className="inline-flex items-center gap-1 font-medium"><span className="w-2 h-2 rounded-full bg-blue-500" /> Medium (5-10%)</span>
+                    <span className="inline-flex items-center gap-1 font-medium"><span className="w-2 h-2 rounded-full bg-emerald-500" /> Moderate (&lt;5%)</span>
                   </div>
                 </div>
 
@@ -1767,28 +1767,28 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
                       </filter>
                     </defs>
 
-                    {/* Dark Digital Radar Grid Background */}
-                    <rect width="1000" height="500" fill="#090d16" />
+                    {/* Light Executive Ocean Canvas Background */}
+                    <rect width="1000" height="500" fill="#f8fafc" />
 
                     {/* Graticule Latitude / Longitude lines */}
-                    <g opacity="0.15" stroke="#38bdf8" strokeWidth="0.75" strokeDasharray="3,4">
+                    <g opacity="0.35" stroke="#cbd5e1" strokeWidth="0.75" strokeDasharray="3,4">
                       {/* Latitudes */}
                       <line x1="0" y1="83" x2="1000" y2="83" />
                       <line x1="0" y1="166" x2="1000" y2="166" />
-                      <line x1="0" y1="250" x2="1000" y2="250" strokeWidth="1.2" stroke="#38bdf8" opacity="0.3" strokeDasharray="none" />
+                      <line x1="0" y1="250" x2="1000" y2="250" strokeWidth="1.2" stroke="#94a3b8" opacity="0.5" strokeDasharray="none" />
                       <line x1="0" y1="333" x2="1000" y2="333" />
                       <line x1="0" y1="416" x2="1000" y2="416" />
 
                       {/* Longitudes */}
                       <line x1="166" y1="0" x2="166" y2="500" />
                       <line x1="333" y1="0" x2="333" y2="500" />
-                      <line x1="500" y1="0" x2="500" y2="500" strokeWidth="1.2" stroke="#38bdf8" opacity="0.3" strokeDasharray="none" />
+                      <line x1="500" y1="0" x2="500" y2="500" strokeWidth="1.2" stroke="#94a3b8" opacity="0.5" strokeDasharray="none" />
                       <line x1="666" y1="0" x2="666" y2="500" />
                       <line x1="833" y1="0" x2="833" y2="500" />
                     </g>
 
                     {/* Graticule Text Coordinates */}
-                    <g opacity="0.3" fill="#94a3b8" fontSize="8" fontFamily="monospace">
+                    <g opacity="0.6" fill="#64748b" fontSize="8" fontFamily="monospace">
                       <text x="8" y="246">0° Equator</text>
                       <text x="8" y="162">30°N</text>
                       <text x="8" y="79">60°N</text>
@@ -1800,8 +1800,8 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
                       <text x="837" y="492">120°E</text>
                     </g>
 
-                    {/* Continents Silhouettes */}
-                    <g fill="#172236" stroke="#253754" strokeWidth="1.2" opacity="0.85">
+                    {/* Light Color World Map Continents Silhouettes */}
+                    <g fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1.2" opacity="0.95">
                       {/* North America */}
                       <path d="M 120,60 C 180,45 280,55 330,75 C 340,110 300,120 310,145 C 280,175 250,195 210,235 C 190,225 160,180 135,165 C 110,125 105,80 120,60 Z M 160,40 C 200,30 250,35 240,60 Z" />
                       {/* South America */}
@@ -1818,7 +1818,7 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
 
                     {/* SASE Transit Mesh Lines (When mode is 'mesh' or default) */}
                     {(heatmapMode === 'mesh' || heatmapMode === 'density') && (
-                      <g stroke="#38bdf8" strokeWidth="1" strokeDasharray="4,4" opacity={heatmapMode === 'mesh' ? 0.75 : 0.35}>
+                      <g stroke="#0284c7" strokeWidth="1.2" strokeDasharray="4,4" opacity={heatmapMode === 'mesh' ? 0.85 : 0.45}>
                         {/* NY to London */}
                         <path d="M 294,137 Q 397,80 500,107" fill="none" />
                         {/* London to Frankfurt */}
@@ -1971,22 +1971,22 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
                 </div>
 
                 {/* Bottom Canvas Footer: Detected Local Client Telemetry */}
-                <div className="p-2.5 px-4 bg-zinc-900/90 border-t border-white/10 flex flex-wrap items-center justify-between gap-3 text-[10.5px]">
+                <div className="p-2.5 px-4 bg-slate-100 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-[10.5px]">
                   <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                    <span className="text-zinc-300">
-                      Your Client Route: <strong className="text-white font-mono">{clientIp || '104.28.19.42'}</strong>
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="text-slate-600">
+                      Your Client Route: <strong className="text-slate-900 font-mono">{clientIp || '104.28.19.42'}</strong>
                     </span>
-                    <span className="text-zinc-500">•</span>
-                    <span className="text-zinc-400">
-                      Autonomous System: <span className="text-cyan-400 font-mono">AS13335 (Cloudflare Managed Anycast)</span>
+                    <span className="text-slate-300">•</span>
+                    <span className="text-slate-600">
+                      Autonomous System: <span className="text-blue-700 font-mono">AS13335 (Cloudflare Managed Anycast)</span>
                     </span>
                   </div>
 
                   <div className="flex items-center gap-3 font-mono text-[10px]">
-                    <span className="text-zinc-400">Mean Global Latency: <strong className="text-emerald-400">31.4 ms</strong></span>
-                    <span className="text-zinc-600">|</span>
-                    <span className="text-zinc-400">Zero Trust Attestation: <strong className="text-blue-400">100% Passed</strong></span>
+                    <span className="text-slate-600">Mean Global Latency: <strong className="text-emerald-700 font-bold">31.4 ms</strong></span>
+                    <span className="text-slate-300">|</span>
+                    <span className="text-slate-600">Zero Trust Attestation: <strong className="text-blue-700 font-bold">100% Passed</strong></span>
                   </div>
                 </div>
               </div>

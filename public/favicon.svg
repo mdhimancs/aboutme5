@@ -1,10 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
-  <!-- Dark Indigo Executive Background -->
-  <rect x="0" y="0" width="32" height="32" rx="6" fill="#1e1b4b"/>
-  <!-- Crisp Sharp Inner Border -->
-  <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.9"/>
-  <!-- Ultra-Sharp High-Contrast MD Text -->
-  <text x="16" y="13.2" text-anchor="middle" dominant-baseline="central" font-family="Arial, 'Helvetica Neue', 'SF Pro Display', sans-serif" font-weight="900" font-size="15.5" letter-spacing="-0.3" fill="#ffffff">MD</text>
-  <!-- 1-Point Thicker Sky-Blue Accent Underline (stroke-width 2.8) -->
-  <line x1="5" y1="23.5" x2="27" y2="23.5" stroke="#38bdf8" stroke-width="2.8" stroke-linecap="round"/>
+  <defs>
+    <!-- Deep Midnight Executive Gradient Canvas -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b132b"/>
+      <stop offset="100%" stop-color="#1c2541"/>
+    </linearGradient>
+    <!-- Precision Luminous Frame Gradient -->
+    <linearGradient id="border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <!-- High-Tech Cyan to Emerald Gradient Underline -->
+    <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Executive Navy Gradient Background Canvas -->
+  <rect x="0" y="0" width="32" height="32" rx="7" fill="url(#bg-grad)"/>
+
+  <!-- High-Precision Luminous Gradient Border Frame -->
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" fill="none" stroke="url(#border-grad)" stroke-width="1" opacity="0.95"/>
+
+  <!-- Optic White MD Initials -->
+  <text x="16" y="13.2" text-anchor="middle" dominant-baseline="central" font-family="system-ui, -apple-system, Arial, sans-serif" font-weight="900" font-size="15.5" letter-spacing="-0.4" fill="#ffffff">MD</text>
+
+  <!-- Vibrant Cyan-Emerald Gradient Underline -->
+  <line x1="5" y1="23.5" x2="27" y2="23.5" stroke="url(#line-grad)" stroke-width="2.8" stroke-linecap="round"/>
 </svg>

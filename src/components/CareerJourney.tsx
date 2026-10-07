@@ -328,14 +328,25 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     onClick={() => {
                       setExpandedId(isExpanded ? null : milestone.id);
                     }}
-                    className={`border rounded-xl backdrop-blur-xl transition-all duration-200 cursor-pointer interactive-card overflow-hidden ${
-                      isExpanded
-                        ? 'border-emerald-500 shadow-md ring-1 ring-emerald-500/30'
-                        : 'border-emerald-500/40 hover:border-emerald-400/60 shadow-sm'
+                    className={`relative border rounded-xl backdrop-blur-xl transition-all duration-200 cursor-pointer interactive-card overflow-hidden ${
+                      idx === 0
+                        ? 'border-emerald-400/90 shadow-[0_4px_20px_rgba(16,185,129,0.22)] ring-1 ring-emerald-400/50'
+                        : isExpanded
+                          ? 'border-emerald-500 shadow-md ring-1 ring-emerald-500/30'
+                          : 'border-emerald-500/40 hover:border-emerald-400/60 shadow-sm'
                     }`}
                   >
-                    {/* Top Heading Section - Dark Obsidian & Bottle-Green like Core Competencies */}
-                    <div className="p-3 sm:p-3.5 bg-gradient-to-br from-zinc-950 via-[#042114] to-zinc-950 text-zinc-100">
+                    {/* Luminous Top Accent Line for 1st Milestone */}
+                    {idx === 0 && (
+                      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 opacity-100 z-10" />
+                    )}
+
+                    {/* Top Heading Section - Rich Apparent Executive Emerald Tint for First Milestone */}
+                    <div className={`p-3 sm:p-3.5 ${
+                      idx === 0 
+                        ? 'bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white shadow-md border-b border-emerald-400/60 pt-4' 
+                        : 'bg-gradient-to-br from-zinc-950 via-[#042114] to-zinc-950 text-zinc-100'
+                    }`}>
                       <div className="flex flex-col gap-1.5">
                         <div className="min-w-0 w-full">
                           {/* Company Badge with Elevated Visual Aesthetic */}
@@ -343,14 +354,16 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                             {renderCompanyBadge(milestone.company)}
 
                             {/* Location and Date Range Row */}
-                            <div className="text-[11px] font-medium text-emerald-200/80 flex items-center gap-1.5">
+                            <div className={`text-[11px] font-medium flex items-center gap-1.5 ${
+                              idx === 0 ? 'text-emerald-100 font-semibold' : 'text-emerald-200/80'
+                            }`}>
                               <span className="inline-flex items-center gap-0.5">
-                                <MapPin className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
+                                <MapPin className={`w-2.5 h-2.5 shrink-0 ${idx === 0 ? 'text-emerald-300' : 'text-emerald-400'}`} />
                                 <span>{milestone.location}</span>
                               </span>
-                              <span className="opacity-40 text-emerald-500">|</span>
+                              <span className="opacity-40 text-emerald-300">|</span>
                               <span className="inline-flex items-center gap-0.5">
-                                <Calendar className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
+                                <Calendar className={`w-2.5 h-2.5 shrink-0 ${idx === 0 ? 'text-emerald-300' : 'text-emerald-400'}`} />
                                 <span>{milestone.period}</span>
                               </span>
                             </div>
@@ -363,19 +376,27 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                         </div>
 
                         {/* Category Highlight Tags as Clean Typographic Text */}
-                        <div className="flex flex-wrap items-center justify-start gap-1.5 w-full text-[10px] font-mono text-emerald-300">
+                        <div className={`flex flex-wrap items-center justify-start gap-1.5 w-full text-[10px] font-mono ${
+                          idx === 0 ? 'text-emerald-200 font-bold' : 'text-emerald-300'
+                        }`}>
                           {milestone.category.split(',').map((catTag, cIdx) => (
                             <React.Fragment key={cIdx}>
                               {cIdx > 0 && <span className="opacity-40" aria-hidden="true">·</span>}
-                              <span>{catTag.trim()}</span>
+                              <span className={idx === 0 ? 'bg-emerald-500/20 px-1.5 py-0.5 rounded border border-emerald-400/40 text-emerald-200' : ''}>
+                                {catTag.trim()}
+                              </span>
                             </React.Fragment>
                           ))}
                         </div>
                       </div>
                     </div>
 
-                    {/* Bottom Content Compartment - Light Colored like Core Competencies */}
-                    <div className="p-3 sm:p-3.5 bg-zinc-50/95 text-zinc-900 border-t border-emerald-500/25 rounded-b-xl shadow-inner">
+                    {/* Bottom Content Compartment - Apparent Emerald Tint for First Milestone */}
+                    <div className={`p-3 sm:p-3.5 text-zinc-900 border-t rounded-b-xl shadow-inner ${
+                      idx === 0 
+                        ? 'bg-emerald-50/85 border-emerald-400/60' 
+                        : 'bg-zinc-50/95 border-emerald-500/25'
+                    }`}>
                       {/* Key Achievements (Highlights) */}
                       <div className="mb-2">
                         <ul className="space-y-1">
