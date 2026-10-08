@@ -159,7 +159,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 style={{
                   right: isSidebarCollapsed ? '-26px' : '-42px',
                 }}
-                className={`absolute top-1/2 -translate-y-1/2 z-50 flex items-center justify-center w-7 h-7 rounded-full border shadow-md transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ${
+                className={`absolute top-1/2 -translate-y-1/2 z-50 flex items-center justify-center w-7 h-7 rounded-full border shadow-md transition-all duration-300 hover:scale-110 hover:shadow-[0_0_16px_rgba(59,130,246,0.55)] hover:border-blue-400 active:scale-95 active:shadow-[0_0_24px_rgba(59,130,246,0.8)] cursor-pointer ${
                   isLight
                     ? 'bg-white border-zinc-300 text-zinc-700 hover:text-blue-600 shadow-zinc-300/80 hover:border-blue-400'
                     : 'bg-[#121217] border-white/25 text-zinc-200 hover:text-white shadow-black/90 hover:border-blue-500/60'
@@ -201,16 +201,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }
                     }}
                     data-nav-link
-                    className={`flex items-center rounded-xl text-xs sm:text-[12.5px] font-medium transition-all duration-150 group cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+                    className={`flex items-center rounded-xl text-xs sm:text-[12.5px] font-medium transition-all duration-200 group cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_14px_rgba(59,130,246,0.35)] active:scale-[0.98] ${
                       isSidebarCollapsed ? 'justify-center p-2 w-10' : 'justify-between pl-3 pr-2.5 py-1.5 w-[80%] text-left'
                     } ${
                       isActive
                         ? isLight
-                          ? 'bg-blue-50/90 text-blue-600 font-semibold shadow-xs'
-                          : 'bg-white/10 text-white font-semibold shadow-xs'
+                          ? 'bg-blue-50/90 text-blue-600 font-semibold shadow-xs border border-blue-200/60'
+                          : 'bg-white/10 text-white font-semibold shadow-xs border border-white/20'
                         : isLight
-                          ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90'
-                          : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06]'
+                          ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 border border-transparent hover:border-blue-300/40'
+                          : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] border border-transparent hover:border-blue-400/30'
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
@@ -245,7 +245,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 href={PERSONAL_INFO.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-150 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(59,130,246,0.35)] border border-transparent hover:border-blue-400/40 ${
                   isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%]'
                 } ${
                   isLight ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90' : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06]'
@@ -260,7 +260,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-150 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(59,130,246,0.35)] border border-transparent hover:border-blue-400/40 ${
                   isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%]'
                 } ${
                   isLight ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90' : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06]'
@@ -273,10 +273,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               </a>
               <button
                 onClick={onOpenContact}
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-150 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_16px_rgba(239,68,68,0.45)] hover:border-red-400/70 active:scale-95 active:shadow-[0_0_24px_rgba(239,68,68,0.7)] ${
                   isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%] text-left'
                 } ${
-                  isLight ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90' : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06]'
+                  isLight ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90 border border-transparent' : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06] border border-transparent'
                 }`}
                 title="Get in Touch via Email"
                 aria-label="Open contact form"
@@ -286,7 +286,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               </button>
               <button
                 onClick={onOpenSuperAdmin}
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-150 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 ${
+                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_18px_rgba(59,130,246,0.5)] hover:border-blue-400/80 active:scale-95 active:shadow-[0_0_26px_rgba(59,130,246,0.8)] ${
                   isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%] text-left'
                 } ${
                   isLight ? 'text-blue-700 hover:text-blue-900 bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200' : 'text-blue-300 hover:text-white bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20'
@@ -333,7 +333,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Theme Options */}
         <button
           onClick={onOpenInterfaceOptions}
-          className={`flex items-center space-x-1 transition-colors px-1.5 py-0.5 rounded-full ${
+          className={`flex items-center space-x-1 transition-all duration-300 px-2 py-0.5 rounded-full cursor-pointer border border-transparent hover:scale-[1.04] hover:shadow-[0_0_16px_rgba(59,130,246,0.5)] hover:border-blue-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(59,130,246,0.75)] ${
             isLight 
               ? 'text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/70' 
               : 'text-zinc-300 hover:text-white hover:bg-white/10'
@@ -350,10 +350,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className={`w-[1px] h-3 ${isLight ? 'bg-zinc-300' : 'bg-white/20'}`} />
         <button
           onClick={() => setGateModalOpen(true)}
-          className={`flex items-center space-x-1 transition-colors px-2 py-0.5 rounded-full cursor-pointer ${
+          className={`flex items-center space-x-1 transition-all duration-300 px-2.5 py-0.5 rounded-full cursor-pointer border ${
             user && isAuthorized
-              ? (isLight ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' : 'bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25 border border-emerald-500/30')
-              : (isLight ? 'text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/70' : 'text-zinc-300 hover:text-white hover:bg-white/10')
+              ? (isLight 
+                  ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-emerald-200 hover:scale-[1.04] hover:shadow-[0_0_16px_rgba(16,185,129,0.5)] hover:border-emerald-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(16,185,129,0.75)]' 
+                  : 'bg-emerald-500/15 text-emerald-300 hover:bg-emerald-500/25 border-emerald-500/30 hover:scale-[1.04] hover:shadow-[0_0_16px_rgba(16,185,129,0.5)] hover:border-emerald-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(16,185,129,0.75)]')
+              : (isLight 
+                  ? 'text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/70 border-transparent hover:scale-[1.04] hover:shadow-[0_0_16px_rgba(245,158,11,0.5)] hover:border-amber-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(245,158,11,0.75)]' 
+                  : 'text-zinc-300 hover:text-white hover:bg-white/10 border-transparent hover:scale-[1.04] hover:shadow-[0_0_16px_rgba(245,158,11,0.5)] hover:border-amber-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(245,158,11,0.75)]')
           }`}
           title={user ? `Firebase Identity: ${user.email}` : "Firebase Authentication & Clearance"}
         >
@@ -399,7 +403,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center space-x-1.5">
           <button
             onClick={onOpenInterfaceOptions}
-            className={`p-1.5 rounded-lg border exec-transition ${
+            className={`p-1.5 rounded-lg border transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_0_16px_rgba(59,130,246,0.45)] hover:border-blue-400/80 active:scale-95 ${
               isLight 
                 ? 'bg-[#f4f4f6] border-zinc-300 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/70' 
                 : 'bg-[#18181b] border-zinc-700 text-zinc-300 hover:text-white'
@@ -408,7 +412,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             <Sliders className="w-3.5 h-3.5 text-blue-500" />
           </button>
-          <div className={`p-0.5 rounded-lg border ${
+          <div className={`p-0.5 rounded-lg border transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_0_16px_rgba(168,85,247,0.45)] hover:border-purple-400/80 ${
             isLight ? 'bg-[#f4f4f6] border-zinc-300' : 'bg-[#18181b] border-zinc-700'
           }`}>
             <MusicPlayer theme={theme} isMobile={true} />
@@ -416,7 +420,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <UserTelemetry theme={theme} isMobile={true} />
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`p-1.5 rounded-full border exec-transition ${isLight ? 'bg-[#f4f4f6] border-zinc-300 text-zinc-700 hover:bg-zinc-200/70' : 'bg-white/5 border-white/10 text-zinc-300'}`}
+            className={`p-1.5 rounded-full border transition-all duration-300 hover:scale-[1.05] hover:shadow-[0_0_16px_rgba(59,130,246,0.45)] hover:border-blue-400/80 active:scale-95 ${isLight ? 'bg-[#f4f4f6] border-zinc-300 text-zinc-700 hover:bg-zinc-200/70' : 'bg-white/5 border-white/10 text-zinc-300'}`}
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
           </button>

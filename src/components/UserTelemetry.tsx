@@ -218,14 +218,14 @@ export const UserTelemetry: React.FC<UserTelemetryProps> = ({
         aria-label="Open Session Audit Telemetry"
         className={
           isMobile
-            ? `p-1.5 rounded-lg border transition-colors cursor-pointer relative flex items-center justify-center ${
+            ? `p-1.5 rounded-lg border transition-all duration-300 cursor-pointer relative flex items-center justify-center hover:scale-[1.05] hover:shadow-[0_0_16px_rgba(16,185,129,0.5)] hover:border-emerald-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(16,185,129,0.75)] ${
                 isOpen
-                  ? (isLight ? 'bg-blue-500/15 border-blue-500/40 text-blue-600' : 'bg-blue-500/20 border-blue-500/50 text-blue-400')
+                  ? (isLight ? 'bg-blue-500/15 border-blue-500/40 text-blue-600 shadow-[0_0_12px_rgba(59,130,246,0.35)]' : 'bg-blue-500/20 border-blue-500/50 text-blue-400 shadow-[0_0_12px_rgba(59,130,246,0.35)]')
                   : (isLight ? 'bg-[#f4f4f6] border-zinc-300 text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/70' : 'bg-[#18181b] border-zinc-700 text-zinc-300 hover:text-white')
               }`
-            : `flex items-center space-x-1.5 px-2.5 py-1 rounded-full transition-colors cursor-pointer ${
+            : `flex items-center space-x-1.5 px-2.5 py-1 rounded-full transition-all duration-300 cursor-pointer border border-transparent hover:scale-[1.04] hover:shadow-[0_0_16px_rgba(16,185,129,0.5)] hover:border-emerald-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(16,185,129,0.75)] ${
                 isOpen
-                  ? (isLight ? 'bg-blue-500/15 text-blue-600 font-bold' : 'bg-blue-500/25 text-blue-400 font-bold')
+                  ? (isLight ? 'bg-blue-500/15 text-blue-600 font-bold border-blue-400/50 shadow-[0_0_14px_rgba(59,130,246,0.4)]' : 'bg-blue-500/25 text-blue-400 font-bold border-blue-400/50 shadow-[0_0_14px_rgba(59,130,246,0.4)]')
                   : (isLight ? 'text-zinc-700 hover:text-zinc-950 hover:bg-zinc-200/70' : 'text-zinc-300 hover:text-white hover:bg-white/10')
               }`
         }

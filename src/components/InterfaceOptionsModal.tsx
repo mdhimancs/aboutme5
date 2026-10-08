@@ -108,7 +108,7 @@ export const InterfaceOptionsModal: React.FC<InterfaceOptionsModalProps> = ({
                 <div
                   key={t.id}
                   onClick={() => onThemeChange(t.id)}
-                  className={`p-2 rounded-xl border cursor-pointer transition-all flex flex-col justify-between ${
+                  className={`p-2 rounded-xl border cursor-pointer transition-all duration-300 flex flex-col justify-between hover:scale-[1.03] hover:shadow-[0_0_16px_rgba(59,130,246,0.45)] hover:border-blue-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(59,130,246,0.7)] ${
                     isSelected
                       ? (isLight ? 'border-blue-600 bg-blue-50 shadow-xs' : 'border-blue-500 bg-blue-500/10 shadow-lg')
                       : (isLight ? 'border-zinc-200 bg-white hover:border-zinc-300' : 'border-white/10 bg-white/[0.02] hover:border-white/20')
@@ -142,7 +142,7 @@ export const InterfaceOptionsModal: React.FC<InterfaceOptionsModalProps> = ({
                 <button
                   key={acc.id}
                   onClick={() => onAccentChange(acc.id)}
-                  className={`p-1.5 px-2 rounded-xl border flex items-center justify-center space-x-1.5 transition-all ${
+                  className={`p-1.5 px-2 rounded-xl border flex items-center justify-center space-x-1.5 transition-all duration-300 cursor-pointer hover:scale-[1.04] hover:shadow-[0_0_14px_rgba(59,130,246,0.45)] hover:border-blue-400/80 active:scale-95 active:shadow-[0_0_20px_rgba(59,130,246,0.7)] ${
                     isSelected
                       ? (isLight ? 'border-zinc-800 bg-white shadow-xs font-bold' : 'border-white bg-white/10 font-bold')
                       : (isLight ? 'border-zinc-200 bg-white hover:bg-zinc-100' : 'border-white/10 bg-white/[0.02] hover:bg-white/5')
@@ -174,7 +174,7 @@ export const InterfaceOptionsModal: React.FC<InterfaceOptionsModalProps> = ({
                 <div
                   key={f.id}
                   onClick={() => onFontChange(f.id)}
-                  className={`p-2 rounded-xl border cursor-pointer transition-all ${
+                  className={`p-2 rounded-xl border cursor-pointer transition-all duration-300 flex flex-col justify-between hover:scale-[1.03] hover:shadow-[0_0_16px_rgba(59,130,246,0.45)] hover:border-blue-400/80 active:scale-95 active:shadow-[0_0_24px_rgba(59,130,246,0.7)] ${
                     isSelected
                       ? (isLight ? 'border-blue-600 bg-blue-50' : 'border-blue-500 bg-blue-500/10')
                       : (isLight ? 'border-zinc-200 bg-white hover:border-zinc-300' : 'border-white/10 bg-white/[0.02] hover:border-white/20')
@@ -193,7 +193,7 @@ export const InterfaceOptionsModal: React.FC<InterfaceOptionsModalProps> = ({
           {onOpenFontShowcase ? (
             <button
               onClick={onOpenFontShowcase}
-              className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all shadow-md cursor-pointer"
+              className="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 shadow-md cursor-pointer hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(99,102,241,0.6)] active:scale-95"
             >
               <Type className="w-3.5 h-3.5" />
               <span>Explore Top 56 Fonts</span>
@@ -202,7 +202,7 @@ export const InterfaceOptionsModal: React.FC<InterfaceOptionsModalProps> = ({
 
           <button
             onClick={onClose}
-            className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all shadow-md cursor-pointer"
+            className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300 shadow-md cursor-pointer hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(37,99,235,0.6)] active:scale-95"
           >
             Apply Interface Preferences
           </button>
