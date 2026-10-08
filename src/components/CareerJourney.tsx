@@ -223,7 +223,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       >
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(217,119,6,0.45)] hover:border-amber-400 active:scale-95 active:shadow-[0_0_30px_rgba(245,158,11,0.8)]"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.015] hover:shadow-[0_0_10px_rgba(217,119,6,0.25)] hover:border-amber-400/70 active:scale-95 active:shadow-[0_0_18px_rgba(245,158,11,0.5)]"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-amber-600 uppercase tracking-wider">Goldman Sachs Tenure</div>
           <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">14 Yrs · 4 Promotions</div>
@@ -232,7 +232,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(59,130,246,0.45)] hover:border-blue-400 active:scale-95 active:shadow-[0_0_30px_rgba(56,189,248,0.8)]"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.015] hover:shadow-[0_0_10px_rgba(59,130,246,0.25)] hover:border-blue-400/70 active:scale-95 active:shadow-[0_0_18px_rgba(56,189,248,0.5)]"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-blue-600 uppercase tracking-wider">Leadership Scale</div>
           <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">30+ Global Engineers</div>
@@ -241,7 +241,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(16,185,129,0.45)] hover:border-emerald-400 active:scale-95 active:shadow-[0_0_30px_rgba(52,211,153,0.8)]"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.015] hover:shadow-[0_0_10px_rgba(16,185,129,0.25)] hover:border-emerald-400/70 active:scale-95 active:shadow-[0_0_18px_rgba(52,211,153,0.5)]"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-emerald-600 uppercase tracking-wider">Audit & Compliance</div>
           <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">100% Clean Attestations</div>
@@ -250,7 +250,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(99,102,241,0.45)] hover:border-indigo-400 active:scale-95 active:shadow-[0_0_30px_rgba(129,140,248,0.8)]"
+          className="relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.015] hover:shadow-[0_0_10px_rgba(99,102,241,0.25)] hover:border-indigo-400/70 active:scale-95 active:shadow-[0_0_18px_rgba(129,140,248,0.5)]"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-indigo-600 uppercase tracking-wider">Transaction Defense</div>
           <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">$100B–$500B+ Flow</div>
@@ -259,7 +259,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
 
         <div 
           style={{ backgroundColor: '#ffffff', opacity: 1 }}
-          className="col-span-2 sm:col-span-1 relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(168,85,247,0.45)] hover:border-purple-400 active:scale-95 active:shadow-[0_0_30px_rgba(192,132,252,0.8)]"
+          className="col-span-2 sm:col-span-1 relative z-10 py-2 px-3 rounded-lg border text-center transition-all duration-300 cursor-pointer bg-white opacity-100 border-zinc-200/90 shadow-2xs hover:scale-[1.015] hover:shadow-[0_0_10px_rgba(168,85,247,0.25)] hover:border-purple-400/70 active:scale-95 active:shadow-[0_0_18px_rgba(192,132,252,0.5)]"
         >
           <div className="text-[10px] sm:text-[10.5px] font-bold text-purple-600 uppercase tracking-wider">Privilege Exposure</div>
           <div className="text-[11.5px] sm:text-xs font-bold mt-0.5 text-zinc-900 tabular-nums">-98.4% Zero Standing</div>
@@ -336,7 +336,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     onClick={() => {
                       setExpandedId(isExpanded ? null : milestone.id);
                     }}
-                    className={`relative border rounded-xl backdrop-blur-xl transition-all duration-300 cursor-pointer interactive-card overflow-hidden border-emerald-400/90 ring-1 ring-emerald-400/50 hover:scale-[1.015] hover:shadow-[0_0_28px_rgba(16,185,129,0.55),0_4px_24px_rgba(16,185,129,0.3)] hover:border-emerald-300 hover:ring-2 hover:ring-emerald-400/80 active:scale-[0.99] active:shadow-[0_0_36px_rgba(52,211,153,0.85)] ${
+                    className={`relative border rounded-xl backdrop-blur-xl transition-all duration-300 cursor-pointer interactive-card overflow-hidden border-emerald-400/90 ring-1 ring-emerald-400/50 hover:scale-[1.008] hover:shadow-[0_0_14px_rgba(16,185,129,0.28),0_2px_12px_rgba(16,185,129,0.15)] hover:border-emerald-300/80 hover:ring-1 hover:ring-emerald-400/60 active:scale-[0.99] active:shadow-[0_0_20px_rgba(52,211,153,0.5)] ${
                       isExpanded 
                         ? 'shadow-[0_0_30px_rgba(16,185,129,0.45)] ring-emerald-400/70 border-emerald-300' 
                         : 'shadow-[0_4px_20px_rgba(16,185,129,0.22)]'

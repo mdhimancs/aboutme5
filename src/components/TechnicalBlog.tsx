@@ -109,34 +109,6 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           }`}>
             Publications - Solution Design & Architecture
           </h2>
-          <div className="inline-flex items-center gap-2">
-            <span 
-              onClick={isSectionGated ? () => setGateModalOpen(true) : undefined}
-              className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border ${
-                isSectionGated ? 'cursor-pointer hover:opacity-85' : ''
-              } ${
-              isSectionGated 
-                ? (isLight ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-amber-500/10 text-amber-400 border-amber-500/20')
-                : (isLight ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20')
-            }`}>
-              {isSectionGated ? <Lock className="w-3 h-3" /> : <Unlock className="w-3 h-3" />}
-              <span>{isSectionGated ? 'Request Access' : 'Public Access'}</span>
-            </span>
-            {isAdmin && (
-              <button
-                type="button"
-                onClick={() => toggleSectionLock('publications')}
-                className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold border transition-colors cursor-pointer ${
-                  isLight 
-                    ? 'bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border-zinc-300' 
-                    : 'bg-white/5 hover:bg-white/10 text-zinc-300 border-white/10'
-                }`}
-                title="Toggle publications section lock"
-              >
-                <span>{isSectionGated ? 'Unlock Section' : 'Lock Section'}</span>
-              </button>
-            )}
-          </div>
         </div>
         <p 
           style={{ fontSize: '11px' }}
@@ -247,7 +219,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
         {/* Right Column: All Publications (Increased by 10% to col-span-8) */}
         <div className="lg:col-span-8 flex flex-col min-h-0 h-full">
           <div className="flex items-center justify-between pb-2 mb-2.5 border-b border-zinc-200/80 dark:border-white/10 shrink-0">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <BookOpen className="w-4 h-4 text-blue-500" />
               <h3 className={`text-xs sm:text-sm font-bold uppercase tracking-wider ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
                 All Publications
@@ -258,6 +230,31 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
                 <FileText className="w-3 h-3 text-blue-500" />
                 <span>{BLOG_POSTS.length} Articles</span>
               </span>
+              <span 
+                onClick={isSectionGated ? () => setGateModalOpen(true) : undefined}
+                className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border cursor-pointer transition-all ${
+                  isSectionGated 
+                    ? (isLight ? 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100' : 'bg-amber-500/10 text-amber-400 border-amber-500/20 hover:bg-amber-500/20')
+                    : (isLight ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20')
+                }`}
+              >
+                {isSectionGated ? <Lock className="w-3 h-3 text-amber-500" /> : <Unlock className="w-3 h-3 text-emerald-500" />}
+                <span>{isSectionGated ? 'Request Access' : 'Public Access'}</span>
+              </span>
+              {isAdmin && (
+                <button
+                  type="button"
+                  onClick={() => toggleSectionLock('publications')}
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold border transition-colors cursor-pointer ${
+                    isLight 
+                      ? 'bg-zinc-100 hover:bg-zinc-200 text-zinc-800 border-zinc-300' 
+                      : 'bg-white/5 hover:bg-white/10 text-zinc-300 border-white/10'
+                  }`}
+                  title="Toggle publications section lock"
+                >
+                  <span>{isSectionGated ? 'Unlock Section' : 'Lock Section'}</span>
+                </button>
+              )}
             </div>
           </div>
 

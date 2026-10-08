@@ -182,10 +182,12 @@ export const CaseStudySlider: React.FC<CaseStudySliderProps> = ({
       <div 
         className="relative w-full group/slider"
         style={{
-          width: '1073.99px',
-          maxWidth: 'calc(100% - 15px)',
-          marginLeft: '15px',
-          paddingLeft: '0px'
+          width: '1109.02px',
+          maxWidth: '100%',
+          marginLeft: '3px',
+          marginRight: '-10px',
+          paddingLeft: '4px',
+          paddingRight: '-6px'
         }}
       >
         {/* Floating Left Prev Button */}

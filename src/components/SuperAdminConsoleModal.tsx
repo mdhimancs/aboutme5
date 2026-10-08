@@ -380,6 +380,85 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
   const [authLoading, setAuthLoading] = useState(false);
   const [authError, setAuthError] = useState('');
 
+  // Daily Session Summary Telemetry (1x / Day to munish.world@gmail.com)
+  const [summaryState, setSummaryState] = useState<{
+    enabled: boolean;
+    recipient: string;
+    lastSentAt: string | null;
+    lastStatus: string;
+    lastMessage: string | null;
+    totalDispatched: number;
+  }>({
+    enabled: true,
+    recipient: 'munish.world@gmail.com',
+    lastSentAt: null,
+    lastStatus: 'idle',
+    lastMessage: null,
+    totalDispatched: 0
+  });
+  const [isSendingSummary, setIsSendingSummary] = useState(false);
+  const [summaryNotification, setSummaryNotification] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null);
+
+  const fetchSummaryStatus = useCallback(async () => {
+    try {
+      const res = await fetch('/api/admin/session-summary/status');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          setSummaryState({
+            enabled: data.enabled ?? true,
+            recipient: data.recipient || 'munish.world@gmail.com',
+            lastSentAt: data.lastSentAt || null,
+            lastStatus: data.lastStatus || 'idle',
+            lastMessage: data.lastMessage || null,
+            totalDispatched: data.totalDispatched || 0
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to fetch session summary status:", e);
+    }
+  }, []);
+
+  const handleSendDailySummary = async (force = true) => {
+    setIsSendingSummary(true);
+    setSummaryNotification(null);
+    try {
+      const res = await fetch('/api/admin/session-summary/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ force, sessions })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setSummaryState(prev => ({
+          ...prev,
+          lastSentAt: data.lastSentAt || new Date().toISOString(),
+          lastStatus: 'success',
+          lastMessage: data.message || 'Dispatched to munish.world@gmail.com',
+          totalDispatched: (prev.totalDispatched || 0) + (data.skipped ? 0 : 1)
+        }));
+        setSummaryNotification({
+          type: 'success',
+          message: data.message || 'Daily session summary transmitted to munish.world@gmail.com!'
+        });
+      } else {
+        setSummaryNotification({
+          type: 'error',
+          message: data.error || data.message || 'Failed to dispatch daily summary.'
+        });
+      }
+    } catch (err: any) {
+      setSummaryNotification({
+        type: 'error',
+        message: err.message || 'Network error dispatching session summary.'
+      });
+    } finally {
+      setIsSendingSummary(false);
+      setTimeout(() => setSummaryNotification(null), 8000);
+    }
+  };
+
   // Logic for generating deep, realistic live visitor telemetry & interaction data
   const generateSessions = useCallback((): VisitorSession[] => {
     const currentUptime = `${Math.floor(Math.random() * 2 + 1)}h ${Math.floor(Math.random() * 40 + 10)}m`;
@@ -599,8 +678,9 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
     if (isOpen) {
       setSessions(generateSessions());
       setAutoRefreshCountdown(30);
+      fetchSummaryStatus();
     }
-  }, [isOpen, generateSessions]);
+  }, [isOpen, generateSessions, fetchSummaryStatus]);
 
   // Automated 30-second refresh countdown and trigger
   useEffect(() => {
@@ -1003,6 +1083,66 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
                 </span>
               </div>
               <div className="text-[9px] text-zinc-500 mt-0.5">Hardware TPM 2.0 attestation</div>
+            </div>
+          </div>
+
+          {/* Executive Daily Session Summary Telemetry Banner (1x / Day) */}
+          <div className="p-3 rounded-xl bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white border border-blue-500/30 shadow-sm flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-blue-500/20 border border-blue-400/40 flex items-center justify-center shrink-0">
+                <Mail className="w-4 h-4 text-sky-300" />
+              </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-xs font-bold tracking-tight text-white">Daily Session Telemetry Digest</span>
+                  <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Active • 1x / Day Schedule</span>
+                  </span>
+                  <span className="text-[10px] text-sky-200 font-mono bg-blue-950/60 px-2 py-0.5 rounded border border-blue-500/30">
+                    munish.world@gmail.com
+                  </span>
+                </div>
+                <div className="text-[10px] text-zinc-300 flex items-center gap-2 flex-wrap">
+                  <span>Automated 24h executive digest: sessions, peak traffic, top searches, downloads & Zero Trust posture.</span>
+                  {summaryState.lastSentAt && (
+                    <span className="text-sky-300 font-mono">
+                      (Last sent: {new Date(summaryState.lastSentAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              {summaryNotification && (
+                <span className={`text-[10px] px-2.5 py-1 rounded-lg border font-medium ${
+                  summaryNotification.type === 'success'
+                    ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/40'
+                    : 'bg-rose-950/80 text-rose-300 border-rose-500/40'
+                }`}>
+                  {summaryNotification.message}
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => handleSendDailySummary(true)}
+                disabled={isSendingSummary}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-blue-600 hover:bg-blue-500 active:scale-95 text-white transition-all shadow-md shadow-blue-900/40 border border-blue-400/50 cursor-pointer disabled:opacity-50"
+                title="Dispatch Daily Session Summary to munish.world@gmail.com now"
+              >
+                {isSendingSummary ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Dispatching...</span>
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-3.5 h-3.5 text-sky-200" />
+                    <span>Send Session Summary Now</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
 
@@ -2181,7 +2321,74 @@ export const SuperAdminConsoleModal: React.FC<SuperAdminConsoleModalProps> = ({
 
           {/* TAB 3: Session Matrix */}
           {activeTab === 'sessions' && (
-            <div className="space-y-2">
+            <div className="space-y-3">
+              {/* Daily Session Telemetry Dispatch Configuration Card */}
+              <div className="p-3.5 rounded-xl bg-white border border-blue-200/80 shadow-2xs space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <div className="p-1.5 rounded-lg bg-blue-50 text-blue-600 border border-blue-200">
+                      <Mail className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-zinc-900 tracking-tight">
+                        Daily Session Telemetry Summary (1x in a Day)
+                      </h4>
+                      <p className="text-[10px] text-zinc-500">
+                        Automated once-daily email transmission to <strong className="text-blue-600">munish.world@gmail.com</strong>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="px-2 py-0.5 rounded-full text-[9.5px] font-bold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span>Cadence: 1x / 24 Hours</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => handleSendDailySummary(true)}
+                      disabled={isSendingSummary}
+                      className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-bold bg-blue-600 hover:bg-blue-500 active:scale-95 text-white transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                    >
+                      {isSendingSummary ? (
+                        <>
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                          <span>Dispatching...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="w-3 h-3 text-sky-200" />
+                          <span>Dispatch Daily Summary Now</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-[10.5px]">
+                  <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200/80">
+                    <span className="text-[9px] uppercase font-bold text-zinc-500 block">Recipient Configuration</span>
+                    <span className="font-mono font-semibold text-zinc-900 text-[11px]">munish.world@gmail.com</span>
+                    <span className="block text-[9px] text-zinc-400 mt-0.5">Primary Executive Administrator</span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200/80">
+                    <span className="text-[9px] uppercase font-bold text-zinc-500 block">Dispatch Status</span>
+                    <span className="font-semibold text-emerald-700 text-[11px] flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                      <span>{summaryState.lastStatus === 'success' ? 'Dispatched & Healthy' : 'Active Automated Scheduler'}</span>
+                    </span>
+                    <span className="block text-[9px] text-zinc-400 mt-0.5 font-mono">
+                      {summaryState.lastSentAt ? `Last: ${new Date(summaryState.lastSentAt).toLocaleString()}` : 'Scheduled for today'}
+                    </span>
+                  </div>
+                  <div className="p-2.5 rounded-lg bg-zinc-50 border border-zinc-200/80">
+                    <span className="text-[9px] uppercase font-bold text-zinc-500 block">Payload Telemetry</span>
+                    <span className="font-semibold text-zinc-900 text-[11px]">2,532 Sessions • 8 Global Hubs</span>
+                    <span className="block text-[9px] text-zinc-400 mt-0.5">Peak curves, queries & downloads</span>
+                  </div>
+                </div>
+              </div>
+
               <div className="flex items-center justify-between">
                 <h3 className="text-xs font-bold text-zinc-900 flex items-center gap-1.5">
                   <Activity className="w-3.5 h-3.5 text-indigo-600" />

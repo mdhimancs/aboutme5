@@ -3,24 +3,25 @@
     <!-- Silver Metallic Gradient for Underline and Accent Dot -->
     <linearGradient id="silverGradient" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#94a3b8"/>
-      <stop offset="30%" stop-color="#f8fafc"/>
-      <stop offset="65%" stop-color="#e2e8f0"/>
+      <stop offset="25%" stop-color="#f1f5f9"/>
+      <stop offset="50%" stop-color="#ffffff"/>
+      <stop offset="75%" stop-color="#e2e8f0"/>
       <stop offset="100%" stop-color="#94a3b8"/>
     </linearGradient>
     <linearGradient id="silverDotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="0%" stop-color="#ffffff"/>
       <stop offset="50%" stop-color="#e2e8f0"/>
       <stop offset="100%" stop-color="#94a3b8"/>
     </linearGradient>
   </defs>
   <!-- Dark Indigo/Obsidian Executive Background -->
-  <rect x="0" y="0" width="32" height="32" rx="6" fill="#0f172a"/>
+  <rect x="0" y="0" width="32" height="32" rx="6.5" fill="#090d16"/>
   <!-- Crisp Sharp Inner Border -->
-  <rect x="0.5" y="0.5" width="31" height="31" rx="5.5" fill="none" stroke="#334155" stroke-width="1" opacity="0.85"/>
-  <!-- High-Contrast Letter M -->
-  <text x="13.5" y="13.2" text-anchor="middle" dominant-baseline="central" font-family="Arial, 'Helvetica Neue', 'SF Pro Display', sans-serif" font-weight="900" font-size="15.5" letter-spacing="-0.2" fill="#ffffff">M</text>
-  <!-- Refined Silver Accent Dot -->
-  <circle cx="23.8" cy="17.2" r="1.9" fill="url(#silverDotGrad)"/>
-  <!-- Sleek Silver Accent Underline -->
-  <line x1="5" y1="23.5" x2="27" y2="23.5" stroke="url(#silverGradient)" stroke-width="2.6" stroke-linecap="round"/>
+  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="5.75" fill="none" stroke="#334155" stroke-width="0.8" opacity="0.9"/>
+  <!-- Centered Bold Executive Letter M -->
+  <text x="16" y="12.5" text-anchor="middle" dominant-baseline="central" font-family="Arial, 'Helvetica Neue', 'SF Pro Display', sans-serif" font-weight="900" font-size="16" letter-spacing="-0.3" fill="#ffffff">M</text>
+  <!-- Sleek Silver Accent Underline directly beneath M -->
+  <line x1="6" y1="21.8" x2="26" y2="21.8" stroke="url(#silverGradient)" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Silver Accent Dot placed directly BELOW the Underline -->
+  <circle cx="16" cy="26.8" r="1.6" fill="url(#silverDotGrad)"/>
 </svg>
