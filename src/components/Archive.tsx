@@ -472,7 +472,7 @@ export const Archive: React.FC<ArchiveProps> = ({
       {/* Background Aura Effects */}
       <SectionBackgroundAura theme={theme} auraLevel={3} />
 
-      <div className="relative flex-1 flex flex-col justify-center min-h-0">
+      <div className="relative flex-1 flex flex-col justify-center min-h-0 w-full mx-auto">
         
         {/* Section Header */}
         <div className="relative w-full space-y-0.5 mb-3 shrink-0 text-left -mt-4">
@@ -613,9 +613,9 @@ export const Archive: React.FC<ArchiveProps> = ({
         {/* Tab 1: Standardized Executive Blueprints */}
         {activeTab === 'blueprints' && (
           <div className="relative w-full">
-            <div className="overflow-y-auto min-h-0 max-h-[380px] sm:max-h-[410px] lg:max-h-[430px] pr-1 pb-5 space-y-2.5 scrollbar-thin animate-in fade-in duration-300" style={{ marginLeft: '-36px', paddingLeft: '0px' }}>
+            <div className="overflow-y-auto min-h-0 max-h-[380px] sm:max-h-[410px] lg:max-h-[430px] pr-1 pb-5 space-y-2.5 scrollbar-thin animate-in fade-in duration-300">
               {/* Blueprints Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-[90%] ml-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
                 {EXECUTIVE_BLUEPRINTS.map((bp) => {
                   const locked = isItemLocked(bp.id, 'archive');
                   const hasSpecificClearance = currentUserEntry?.scope === 'specific' && currentUserEntry.allowedItems?.includes(bp.id);
@@ -2162,7 +2162,7 @@ export const Archive: React.FC<ArchiveProps> = ({
       )}
 
       {/* Integrated Compact Executive Footer */}
-      <div className={`pt-2 mt-1.5 border-t shrink-0 ${isLight ? 'border-zinc-200 text-zinc-600' : 'border-white/10 text-zinc-400'}`}>
+      <div className={`pt-2 mt-1.5 border-t shrink-0 w-full mx-auto ${isLight ? 'border-zinc-200 text-zinc-600' : 'border-white/10 text-zinc-400'}`}>
         <div className="flex flex-col sm:flex-row items-center justify-between gap-1.5 text-xs py-0.5">
           <div className="flex flex-wrap items-center space-x-2 sm:space-x-2.5">
             <span className={`font-semibold ${isLight ? 'text-zinc-900' : 'text-white'}`}>{PERSONAL_INFO.name}</span>

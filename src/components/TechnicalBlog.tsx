@@ -109,12 +109,6 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           }`}>
             Publications - Solution Design & Architecture
           </h2>
-          <span className={`px-2.5 py-1 rounded-lg text-xs font-extrabold border inline-flex items-center gap-1.5 shadow-2xs ${
-            isLight ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-blue-500/10 text-blue-400 border-blue-500/25'
-          }`}>
-            <FileText className="w-3.5 h-3.5 text-blue-500" />
-            <span>{BLOG_POSTS.length} Articles Available</span>
-          </span>
           <div className="inline-flex items-center gap-2">
             <span 
               onClick={isSectionGated ? () => setGateModalOpen(true) : undefined}
@@ -258,6 +252,12 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
               <h3 className={`text-xs sm:text-sm font-bold uppercase tracking-wider ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>
                 All Publications
               </h3>
+              <span className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold border inline-flex items-center gap-1 shadow-2xs ${
+                isLight ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-blue-500/10 text-blue-400 border-blue-500/25'
+              }`}>
+                <FileText className="w-3 h-3 text-blue-500" />
+                <span>{BLOG_POSTS.length} Articles</span>
+              </span>
             </div>
           </div>
 

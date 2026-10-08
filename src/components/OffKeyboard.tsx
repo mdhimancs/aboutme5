@@ -196,10 +196,10 @@ export const OffKeyboard: React.FC<OffKeyboardProps> = ({ theme = 'apple-dark' }
             {interestsList.map((item, index) => (
               <div
                 key={index}
-                className={`group flex flex-col justify-between rounded-xl sm:rounded-2xl p-2.5 sm:p-3 border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                className={`group flex flex-col justify-between rounded-xl sm:rounded-2xl p-2.5 sm:p-3 border transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_0_26px_rgba(59,130,246,0.45),0_4px_20px_rgba(59,130,246,0.2)] hover:border-blue-400 active:scale-[0.98] ${
                   isLight 
-                    ? 'bg-zinc-50/90 border-zinc-200 hover:border-blue-500/50 hover:bg-white' 
-                    : 'bg-white/[0.02] border-white/10 hover:border-blue-500/50 hover:bg-white/[0.04]'
+                    ? 'bg-zinc-50/90 border-zinc-200 hover:bg-white' 
+                    : 'bg-white/[0.02] border-white/10 hover:bg-white/[0.04]'
                 }`}
               >
                 <div>
@@ -326,10 +326,10 @@ export const OffKeyboard: React.FC<OffKeyboardProps> = ({ theme = 'apple-dark' }
                   href={video.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`group flex flex-col rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${
+                  className={`group flex flex-col rounded-xl overflow-hidden border transition-all duration-300 hover:-translate-y-1 hover:scale-[1.015] hover:shadow-[0_0_26px_rgba(59,130,246,0.45),0_4px_20px_rgba(59,130,246,0.2)] hover:border-blue-400 active:scale-[0.98] ${
                     isLight 
-                      ? 'bg-zinc-50/80 border-zinc-200 hover:border-blue-500/50 hover:bg-white' 
-                      : 'bg-white/[0.02] border-white/10 hover:border-blue-500/50 hover:bg-white/[0.04]'
+                      ? 'bg-zinc-50/80 border-zinc-200 hover:bg-white' 
+                      : 'bg-white/[0.02] border-white/10 hover:bg-white/[0.04]'
                   }`}
                 >
                   <div className="relative h-16 sm:h-18 w-full overflow-hidden bg-zinc-900">

@@ -14,14 +14,14 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
   return (
     <section 
       id="philosophy" 
-      className={`relative min-h-screen lg:h-screen w-full flex flex-col justify-start pt-3 sm:pt-6 pb-3 sm:pb-4 lg:pb-5 px-6 sm:px-12 lg:px-16 max-w-[920px] lg:max-w-[1260px] mx-auto overflow-hidden border-t transition-colors duration-500 ${
+      className={`relative min-h-screen lg:h-screen w-full flex flex-col justify-start pt-6 sm:pt-10 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1360px] mx-auto overflow-hidden border-t transition-colors duration-500 ${
         isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >
       {/* Soothing Ambient Atmospheric Aura Effects */}
       <SectionBackgroundAura theme={theme} auraLevel={3} />
 
-      <div className="relative w-[90%] max-w-[1260px] mx-auto flex flex-col flex-1 justify-start space-y-2.5 sm:space-y-3 pt-1.5">
+      <div className="relative w-full max-w-[1360px] mx-auto flex flex-col flex-1 justify-start space-y-2.5 sm:space-y-3 pt-1.5">
         
         {/* Header */}
         <div className="relative text-left space-y-1 shrink-0 mt-0">
@@ -79,10 +79,10 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
           style={{ paddingTop: '4px' }}
         >
           {/* Pillar 1 */}
-          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_28px_rgba(59,130,246,0.5),0_0_50px_rgba(37,99,235,0.25)] hover:border-blue-400 active:scale-[0.98] ${
             isLight 
-              ? 'bg-white/95 border-zinc-200/80 hover:border-blue-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
-              : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-blue-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+              ? 'bg-white/95 border-zinc-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)]' 
+              : 'bg-zinc-900/60 backdrop-blur-md border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -107,10 +107,10 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
           </div>
 
           {/* Pillar 2 */}
-          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_28px_rgba(244,63,94,0.5),0_0_50px_rgba(225,29,72,0.25)] hover:border-rose-400 active:scale-[0.98] ${
             isLight 
-              ? 'bg-white/95 border-zinc-200/80 hover:border-rose-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
-              : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-rose-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+              ? 'bg-white/95 border-zinc-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)]' 
+              : 'bg-zinc-900/60 backdrop-blur-md border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -135,10 +135,10 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
           </div>
 
           {/* Pillar 3 */}
-          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
+          <div className={`p-3 sm:p-3.5 rounded-2xl border flex flex-col justify-between transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:scale-[1.02] hover:shadow-[0_0_28px_rgba(16,185,129,0.5),0_0_50px_rgba(5,150,105,0.25)] hover:border-emerald-400 active:scale-[0.98] ${
             isLight 
-              ? 'bg-white/95 border-zinc-200/80 hover:border-emerald-300 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-md' 
-              : 'bg-zinc-900/60 backdrop-blur-md border-white/10 hover:border-emerald-500/30 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
+              ? 'bg-white/95 border-zinc-200/80 shadow-[0_2px_12px_rgba(0,0,0,0.03)]' 
+              : 'bg-zinc-900/60 backdrop-blur-md border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]'
           }`}>
             <div>
               <div className="flex items-center justify-between mb-2">

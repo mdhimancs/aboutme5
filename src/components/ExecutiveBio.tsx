@@ -177,56 +177,56 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
           >
              <button
               onClick={() => setActiveBioTab('philosophy')}
-              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap exec-transition cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(59,130,246,0.45)] hover:border-blue-400/60 active:scale-95 active:shadow-[0_0_32px_rgba(56,189,248,0.85)] ${
                 activeBioTab === 'philosophy'
                   ? (isLight 
-                      ? 'bg-white text-zinc-900 shadow-xs border border-zinc-200/80 font-semibold' 
-                      : 'bg-zinc-800 text-white shadow-xs border border-white/15 font-semibold')
+                      ? 'bg-white text-zinc-900 border border-blue-400/40 shadow-[0_0_14px_rgba(59,130,246,0.25)] font-semibold' 
+                      : 'bg-zinc-800 text-white border border-blue-400/40 shadow-[0_0_16px_rgba(59,130,246,0.35)] font-semibold')
                   : (isLight 
-                      ? 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/60' 
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5')
+                      ? 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/60 border border-transparent' 
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent')
               }`}
             >
               Executive Philosophy
             </button>
             <button
               onClick={() => setActiveBioTab('summary')}
-              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap exec-transition cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(59,130,246,0.45)] hover:border-blue-400/60 active:scale-95 active:shadow-[0_0_32px_rgba(56,189,248,0.85)] ${
                 activeBioTab === 'summary'
                   ? (isLight 
-                      ? 'bg-white text-zinc-900 shadow-xs border border-zinc-200/80 font-semibold' 
-                      : 'bg-zinc-800 text-white shadow-xs border border-white/15 font-semibold')
+                      ? 'bg-white text-zinc-900 border border-blue-400/40 shadow-[0_0_14px_rgba(59,130,246,0.25)] font-semibold' 
+                      : 'bg-zinc-800 text-white border border-blue-400/40 shadow-[0_0_16px_rgba(59,130,246,0.35)] font-semibold')
                   : (isLight 
-                      ? 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/60' 
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5')
+                      ? 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/60 border border-transparent' 
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent')
               }`}
             >
               Leadership Pillars
             </button>
             <button
               onClick={() => setActiveBioTab('credentials')}
-              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap exec-transition cursor-pointer ${
+              className={`px-3 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-medium whitespace-nowrap cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(59,130,246,0.45)] hover:border-blue-400/60 active:scale-95 active:shadow-[0_0_32px_rgba(56,189,248,0.85)] ${
                 activeBioTab === 'credentials'
                   ? (isLight 
-                      ? 'bg-white text-zinc-900 shadow-xs border border-zinc-200/80 font-semibold' 
-                      : 'bg-zinc-800 text-white shadow-xs border border-white/15 font-semibold')
+                      ? 'bg-white text-zinc-900 border border-blue-400/40 shadow-[0_0_14px_rgba(59,130,246,0.25)] font-semibold' 
+                      : 'bg-zinc-800 text-white border border-blue-400/40 shadow-[0_0_16px_rgba(59,130,246,0.35)] font-semibold')
                   : (isLight 
-                      ? 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/60' 
-                      : 'text-zinc-400 hover:text-white hover:bg-white/5')
+                      ? 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-200/60 border border-transparent' 
+                      : 'text-zinc-400 hover:text-white hover:bg-white/5 border border-transparent')
               }`}
             >
               Credentials
             </button>
             <button
               onClick={() => setActiveBioTab('video')}
-              className={`px-3.5 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-bold whitespace-nowrap exec-transition cursor-pointer flex items-center gap-1.5 ${
+              className={`px-3.5 py-1.5 rounded-lg text-[11px] sm:text-[12px] font-bold whitespace-nowrap cursor-pointer flex items-center gap-1.5 transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_25px_rgba(56,189,248,0.65)] hover:border-cyan-400 active:scale-95 active:shadow-[0_0_35px_rgba(56,189,248,0.95)] ${
                 activeBioTab === 'video'
                   ? (isLight 
-                      ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 border border-blue-500' 
-                      : 'bg-blue-700 text-white shadow-md shadow-blue-700/30 border border-blue-500')
+                      ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.45)] border border-blue-400' 
+                      : 'bg-blue-700 text-white shadow-[0_0_22px_rgba(59,130,246,0.55)] border border-blue-400')
                   : (isLight 
-                      ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200' 
-                      : 'bg-blue-950/50 text-blue-300 hover:bg-blue-900/55 border border-blue-500/30')
+                      ? 'bg-blue-50 text-blue-700 hover:bg-blue-100 border border-blue-200 shadow-2xs' 
+                      : 'bg-blue-950/50 text-blue-300 hover:bg-blue-900/55 border border-blue-500/30 shadow-2xs')
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-blue-300 animate-pulse" />
@@ -265,9 +265,9 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                             setVideoPrompt(preset.prompt);
                             setVideoMode(preset.type as 'veo' | 'animated');
                           }}
-                          className={`p-2 rounded-xl text-left border text-[11px] font-medium transition-all cursor-pointer ${
+                          className={`p-2 rounded-xl text-left border text-[11px] font-medium transition-all duration-300 cursor-pointer hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(16,185,129,0.55)] hover:border-emerald-400 active:scale-95 active:shadow-[0_0_32px_rgba(52,211,153,0.85)] ${
                             videoPrompt === preset.prompt
-                              ? 'bg-emerald-600 text-white border-emerald-400 shadow-md font-bold'
+                              ? 'bg-emerald-600 text-white border-emerald-400 shadow-[0_0_16px_rgba(16,185,129,0.45)] font-bold'
                               : 'bg-emerald-950/60 text-emerald-300 border-emerald-500/30 hover:bg-emerald-900/60'
                           }`}
                         >
@@ -301,9 +301,9 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                         <button
                           type="button"
                           onClick={() => setVideoMode('veo')}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 cursor-pointer hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(16,185,129,0.6)] hover:border-emerald-400 active:scale-95 active:shadow-[0_0_30px_rgba(52,211,153,0.9)] ${
                             videoMode === 'veo'
-                              ? 'bg-emerald-600 text-white shadow-sm border border-emerald-400'
+                              ? 'bg-emerald-600 text-white shadow-[0_0_16px_rgba(16,185,129,0.5)] border border-emerald-400'
                               : 'bg-emerald-900/40 text-emerald-300 border border-emerald-500/25 hover:bg-emerald-900/70'
                           }`}
                         >
@@ -312,9 +312,9 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                         <button
                           type="button"
                           onClick={() => setVideoMode('animated')}
-                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-300 cursor-pointer hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(6,182,212,0.6)] hover:border-cyan-400 active:scale-95 active:shadow-[0_0_30px_rgba(34,211,238,0.9)] ${
                             videoMode === 'animated'
-                              ? 'bg-cyan-600 text-white shadow-sm border border-cyan-400'
+                              ? 'bg-cyan-600 text-white shadow-[0_0_16px_rgba(6,182,212,0.5)] border border-cyan-400'
                               : 'bg-emerald-900/40 text-emerald-300 border border-emerald-500/25 hover:bg-emerald-900/70'
                           }`}
                         >
@@ -328,7 +328,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                         type="button"
                         disabled={isGeneratingVideo}
                         onClick={handleGenerateVideo}
-                        className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 border border-emerald-400/50 transition-all cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                        className="relative group w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-emerald-600/30 border border-emerald-400/50 transition-all duration-300 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 hover:scale-[1.03] hover:shadow-[0_0_28px_rgba(16,185,129,0.7),0_0_55px_rgba(20,184,166,0.4)] hover:border-emerald-300 active:scale-95 active:shadow-[0_0_40px_rgba(52,211,153,0.95),0_0_75px_rgba(16,185,129,0.7)]"
                       >
                         {isGeneratingVideo ? (
                           <>
@@ -419,9 +419,9 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                                 key={idx}
                                 type="button"
                                 onClick={() => setActiveAnimatedScene(idx)}
-                                className={`w-6 h-6 rounded-md text-[10px] font-mono font-bold transition-all cursor-pointer ${
+                                className={`w-6 h-6 rounded-md text-[10px] font-mono font-bold transition-all duration-300 cursor-pointer hover:scale-110 hover:shadow-[0_0_16px_rgba(6,182,212,0.7)] active:scale-90 active:shadow-[0_0_24px_rgba(34,211,238,0.95)] ${
                                   activeAnimatedScene === idx
-                                    ? 'bg-cyan-500 text-black font-extrabold scale-110 shadow-sm'
+                                    ? 'bg-cyan-500 text-black font-extrabold scale-110 shadow-[0_0_14px_rgba(6,182,212,0.6)]'
                                     : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
                                 }`}
                               >
@@ -434,7 +434,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                             <button
                               type="button"
                               onClick={() => setActiveAnimatedScene((prev) => (prev + 1) % 6)}
-                              className="px-2.5 py-1 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 text-[10px] font-mono hover:bg-cyan-900 cursor-pointer"
+                              className="px-2.5 py-1 rounded bg-cyan-950 border border-cyan-500/40 text-cyan-300 text-[10px] font-mono hover:bg-cyan-900 cursor-pointer transition-all duration-300 hover:scale-105 hover:border-cyan-400 hover:shadow-[0_0_18px_rgba(6,182,212,0.6)] active:scale-95 active:shadow-[0_0_28px_rgba(34,211,238,0.9)]"
                             >
                               Next Scene ➔
                             </button>
@@ -475,7 +475,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                                 setVideoUrl('/videos/executive-preview.mp4');
                                 setVideoError(null);
                               }}
-                              className="px-3 py-1 rounded bg-emerald-600 text-white text-[11px] font-mono hover:bg-emerald-500 cursor-pointer"
+                              className="px-3 py-1 rounded bg-emerald-600 text-white text-[11px] font-mono hover:bg-emerald-500 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.7)] active:scale-95 active:shadow-[0_0_30px_rgba(52,211,153,0.9)]"
                             >
                               Reload Local Stream
                             </button>

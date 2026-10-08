@@ -268,15 +268,28 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
             {CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat.id;
               const config = cat.id !== 'all' ? getCategoryConfig(cat.id) : null;
+              
+              const getSelectedStyle = () => {
+                if (theme === 'emerald-matrix') {
+                  return 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white shadow-md shadow-emerald-600/40 ring-1 ring-emerald-400 font-bold';
+                }
+                if (theme === 'obsidian') {
+                  return 'bg-gradient-to-r from-purple-600 to-indigo-700 text-white shadow-md shadow-purple-600/40 ring-1 ring-purple-400 font-bold';
+                }
+                if (theme === 'terminal') {
+                  return 'bg-[#00ff66] text-black shadow-md shadow-[#00ff66]/50 ring-1 ring-[#00ff66] font-bold';
+                }
+                // Default & Sapphire Blue
+                return 'bg-gradient-to-r from-[#0f52ba] to-[#1d4ed8] text-white shadow-md shadow-[#0f52ba]/45 ring-1 ring-sky-400/70 font-bold hover:shadow-[0_0_18px_rgba(15,82,186,0.6)]';
+              };
+
               return (
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[9px] font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                  className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[9px] font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95 ${
                     isSelected
-                      ? isLight
-                        ? 'bg-zinc-600 text-white shadow-sm shadow-zinc-500/25 ring-1 ring-zinc-500'
-                        : 'bg-zinc-700 text-white shadow-[0_0_16px_rgba(113,113,122,0.35)] ring-1 ring-zinc-500/40'
+                      ? getSelectedStyle()
                       : isLight
                         ? 'bg-zinc-200 text-zinc-700 hover:bg-zinc-300 hover:text-zinc-950 border border-zinc-300/60'
                         : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white border border-zinc-700'
