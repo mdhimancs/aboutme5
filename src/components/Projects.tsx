@@ -13,14 +13,8 @@ import {
   GitMerge, 
   CheckCircle,
   KeyRound,
-  Search,
-  LayoutGrid,
-  Columns2,
-  Table as TableIcon,
-  X,
   Layers,
-  ChevronRight,
-  SlidersHorizontal
+  ChevronRight
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { EXECUTIVE_CASE_STUDIES } from '../data/caseStudiesData';
@@ -184,6 +178,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
   return (
     <section 
       id="projects" 
+      style={{ fontSize: '8px' }}
       className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t transition-colors ${
         isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
@@ -268,7 +263,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
             ref={scrollRef}
             onMouseMove={onMouseMove}
             onMouseLeave={onMouseLeave}
-            className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none flex-1 select-none"
+            className="flex items-center gap-1 overflow-x-auto pb-1 md:pb-0 scrollbar-none flex-1 select-none"
           >
             {CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat.id;
@@ -277,7 +272,7 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                  className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[9px] font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer ${
                     isSelected
                       ? isLight
                         ? 'bg-zinc-600 text-white shadow-sm shadow-zinc-500/25 ring-1 ring-zinc-500'
@@ -293,106 +288,29 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
               );
             })}
           </div>
-
-          {/* Right Controls: Search Input & View Switcher */}
-          <div className="flex items-center gap-2 shrink-0">
-            {/* Search Input */}
-            <div className={`relative flex items-center rounded-xl border transition-all ${
-              isLight 
-                ? 'bg-white border-zinc-300 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20' 
-                : 'bg-zinc-950/80 border-white/15 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20'
-            }`}>
-              <Search className="w-3.5 h-3.5 text-zinc-400 ml-2.5 pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search program, tech, SOX..."
-                className="w-36 sm:w-48 py-1.5 pl-2 pr-7 text-xs bg-transparent outline-none placeholder:text-zinc-500"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2 text-zinc-400 hover:text-zinc-200"
-                >
-                  <X className="w-3 h-3" />
-                </button>
-              )}
-            </div>
-
-            {/* View Mode Toggle */}
-            <div className={`inline-flex items-center p-0.5 rounded-xl border ${
-              isLight ? 'bg-zinc-100 border-zinc-200' : 'bg-white/5 border-white/10'
-            }`}>
-              <button
-                onClick={() => setViewMode('slider')}
-                className={`p-1.5 rounded-lg text-xs transition-all ${
-                  viewMode === 'slider'
-                    ? isLight ? 'bg-white text-blue-600 shadow-xs' : 'bg-white/15 text-white shadow-xs'
-                    : isLight ? 'text-zinc-600 hover:text-zinc-950' : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Slider View (Interactive Carousel)"
-              >
-                <SlidersHorizontal className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={() => setViewMode('dossiers')}
-                className={`p-1.5 rounded-lg text-xs transition-all ${
-                  viewMode === 'dossiers'
-                    ? isLight ? 'bg-white text-blue-600 shadow-xs' : 'bg-white/15 text-white shadow-xs'
-                    : isLight ? 'text-zinc-600 hover:text-zinc-950' : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Dossier View (Spacious & Detailed)"
-              >
-                <Columns2 className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`p-1.5 rounded-lg text-xs transition-all ${
-                  viewMode === 'grid'
-                    ? isLight ? 'bg-white text-blue-600 shadow-xs' : 'bg-white/15 text-white shadow-xs'
-                    : isLight ? 'text-zinc-600 hover:text-zinc-950' : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Grid View (3-Column)"
-              >
-                <LayoutGrid className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={() => setViewMode('matrix')}
-                className={`p-1.5 rounded-lg text-xs transition-all ${
-                  viewMode === 'matrix'
-                    ? isLight ? 'bg-white text-blue-600 shadow-xs' : 'bg-white/15 text-white shadow-xs'
-                    : isLight ? 'text-zinc-600 hover:text-zinc-950' : 'text-zinc-400 hover:text-white'
-                }`}
-                title="Board Matrix View (Comparison Table)"
-              >
-                <TableIcon className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
         </div>
 
-        {/* Search / Active Filter Indicator */}
-        {(searchQuery || selectedCategory !== 'all') && (
+        {/* Active Filter Indicator */}
+        {selectedCategory !== 'all' && (
           <div className="flex items-center justify-between text-xs text-zinc-500 pt-0.5">
             <span>
               Showing {filteredCaseStudies.length} of {EXECUTIVE_CASE_STUDIES.length} defense programs
-              {searchQuery && <span> matching &ldquo;<span className="text-blue-500 font-semibold">{searchQuery}</span>&rdquo;</span>}
             </span>
-            {(searchQuery || selectedCategory !== 'all') && (
-              <button 
-                onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
-                className="text-blue-500 hover:underline text-xs font-semibold"
-              >
-                Reset Filters
-              </button>
-            )}
+            <button 
+              onClick={() => setSelectedCategory('all')}
+              className="text-blue-500 hover:underline text-xs font-semibold cursor-pointer"
+            >
+              Reset Filters
+            </button>
           </div>
         )}
       </div>
 
       {/* Main Content Area: Slider, Dossiers, Grid, or Board Matrix */}
-      <div className="mt-[5pt] flex-1 min-h-0">
+      <div 
+        style={{ marginTop: '6.66667px', paddingTop: '0px', marginLeft: '-64px', width: '1155.02px', height: '437.971px' }}
+        className="mt-[5pt] flex-1 min-h-0 overflow-x-hidden max-w-full"
+      >
         {viewMode === 'slider' ? (
         <CaseStudySlider
           caseStudies={filteredCaseStudies}
@@ -490,7 +408,9 @@ export const Projects: React.FC<ProjectsProps> = ({ theme = 'apple-dark' }) => {
         </div>
       ) : (
         /* Card Grids: 2-Column Dossiers (Default) or 3-Column Grid */
-        <div className={`grid gap-4 sm:gap-5 pb-6 ${
+        <div 
+          style={{ width: '1223.02px' }}
+          className={`grid gap-4 sm:gap-5 pb-6 ${
           viewMode === 'dossiers' 
             ? 'grid-cols-1 lg:grid-cols-2' 
             : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'

@@ -110,31 +110,40 @@ export const CoreCompetencies: React.FC<CoreCompetenciesProps> = ({ theme = 'app
           return (
             <div
               key={idx}
-              className="rounded-2xl backdrop-blur-xl transition-all group flex flex-col justify-between h-full border border-emerald-500/30 bg-gradient-to-br from-emerald-950 via-[#042616] to-emerald-950 shadow-xl hover:border-emerald-400/60 hover:shadow-2xl overflow-hidden interactive-card"
+              className="rounded-2xl backdrop-blur-xl transition-all group flex flex-col justify-between h-full relative overflow-hidden interactive-card border border-emerald-500/70 shadow-[0_4px_20px_rgba(16,185,129,0.18)] ring-1 ring-emerald-500/40 bg-gradient-to-r from-emerald-950 via-[#031d11] to-[#010a05] hover:border-emerald-400 hover:shadow-[0_8px_28px_rgba(16,185,129,0.25)]"
             >
-                {/* Card Header with Veo 3 Style High-Tech Aesthetics - More Compact */}
-                <div className="flex flex-wrap items-center justify-between gap-1.5 border-b border-emerald-500/20 pb-1.5 mb-1.5 p-2 sm:p-2.5">
-                  <div className="flex items-center gap-1.5 text-[9px] sm:text-[11px] font-bold tracking-widest uppercase text-emerald-300">
-                    <div className="p-0.5 sm:p-1 rounded-md border border-emerald-500/40 bg-emerald-950/80 shrink-0 group-hover:scale-110 transition-transform shadow-inner">
+              {/* Luminous Top Accent Line */}
+              <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-500 via-emerald-700 to-emerald-950 opacity-90 z-10" />
+
+              {/* Upper Section with Subtle Deep Tint Flow */}
+              <div className="relative flex-1 flex flex-col overflow-hidden bg-gradient-to-r from-emerald-600/12 via-emerald-800/06 to-transparent">
+                {/* Subtle Ambient Glow on Left */}
+                <div className="absolute top-0 left-0 w-2/3 h-full bg-gradient-to-r from-emerald-500/12 via-emerald-700/05 to-transparent pointer-events-none" />
+
+                {/* Card Header: Darkened Emerald on Left, Deep on Right */}
+                <div className="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 mb-1.5 p-2 sm:p-2.5 relative z-1 border-b border-emerald-500/35 bg-gradient-to-r from-emerald-950/95 via-[#032013] to-[#010905] text-white shadow-xs">
+                  <div className="flex items-center gap-1.5 text-[9px] sm:text-[11px] font-bold tracking-widest uppercase text-emerald-200">
+                    <div className="p-0.5 sm:p-1 rounded-md border shrink-0 group-hover:scale-110 transition-transform shadow-inner border-emerald-500/50 bg-emerald-950 text-emerald-300 shadow-[0_0_8px_rgba(16,185,129,0.2)]">
                       {getIcon(cat.iconName)}
                     </div>
                     <span className="truncate max-w-[140px] sm:max-w-none">{cat.title}</span>
                   </div>
-                  <div className="px-1.5 py-0.5 rounded-full text-[8.5px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm flex items-center gap-1">
-                    <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                  <div className="px-1.5 py-0.5 rounded-full text-[8.5px] font-mono border shadow-sm flex items-center gap-1 bg-emerald-950/90 text-emerald-300 border-emerald-700/50 shadow-[0_0_6px_rgba(16,185,129,0.15)]">
+                    <span className="w-1 h-1 rounded-full animate-pulse shrink-0 bg-emerald-400 shadow-[0_0_4px_rgba(52,211,153,0.7)]" />
                     <span>P.0{idx + 1}</span>
                   </div>
                 </div>
 
-                <div className="px-2.5 sm:px-3 pb-2 sm:pb-2.5 text-zinc-100 flex-1">
+                <div className="px-2.5 sm:px-3 pb-2 sm:pb-2.5 text-zinc-100 flex-1 relative z-1">
                   {/* Description with 1-point reduced font and word wrap */}
-                  <p className="text-[9.5px] sm:text-[10px] leading-snug break-words whitespace-normal text-emerald-100/60 font-medium italic">
+                  <p className="text-[9.5px] sm:text-[10px] leading-snug break-words whitespace-normal font-medium italic text-emerald-200/75">
                     {cat.description}
                   </p>
                 </div>
+              </div>
  
               {/* Skills List - Light Colored Below Part with increased font */}
-              <div className="space-y-2 p-3.5 sm:p-4 bg-zinc-50/95 text-zinc-900 border-t border-emerald-500/25 rounded-b-2xl shadow-inner">
+              <div className="space-y-2 p-3.5 sm:p-4 text-zinc-900 border-t rounded-b-2xl shadow-inner bg-zinc-100/95 border-emerald-500/30">
                 {sortedSkills.map((skill, sIdx) => (
                   <div key={sIdx} className="flex items-center justify-between gap-2.5 text-xs py-0.5">
                     <div className="flex items-center gap-2 flex-1 min-w-0 pr-1">

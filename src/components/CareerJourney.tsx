@@ -12,11 +12,15 @@ interface CareerJourneyProps {
 export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dark' }) => {
   const isLight = theme === 'apple-light';
   const [selectedFilter, setSelectedFilter] = useState<string>('All');
-  const [expandedId, setExpandedId] = useState<string | null>(CAREER_MILESTONES[0]?.id || null);
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const listContainerRef = useRef<HTMLDivElement>(null);
   const { scrollRef: careerScrollRef, onMouseMove: careerOnMouseMove, onMouseLeave: careerOnMouseLeave } = useHoverScroll();
 
   const getMilestoneYear = (period: string) => {
+    if (period.toLowerCase().includes('current') || period.toLowerCase().includes('present')) {
+      const match = period.match(/\d{4}/);
+      return match ? `${match[0]}–Current` : period;
+    }
     const years = period.match(/\d{4}/g);
     if (!years) return '';
     if (years.length === 1) return years[0];
@@ -24,6 +28,19 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
   };
 
   const careerGroups = [
+    {
+      company: 'Confidential',
+      period: 'Dec 2025 — Current',
+      roles: [
+        {
+          value: 'ga-confidential-director',
+          role: 'Principal Cybersecurity Architect | Director',
+          years: '2025–Current',
+          shortLabel: 'Principal Architect | Director',
+          milestoneId: 'ga-confidential-director'
+        }
+      ]
+    },
     {
       company: 'Goldman Sachs',
       period: '2011–2025 · 14 Yrs',
@@ -59,19 +76,6 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       ]
     },
     {
-      company: 'Global Analytics (GA) / Confidential',
-      period: '2013–2014 · 2 Yrs',
-      roles: [
-        {
-          value: 'ga-confidential-director-v2',
-          role: 'Director of Architecture & Confidential Analytics',
-          years: '2013–2014',
-          shortLabel: 'Director / GA Confidential',
-          milestoneId: 'ga-confidential-director-v2'
-        }
-      ]
-    },
-    {
       company: 'Computer Associates (Broadcom)',
       period: '2009–2011 · 2 Yrs',
       roles: [
@@ -100,7 +104,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
   ];
 
   const flatRoleOptions = [
-    { value: 'All', shortLabel: 'All Roles', role: 'All Roles (2005–2025)', years: '2005–2025', milestoneId: 'gs-svp' },
+    { value: 'All', shortLabel: 'All Roles', role: 'All Roles (2005–Current)', years: '2005–Current', milestoneId: '' },
     ...careerGroups.flatMap(g => g.roles)
   ];
 
@@ -108,8 +112,12 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
 
   const handleFilterChange = (filterVal: string) => {
     setSelectedFilter(filterVal);
+    if (filterVal === 'All') {
+      setExpandedId(null);
+      return;
+    }
     const targetOption = flatRoleOptions.find(o => o.value === filterVal);
-    const targetId = targetOption ? targetOption.milestoneId : (filterVal === 'All' ? 'gs-svp' : filterVal);
+    const targetId = targetOption ? targetOption.milestoneId : filterVal;
 
     if (targetId) {
       setExpandedId(targetId);
@@ -135,7 +143,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
       return (
         <span className="inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md bg-indigo-950/90 text-indigo-300 border border-indigo-500/40 shadow-xs">
           <Building2 className="w-3 h-3 text-indigo-400 shrink-0" />
-          <span>GA Confidential / Director</span>
+          <span>Confidential</span>
         </span>
       );
     }
@@ -328,25 +336,12 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                     onClick={() => {
                       setExpandedId(isExpanded ? null : milestone.id);
                     }}
-                    className={`relative border rounded-xl backdrop-blur-xl transition-all duration-200 cursor-pointer interactive-card overflow-hidden ${
-                      idx === 0
-                        ? 'border-emerald-400/90 shadow-[0_4px_20px_rgba(16,185,129,0.22)] ring-1 ring-emerald-400/50'
-                        : isExpanded
-                          ? 'border-emerald-500 shadow-md ring-1 ring-emerald-500/30'
-                          : 'border-emerald-500/40 hover:border-emerald-400/60 shadow-sm'
+                    className={`relative border rounded-xl backdrop-blur-xl transition-all duration-200 cursor-pointer interactive-card overflow-hidden border-emerald-400/90 shadow-[0_4px_20px_rgba(16,185,129,0.22)] ring-1 ring-emerald-400/50 hover:border-emerald-300 ${
+                      isExpanded ? 'shadow-[0_4px_24px_rgba(16,185,129,0.28)] ring-emerald-400/60' : ''
                     }`}
                   >
-                    {/* Luminous Top Accent Line for 1st Milestone */}
-                    {idx === 0 && (
-                      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 opacity-100 z-10" />
-                    )}
-
-                    {/* Top Heading Section - Rich Apparent Executive Emerald Tint for First Milestone */}
-                    <div className={`p-3 sm:p-3.5 ${
-                      idx === 0 
-                        ? 'bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white shadow-md border-b border-emerald-400/60 pt-4' 
-                        : 'bg-gradient-to-br from-zinc-950 via-[#042114] to-zinc-950 text-zinc-100'
-                    }`}>
+                    {/* Top Heading Section */}
+                    <div className="p-3 sm:p-3.5 bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white shadow-md border-b border-emerald-400/60">
                       <div className="flex flex-col gap-1.5">
                         <div className="min-w-0 w-full">
                           {/* Company Badge with Elevated Visual Aesthetic */}
@@ -354,16 +349,14 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                             {renderCompanyBadge(milestone.company)}
 
                             {/* Location and Date Range Row */}
-                            <div className={`text-[11px] font-medium flex items-center gap-1.5 ${
-                              idx === 0 ? 'text-emerald-100 font-semibold' : 'text-emerald-200/80'
-                            }`}>
+                            <div className="text-[11px] font-semibold flex items-center gap-1.5 text-emerald-100">
                               <span className="inline-flex items-center gap-0.5">
-                                <MapPin className={`w-2.5 h-2.5 shrink-0 ${idx === 0 ? 'text-emerald-300' : 'text-emerald-400'}`} />
+                                <MapPin className="w-2.5 h-2.5 shrink-0 text-emerald-300" />
                                 <span>{milestone.location}</span>
                               </span>
                               <span className="opacity-40 text-emerald-300">|</span>
                               <span className="inline-flex items-center gap-0.5">
-                                <Calendar className={`w-2.5 h-2.5 shrink-0 ${idx === 0 ? 'text-emerald-300' : 'text-emerald-400'}`} />
+                                <Calendar className="w-2.5 h-2.5 shrink-0 text-emerald-300" />
                                 <span>{milestone.period}</span>
                               </span>
                             </div>
@@ -374,30 +367,12 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                             {milestone.role}
                           </h3>
                         </div>
-
-                        {/* Category Highlight Tags as Clean Typographic Text */}
-                        <div className={`flex flex-wrap items-center justify-start gap-1.5 w-full text-[10px] font-mono ${
-                          idx === 0 ? 'text-emerald-200 font-bold' : 'text-emerald-300'
-                        }`}>
-                          {milestone.category.split(',').map((catTag, cIdx) => (
-                            <React.Fragment key={cIdx}>
-                              {cIdx > 0 && <span className="opacity-40" aria-hidden="true">·</span>}
-                              <span className={idx === 0 ? 'bg-emerald-500/20 px-1.5 py-0.5 rounded border border-emerald-400/40 text-emerald-200' : ''}>
-                                {catTag.trim()}
-                              </span>
-                            </React.Fragment>
-                          ))}
-                        </div>
                       </div>
                     </div>
 
-                    {/* Bottom Content Compartment - Apparent Emerald Tint for First Milestone */}
-                    <div className={`p-3 sm:p-3.5 text-zinc-900 border-t rounded-b-xl shadow-inner ${
-                      idx === 0 
-                        ? 'bg-emerald-50/85 border-emerald-400/60' 
-                        : 'bg-zinc-50/95 border-emerald-500/25'
-                    }`}>
-                      {/* Key Achievements (Highlights) */}
+                    {/* Bottom Content Compartment - Apparent Emerald Tint */}
+                    <div className="p-3 sm:p-3.5 text-zinc-900 border-t rounded-b-xl shadow-inner bg-emerald-50/85 border-emerald-400/60">
+                      {/* Key Achievements */}
                       <div className="mb-2">
                         <ul className="space-y-1">
                           {milestone.achievements.map((ach, i) => (
@@ -472,7 +447,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
                 </h4>
               </div>
               <span className={`text-[10px] font-mono font-medium ${isLight ? 'text-zinc-500' : 'text-zinc-400'}`}>
-                2005–2025
+                2005–Current
               </span>
             </div>
 
@@ -501,7 +476,7 @@ export const CareerJourney: React.FC<CareerJourneyProps> = ({ theme = 'apple-dar
 
               {/* Grouped Companies and Roles */}
               {careerGroups.map((group) => (
-                <div key={group.company} className="space-y-0.5 pt-0.5">
+                <div key={`${group.company}-${group.period}`} className="space-y-0.5 pt-0.5">
                   {/* Company Header */}
                   <div className={`flex items-center justify-between px-2 py-0.5 text-[11.5px] font-bold border-t ${
                     isLight ? 'border-zinc-100 text-zinc-900' : 'border-white/5 text-zinc-100'

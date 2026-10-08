@@ -615,7 +615,7 @@ export const Archive: React.FC<ArchiveProps> = ({
           <div className="relative w-full">
             <div className="overflow-y-auto min-h-0 max-h-[380px] sm:max-h-[410px] lg:max-h-[430px] pr-1 pb-5 space-y-2.5 scrollbar-thin animate-in fade-in duration-300" style={{ marginLeft: '-36px', paddingLeft: '0px' }}>
               {/* Blueprints Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 w-full" style={{ width: '1204.93px', marginLeft: '32px' }}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-[90%] ml-6">
                 {EXECUTIVE_BLUEPRINTS.map((bp) => {
                   const locked = isItemLocked(bp.id, 'archive');
                   const hasSpecificClearance = currentUserEntry?.scope === 'specific' && currentUserEntry.allowedItems?.includes(bp.id);
@@ -630,7 +630,7 @@ export const Archive: React.FC<ArchiveProps> = ({
                           trackAssetInteraction(bp.id, bp.title, 'Executive Blueprint');
                         });
                       }}
-                      className={`p-3.5 rounded-2xl border flex flex-col justify-between transition-all cursor-pointer hover:border-blue-500/40 ${
+                      className={`p-4 rounded-2xl border flex flex-col justify-between transition-all cursor-pointer hover:border-blue-500/40 ${
                         isLight 
                           ? 'bg-white border-zinc-200 shadow-xs hover:shadow-md' 
                           : 'bg-white/[0.02] border-white/10 hover:bg-white/[0.04]'

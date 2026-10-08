@@ -144,7 +144,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenContact, onExploreBlog, theme 
         />
 
         {/* Main Headline */}
-        <div className="relative space-y-[7px] max-w-5xl mx-auto -translate-y-[4%]">
+        <div className="relative space-y-[7px] max-w-5xl mx-auto">
           <h1 
             className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.14] transition-all ${
               isLight 

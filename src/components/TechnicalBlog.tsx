@@ -165,11 +165,6 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
                 Featured Briefings
               </h3>
             </div>
-            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
-              isLight ? 'bg-blue-50 border-blue-200 text-blue-700' : 'bg-blue-950/40 border-blue-800/40 text-blue-300'
-            }`}>
-              {executiveFlagshipPosts.length} Briefings
-            </span>
           </div>
 
           <div className="space-y-3 overflow-y-auto flex-1 pr-1.5 scrollbar-thin max-h-[calc(100vh-250px)]">
@@ -211,31 +206,6 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
                             <KeyRound className="w-2.5 h-2.5 text-purple-400" />
                             <span>Clearance Granted</span>
                           </span>
-                        )}
-                        {locked && !hasSpecificClearance && (
-                          <span 
-                            className={`inline-flex items-center justify-center p-1 rounded border ${
-                              isLight 
-                                ? 'bg-amber-50 border-amber-200 text-amber-700' 
-                                : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                            }`}
-                            title="Locked - Request Access"
-                          >
-                            <Lock className="w-3 h-3 text-amber-500" />
-                          </span>
-                        )}
-                        {isAdmin && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleItemLock(post.id, 'publications');
-                            }}
-                            className="p-1 rounded bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors cursor-pointer"
-                            title={locked ? 'Unlock this whitepaper' : 'Lock this whitepaper'}
-                          >
-                            {locked ? <Lock className="w-2.5 h-2.5 text-amber-400" /> : <Unlock className="w-2.5 h-2.5 text-emerald-400" />}
-                          </button>
                         )}
                       </div>
                       <span className="text-[10px] text-zinc-500 font-mono">
@@ -289,15 +259,10 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
                 All Publications
               </h3>
             </div>
-            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
-              isLight ? 'bg-zinc-100 border-zinc-200 text-zinc-700' : 'bg-white/5 border-white/10 text-zinc-300'
-            }`}>
-              {filteredPosts.length} of {BLOG_POSTS.length} Articles
-            </span>
           </div>
 
           {/* Controls Bar: Category Filter Pills */}
-          <div className="shrink-0 mb-2">
+          <div style={{ width: '755.358px' }} className="shrink-0 mb-2">
             <div 
               ref={scrollRef}
               onMouseMove={onMouseMove}
@@ -308,7 +273,7 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-2.5 py-1 rounded-full text-[9px] font-medium whitespace-nowrap transition-all cursor-pointer ${
+                  className={`px-1.5 py-0.5 rounded-lg text-[8px] font-medium whitespace-nowrap transition-all cursor-pointer ${
                     selectedCategory === cat.id
                       ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20 font-bold'
                       : isLight
@@ -333,7 +298,10 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
           </div>
 
           {/* Scrollable Timeline Publications with Word Wrap */}
-          <div className="flex-1 overflow-y-auto pr-1.5 scrollbar-thin max-h-[calc(100vh-270px)] relative">
+          <div 
+            style={{ width: '750.274px', paddingRight: '2px' }}
+            className="flex-1 overflow-y-auto pr-1.5 scrollbar-thin max-h-[calc(100vh-270px)] relative"
+          >
             <div className="w-full space-y-4">
               {Array.from(new Set(filteredPosts.map(p => new Date(p.date).getFullYear()))).sort((a, b) => b - a).map(year => (
                 <div key={year} className="relative pb-3">
@@ -404,31 +372,6 @@ export const TechnicalBlog: React.FC<TechnicalBlogProps> = ({ theme = 'apple-lig
                                     <KeyRound className="w-2.5 h-2.5 text-purple-400" />
                                     <span>Clearance Granted</span>
                                   </span>
-                                )}
-                                {locked && !hasSpecificClearance && (
-                                  <span 
-                                    className={`inline-flex items-center justify-center p-1 rounded border shrink-0 mt-0.5 ${
-                                      isLight 
-                                        ? 'bg-amber-50 border-amber-200 text-amber-700' 
-                                        : 'bg-amber-500/10 border-amber-500/20 text-amber-400'
-                                    }`}
-                                    title="Locked - Request Access"
-                                  >
-                                    <Lock className="w-3 h-3 text-amber-500" />
-                                  </span>
-                                )}
-                                {isAdmin && (
-                                  <button
-                                    type="button"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      toggleItemLock(post.id, 'publications');
-                                    }}
-                                    className="p-1 rounded bg-white/10 hover:bg-white/20 text-zinc-300 hover:text-white transition-colors cursor-pointer shrink-0 mt-0.5"
-                                    title={locked ? 'Unlock this whitepaper' : 'Lock this whitepaper'}
-                                  >
-                                    {locked ? <Lock className="w-2.5 h-2.5 text-amber-400" /> : <Unlock className="w-2.5 h-2.5 text-emerald-400" />}
-                                  </button>
                                 )}
                                 <h4 className={`text-xs sm:text-[13.5px] font-bold transition-colors break-words whitespace-normal leading-snug flex-1 min-w-0 ${isLight ? 'text-zinc-900 group-hover:text-blue-600' : 'text-white group-hover:text-blue-400'}`}>
                                   {post.title}

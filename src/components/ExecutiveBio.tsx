@@ -46,12 +46,6 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
       prompt: 'Stylized 3D vector animation representing the 6 Executive Security Philosophy Axioms: Identity Perimeter, Defense-in-Depth, Continuous Verification, Defensive AI, Developer Guardrails, and Post-Quantum Cryptographic Agility. Glowing motion graphics grid, isometric vector animation, smooth 60fps.'
     },
     {
-      id: 'cinematic-ciso',
-      label: 'Cinematic Glass Boardroom Keynote',
-      type: 'veo',
-      prompt: 'Professional 8k cinematic video of Munish Dhiman delivering an Executive Security Philosophy keynote in a modern glass boardroom, dynamic 3D holographic threat intelligence grid.'
-    },
-    {
       id: 'pqc-zero-trust',
       label: 'Animated Post-Quantum & Zero-Trust Explainer',
       type: 'animated',
@@ -236,7 +230,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               }`}
             >
               <Sparkles className="w-3.5 h-3.5 text-blue-300 animate-pulse" />
-              <span>🎬 Veo 3 Video Gen</span>
+              <span>🎬 Video (experimental)</span>
             </button>
           </div>
         </div>
@@ -248,11 +242,11 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-500/20 pb-3">
                 <div className="flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide uppercase text-emerald-300">
                   <Cpu className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <span>Veo 3.1 Fast-Generate Preview — Executive Video Studio</span>
+                  <span>Executive Video Studio</span>
                 </div>
                 <div className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  veo-3.1-fast-generate-preview • 5s Cinematic
+                  5s Cinematic
                 </div>
               </div>
 
@@ -491,7 +485,7 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                     )}
                   </div>
                   <span className="text-[10px] font-mono text-emerald-400/70">
-                    {videoMode === 'animated' ? 'Mode: Interactive Vector Motion Graphics' : `Model: veo-3.1-lite-generate-preview • Aspect Ratio: ${videoAspectRatio}`}
+                    {videoMode === 'animated' ? '' : `Model: veo-3.1-lite-generate-preview • Aspect Ratio: ${videoAspectRatio}`}
                   </span>
                 </div>
               </div>

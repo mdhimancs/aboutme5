@@ -99,22 +99,22 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 export const CAREER_MILESTONES: CareerMilestone[] = [
   {
     id: "ga-confidential-director",
-    role: "Director of Architecture & Confidential Global Analytics Solutions",
-    company: "Global Analytics (GA) / Confidential",
+    role: "Principal Cybersecurity Architect - IAM, AuthN, AuthZ, PQC | Director",
+    company: "Confidential",
     location: "Bengaluru, India",
-    period: "Jan 2013 — Dec 2014",
-    category: "Director & Analytics",
-    summary: "Directed enterprise analytics architecture, data security enclaves, and confidential global analytics solutions for financial services and digital platforms.",
+    period: "Dec 2025 — Current",
+    category: "",
+    summary: "Directing enterprise identity architecture, authentication protocols, digital trust frameworks, data security enclaves, and confidential global analytics platforms.",
     achievements: [
-      "Directed cross-functional engineering and analytics teams building secure, high-throughput data processing pipelines and confidential enterprise platforms.",
-      "Established rigorous data privacy, encryption-at-rest/in-transit, and access governance frameworks adhering to international financial regulations.",
-      "Architected scalable distributed storage and real-time analytics engines with strict role-based and attribute-based access controls."
+      "Directing cross-functional engineering and security architecture teams building high-throughput identity, authentication, and digital trust platforms.",
+      "Establishing quantum-resistant cryptographic agility, zero-trust access governance, and privacy-preserving data enclaves adhering to global financial regulations.",
+      "Architecting distributed zero-standing privilege (ZSP) and continuous verification frameworks across multi-cloud enterprise ecosystems."
     ],
-    technologies: ["Big Data Security", "Confidential Computing", "Enterprise Architecture", "Distributed Systems", "Analytics", "Risk Governance"]
+    technologies: ["Identity & Auth", "Digital Trust", "Confidential Computing", "Zero Trust IAM", "OAuth 2.0 / OIDC", "PKI & Cryptography"]
   },
   {
     id: "gs-svp",
-    role: "Principal Cybersecurity & IAM Architect - IAM, Digital Security, Directory Entitlements | Sr. Vice President",
+    role: "Principal Cybersecurity Architect - IAM, Digital Security, Directory | Senior Vice President",
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Nov 2020 — Dec 2025",
@@ -135,7 +135,7 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
   },
   {
     id: "gs-vp",
-    role: "Lead Cybersecurity & IAM Architect | Vice President",
+    role: "lead Cybersecurity & IAM Architect - IAM, Cloud, Networks, DLP | Vice President",
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Jan 2016 — Nov 2020",
@@ -151,7 +151,7 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
   },
   {
     id: "gs-sr-assoc",
-    role: "Senior Associate",
+    role: "Sr. Staff Architect - IAM, PKI, DNS, External DNS, Web Proxies, WAFs | Senior Tech. Associate",
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Jan 2014 — Dec 2015",
@@ -165,23 +165,8 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
     technologies: ["SSO", "SAML", "Active Directory", "LDAP", "Kerberos", "Java", "Linux", "Perl / Shell"]
   },
   {
-    id: "ga-confidential-director-v2",
-    role: "Director of Architecture & Confidential Global Analytics Solutions",
-    company: "Global Analytics (GA) / Confidential",
-    location: "Bengaluru, India",
-    period: "Jan 2013 — Dec 2014",
-    category: "Director & Analytics",
-    summary: "Directed enterprise analytics architecture, data security enclaves, and confidential global analytics solutions for financial services and digital platforms.",
-    achievements: [
-      "Directed cross-functional engineering and analytics teams building secure, high-throughput data processing pipelines and confidential enterprise platforms.",
-      "Established rigorous data privacy, encryption-at-rest/in-transit, and access governance frameworks adhering to international financial regulations.",
-      "Architected scalable distributed storage and real-time analytics engines with strict role-based and attribute-based access controls."
-    ],
-    technologies: ["Big Data Security", "Confidential Computing", "Enterprise Architecture", "Distributed Systems", "Analytics", "Risk Governance"]
-  },
-  {
     id: "gs-tech-analyst",
-    role: "Senior Technology Analyst / Associate",
+    role: "Staff Architect - IAM, PKI, DNS, AutoProxy, WAFs | Tech. Analyst/Associate",
     company: "Goldman Sachs",
     location: "Bengaluru, India",
     period: "Oct 2011 — Dec 2013",
@@ -196,7 +181,7 @@ export const CAREER_MILESTONES: CareerMilestone[] = [
   },
   {
     id: "ca-tech-sol",
-    role: "Technical Solutions Engineer",
+    role: "Technical Solutions Engineer - IAM, SSO, Directory - Secure Configurations, Incident Response, VP/PT",
     company: "Computer Associates",
     location: "Bengaluru, India",
     period: "Jul 2009 — Oct 2011",

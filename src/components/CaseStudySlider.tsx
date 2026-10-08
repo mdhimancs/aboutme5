@@ -61,13 +61,32 @@ export const CaseStudySlider: React.FC<CaseStudySliderProps> = ({
     setCurrentIndex(index);
     isScrollingRef.current = true;
 
-    const el = document.getElementById(`case-study-slide-${index}`);
-    if (el && containerRef.current) {
-      el.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const slide = document.getElementById(`case-study-slide-${index}`);
+      if (slide) {
+        const containerWidth = container.clientWidth;
+        const maxScroll = Math.max(0, container.scrollWidth - containerWidth);
+
+        let targetLeft: number;
+        if (index === 0) {
+          targetLeft = 0;
+        } else if (index >= caseStudies.length - 1) {
+          // Firmly lock to max scroll position so the frame never shifts past the last card
+          targetLeft = maxScroll;
+        } else {
+          // Center the active card cleanly within containerRef without touching parent scroll
+          const slideLeft = slide.offsetLeft;
+          const slideWidth = slide.offsetWidth;
+          targetLeft = slideLeft - (containerWidth - slideWidth) / 2;
+        }
+
+        const clampedScrollLeft = Math.max(0, Math.min(targetLeft, maxScroll));
+        container.scrollTo({
+          left: clampedScrollLeft,
+          behavior: 'smooth'
+        });
+      }
     }
 
     setTimeout(() => {
@@ -93,7 +112,24 @@ export const CaseStudySlider: React.FC<CaseStudySliderProps> = ({
     const container = containerRef.current;
     const scrollLeft = container.scrollLeft;
     const containerWidth = container.clientWidth;
+    const maxScroll = Math.max(0, container.scrollWidth - containerWidth);
     
+    // If at or near the very end, lock to the last card cleanly
+    if (maxScroll > 0 && scrollLeft >= maxScroll - 20) {
+      if (currentIndex !== caseStudies.length - 1) {
+        setCurrentIndex(caseStudies.length - 1);
+      }
+      return;
+    }
+
+    // If at or near the start, lock to the first card
+    if (scrollLeft <= 20) {
+      if (currentIndex !== 0) {
+        setCurrentIndex(0);
+      }
+      return;
+    }
+
     // Find closest slide center
     let closestIdx = 0;
     let minDistance = Infinity;
@@ -133,9 +169,25 @@ export const CaseStudySlider: React.FC<CaseStudySliderProps> = ({
   if (caseStudies.length === 0) return null;
 
   return (
-    <div className="w-full flex flex-col gap-2 mb-6 select-none" id="case-study-slider-deck">
+    <div 
+      className="w-full flex flex-col gap-2 mb-6 select-none" 
+      id="case-study-slider-deck"
+      style={{
+        width: '1105.02px',
+        maxWidth: '100%',
+        paddingLeft: '22px'
+      }}
+    >
       {/* Main Horizontal Carousel Viewport with Floating Nav Controls */}
-      <div className="relative w-full group/slider">
+      <div 
+        className="relative w-full group/slider"
+        style={{
+          width: '1073.99px',
+          maxWidth: 'calc(100% - 15px)',
+          marginLeft: '15px',
+          paddingLeft: '0px'
+        }}
+      >
         {/* Floating Left Prev Button */}
         {currentIndex > 0 && (
           <button
@@ -173,10 +225,18 @@ export const CaseStudySlider: React.FC<CaseStudySliderProps> = ({
         <div
           ref={containerRef}
           onScroll={handleScroll}
-          className="w-full flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 pt-1 px-0.5 scrollbar-none"
+          className="w-full flex gap-3 sm:gap-4 overflow-x-auto overscroll-x-contain snap-x snap-mandatory scroll-smooth pb-2 pt-1 px-0.5 scrollbar-none"
+          style={{
+            width: '988.99px',
+            maxWidth: 'calc(100% - 41px)',
+            paddingLeft: '1px',
+            marginLeft: '41px'
+          }}
         >
         {caseStudies.map((cs, index) => {
           const isSelected = index === currentIndex;
+          const isLast = index === caseStudies.length - 1;
+          const isFirst = index === 0;
           const config = getCategoryConfig(cs.category);
           const locked = isItemLocked(cs.id, 'case-studies');
           const hasSpecificClearance = 
@@ -192,7 +252,9 @@ export const CaseStudySlider: React.FC<CaseStudySliderProps> = ({
                   scrollToSlide(index);
                 }
               }}
-              className={`w-[75vw] sm:w-[340px] lg:w-[380px] shrink-0 snap-center rounded-xl sm:rounded-2xl border transition-all duration-300 backdrop-blur-xl relative overflow-hidden flex flex-col justify-between ${
+              className={`w-[82.5vw] sm:w-[374px] lg:w-[418px] shrink-0 ${
+                isLast ? 'snap-end' : isFirst ? 'snap-start' : 'snap-center'
+              } rounded-xl sm:rounded-2xl border transition-all duration-300 backdrop-blur-xl relative overflow-hidden flex flex-col justify-between ${
                 isSelected
                   ? isLight
                     ? 'bg-white/98 border-blue-500/60 shadow-xl ring-1 ring-blue-500/20'

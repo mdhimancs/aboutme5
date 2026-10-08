@@ -863,7 +863,7 @@ export default function App() {
         onClick={() => {
           if (interfaceModalOpen) setInterfaceModalOpen(false);
         }}
-        className={`h-screen overflow-y-auto scroll-container select-text relative transition-[margin] duration-300 ease-in-out ${
+        className={`h-screen overflow-y-auto overflow-x-hidden scroll-container select-text relative transition-[margin] duration-300 ease-in-out ${
           isSidebarCollapsed ? 'md:ml-[72px]' : 'md:ml-[295px]'
         }`}
       >
