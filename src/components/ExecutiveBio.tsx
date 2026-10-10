@@ -368,17 +368,6 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                         {/* Animated Grid Lines Background */}
                         <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px] opacity-20" />
                         
-                        {/* Header Badge */}
-                        <div className="relative z-10 flex items-center justify-between">
-                          <div className="px-2.5 py-1 rounded-lg bg-black/80 border border-cyan-500/50 text-[10px] font-mono text-cyan-300 flex items-center gap-1.5 shadow-md">
-                            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                            <span>ANIMATED EXECUTIVE PHILOSOPHY MOTION GRAPHICS</span>
-                          </div>
-                          <span className="text-[10px] font-mono text-cyan-400/80 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">
-                            60 FPS • VECTOR SYNTHESIS
-                          </span>
-                        </div>
-
                         {/* Central Animated Axiom Scene */}
                         <div className="relative z-10 my-auto text-center space-y-2 py-2">
                           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-cyan-500 to-emerald-400 p-0.5 shadow-[0_0_24px_rgba(56,189,248,0.4)] animate-bounce">
@@ -544,56 +533,64 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 pt-1">
               <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
-                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
-                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
+                  ? 'bg-gradient-to-br from-blue-50/60 via-white to-white border-blue-200/80 hover:border-blue-400 hover:shadow-md' 
+                  : 'bg-gradient-to-br from-blue-950/20 via-zinc-900/90 to-zinc-900 border-blue-500/30 hover:border-blue-400/60 hover:bg-zinc-900'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
-                  <Scale className="w-4 h-4 text-blue-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Executive Risk & GRC</div>
+                <div className="flex items-center space-x-2 mb-1">
+                  <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <Scale className="w-3.5 h-3.5" />
+                  </div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>Executive Risk & GRC</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                   Executive Risk Strategy, Audit Committee reporting, SOX 404 zero-deficiency governance, and Cyber Disclosure Readiness.
                 </div>
               </div>
 
               <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
-                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
-                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
+                  ? 'bg-gradient-to-br from-indigo-50/60 via-white to-white border-indigo-200/80 hover:border-indigo-400 hover:shadow-md' 
+                  : 'bg-gradient-to-br from-indigo-950/20 via-zinc-900/90 to-zinc-900 border-indigo-500/30 hover:border-indigo-400/60 hover:bg-zinc-900'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
-                  <Shield className="w-4 h-4 text-indigo-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Zero Trust Identity Fabric</div>
+                <div className="flex items-center space-x-2 mb-1">
+                  <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-600 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <Shield className="w-3.5 h-3.5" />
+                  </div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>Zero Trust Identity Fabric</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                   Consolidating multi-forest Active Directory environments into SailPoint IGA, CyberArk PAM, and Identity Security workload federation.
                 </div>
               </div>
 
               <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
-                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
-                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
+                  ? 'bg-gradient-to-br from-purple-50/60 via-white to-white border-purple-200/80 hover:border-purple-400 hover:shadow-md' 
+                  : 'bg-gradient-to-br from-purple-950/20 via-zinc-900/90 to-zinc-900 border-purple-500/30 hover:border-purple-400/60 hover:bg-zinc-900'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
-                  <Brain className="w-4 h-4 text-purple-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>AI Threat Defense</div>
+                <div className="flex items-center space-x-2 mb-1">
+                  <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-purple-600 to-fuchsia-500 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <Brain className="w-3.5 h-3.5" />
+                  </div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>AI Threat Defense</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                   Enterprise AI security reverse-proxies, real-time tokenization DLP, contextual RAG ACLs, and automated SOAR threat containment.
                 </div>
               </div>
 
               <div className={`p-2.5 rounded-2xl border transition-all cursor-pointer ${
                 isLight 
-                  ? 'bg-white border-zinc-200 hover:border-zinc-300 hover:shadow-md' 
-                  : 'bg-white/90 border-white/10 hover:border-white/20 hover:bg-white'
+                  ? 'bg-gradient-to-br from-emerald-50/60 via-white to-white border-emerald-200/80 hover:border-emerald-400 hover:shadow-md' 
+                  : 'bg-gradient-to-br from-emerald-950/20 via-zinc-900/90 to-zinc-900 border-emerald-500/30 hover:border-emerald-400/60 hover:bg-zinc-900'
               }`}>
-                <div className="flex items-center space-x-2 mb-0.5">
-                  <Users className="w-4 h-4 text-emerald-500 shrink-0" />
-                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-900'}`}>Team & Budget Scale</div>
+                <div className="flex items-center space-x-2 mb-1">
+                  <div className="w-7 h-7 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white flex items-center justify-center shadow-sm shrink-0">
+                    <Users className="w-3.5 h-3.5" />
+                  </div>
+                  <div className={`font-bold text-[10.5px] sm:text-[12px] truncate ${isLight ? 'text-zinc-900' : 'text-zinc-100'}`}>Team & Budget Scale</div>
                 </div>
-                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-700'}`}>
+                <div className={`text-[10px] leading-relaxed ${isLight ? 'text-zinc-600' : 'text-zinc-400'}`}>
                   Orchestrating 30+ security engineering, SOC, and IAM personnel; managing $18.5M CapEx/OpEx modernization and Tier-1 vendor governance.
                 </div>
               </div>
@@ -719,18 +716,30 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   ? 'bg-gradient-to-br from-white via-indigo-50/40 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.12)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c24] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
-                {/* Executive luminous accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-600 via-indigo-400 to-violet-500 opacity-95" />
+                {/* Executive luminous accent line & ambient top tint glow */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-sky-400 via-blue-600 to-indigo-950 opacity-95" />
+                <div className="absolute top-0 left-0 w-36 h-8 bg-gradient-to-r from-blue-500/20 via-sky-400/10 to-transparent blur-md pointer-events-none" />
 
                 <div>
-                  {/* Heading with rich deep indigo color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-950 border border-indigo-600/70 shadow-md text-white mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
-                      <Shield className="w-3.5 h-3.5 text-indigo-300" />
+                  {/* Top heading row: Icon excluded from dark background + Navy blue banner with luminous tint */}
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className={`w-7 h-7 rounded-xl border flex items-center justify-center shrink-0 transition-all ${
+                      isLight 
+                        ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50/50 border-blue-200 text-blue-700 shadow-[0_2px_8px_rgba(37,99,235,0.08)]' 
+                        : 'bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent border-blue-400/35 text-blue-300 shadow-[0_2px_12px_rgba(59,130,246,0.18)]'
+                    }`}>
+                      <Shield className="w-3.5 h-3.5 drop-shadow-xs" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
-                      1. Identity is the Sole Perimeter
-                    </strong>
+                    <div className="relative flex-1 py-1.5 px-3 rounded-xl overflow-hidden bg-gradient-to-r from-sky-400 via-blue-700 to-[#020617] border border-blue-400/40 shadow-[0_4px_16px_rgba(10,25,47,0.3),inset_0_1px_1px_rgba(255,255,255,0.22)] text-white min-w-0">
+                      {/* Specular sheen overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/20 pointer-events-none" />
+                      {/* Ambient left tint shimmer */}
+                      <div className="absolute -top-3 -left-3 w-16 h-12 bg-sky-400/25 rounded-full blur-md pointer-events-none" />
+                      <strong className="relative z-10 text-[12px] sm:text-[12.5px] font-bold tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+                        <span className="text-sky-300 font-mono font-bold text-[11.5px] opacity-95">1.</span>
+                        <span className="leading-snug">Identity is the Sole Perimeter</span>
+                      </strong>
+                    </div>
                   </div>
                   <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Static administrative credentials are an unacceptable systemic risk. All elevated access must be ephemeral, Just-In-Time (JIT), cryptographically attested, and zero-standing (ZSP).
@@ -755,18 +764,30 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   ? 'bg-gradient-to-br from-white via-indigo-50/40 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.12)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c24] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
-                {/* Executive luminous accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-600 via-indigo-400 to-violet-500 opacity-95" />
+                {/* Executive luminous accent line & ambient top tint glow */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-sky-400 via-blue-600 to-indigo-950 opacity-95" />
+                <div className="absolute top-0 left-0 w-36 h-8 bg-gradient-to-r from-blue-500/20 via-sky-400/10 to-transparent blur-md pointer-events-none" />
 
                 <div>
-                  {/* Heading with rich deep indigo color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-950 border border-indigo-600/70 shadow-md text-white mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
-                      <Scale className="w-3.5 h-3.5 text-indigo-300" />
+                  {/* Top heading row: Icon excluded from dark background + Navy blue banner with luminous tint */}
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className={`w-7 h-7 rounded-xl border flex items-center justify-center shrink-0 transition-all ${
+                      isLight 
+                        ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50/50 border-blue-200 text-blue-700 shadow-[0_2px_8px_rgba(37,99,235,0.08)]' 
+                        : 'bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent border-blue-400/35 text-blue-300 shadow-[0_2px_12px_rgba(59,130,246,0.18)]'
+                    }`}>
+                      <Scale className="w-3.5 h-3.5 drop-shadow-xs" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
-                      2. Defense-in-Depth Architecture
-                    </strong>
+                    <div className="relative flex-1 py-1.5 px-3 rounded-xl overflow-hidden bg-gradient-to-r from-sky-400 via-blue-700 to-[#020617] border border-blue-400/40 shadow-[0_4px_16px_rgba(10,25,47,0.3),inset_0_1px_1px_rgba(255,255,255,0.22)] text-white min-w-0">
+                      {/* Specular sheen overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/20 pointer-events-none" />
+                      {/* Ambient left tint shimmer */}
+                      <div className="absolute -top-3 -left-3 w-16 h-12 bg-sky-400/25 rounded-full blur-md pointer-events-none" />
+                      <strong className="relative z-10 text-[12px] sm:text-[12.5px] font-bold tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+                        <span className="text-sky-300 font-mono font-bold text-[11.5px] opacity-95">2.</span>
+                        <span className="leading-snug">Defense-in-Depth Architecture</span>
+                      </strong>
+                    </div>
                   </div>
                   <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Security must be layered across every layer of the tech stack—from network to endpoint to application. One control failure should never result in a complete breach.
@@ -791,18 +812,30 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   ? 'bg-gradient-to-br from-white via-indigo-50/40 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.12)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c24] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
-                {/* Executive luminous accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-600 via-indigo-400 to-violet-500 opacity-95" />
+                {/* Executive luminous accent line & ambient top tint glow */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-sky-400 via-blue-600 to-indigo-950 opacity-95" />
+                <div className="absolute top-0 left-0 w-36 h-8 bg-gradient-to-r from-blue-500/20 via-sky-400/10 to-transparent blur-md pointer-events-none" />
 
                 <div>
-                  {/* Heading with rich deep indigo color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-950 border border-indigo-600/70 shadow-md text-white mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
-                      <Lock className="w-3.5 h-3.5 text-indigo-300" />
+                  {/* Top heading row: Icon excluded from dark background + Navy blue banner with luminous tint */}
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className={`w-7 h-7 rounded-xl border flex items-center justify-center shrink-0 transition-all ${
+                      isLight 
+                        ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50/50 border-blue-200 text-blue-700 shadow-[0_2px_8px_rgba(37,99,235,0.08)]' 
+                        : 'bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent border-blue-400/35 text-blue-300 shadow-[0_2px_12px_rgba(59,130,246,0.18)]'
+                    }`}>
+                      <Lock className="w-3.5 h-3.5 drop-shadow-xs" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
-                      3. Continuous Verification
-                    </strong>
+                    <div className="relative flex-1 py-1.5 px-3 rounded-xl overflow-hidden bg-gradient-to-r from-sky-400 via-blue-700 to-[#020617] border border-blue-400/40 shadow-[0_4px_16px_rgba(10,25,47,0.3),inset_0_1px_1px_rgba(255,255,255,0.22)] text-white min-w-0">
+                      {/* Specular sheen overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/20 pointer-events-none" />
+                      {/* Ambient left tint shimmer */}
+                      <div className="absolute -top-3 -left-3 w-16 h-12 bg-sky-400/25 rounded-full blur-md pointer-events-none" />
+                      <strong className="relative z-10 text-[12px] sm:text-[12.5px] font-bold tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+                        <span className="text-sky-300 font-mono font-bold text-[11.5px] opacity-95">3.</span>
+                        <span className="leading-snug">Continuous Verification</span>
+                      </strong>
+                    </div>
                   </div>
                   <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Never trust, always verify every human identity, non-human workload (Identity), API call, and inter-service token across micro-segmented cloud boundaries.
@@ -827,18 +860,30 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   ? 'bg-gradient-to-br from-white via-indigo-50/40 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.12)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c24] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
-                {/* Executive luminous accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-600 via-indigo-400 to-violet-500 opacity-95" />
+                {/* Executive luminous accent line & ambient top tint glow */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-sky-400 via-blue-600 to-indigo-950 opacity-95" />
+                <div className="absolute top-0 left-0 w-36 h-8 bg-gradient-to-r from-blue-500/20 via-sky-400/10 to-transparent blur-md pointer-events-none" />
 
                 <div>
-                  {/* Heading with rich deep indigo color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-950 border border-indigo-600/70 shadow-md text-white mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
-                      <Brain className="w-3.5 h-3.5 text-indigo-300" />
+                  {/* Top heading row: Icon excluded from dark background + Navy blue banner with luminous tint */}
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className={`w-7 h-7 rounded-xl border flex items-center justify-center shrink-0 transition-all ${
+                      isLight 
+                        ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50/50 border-blue-200 text-blue-700 shadow-[0_2px_8px_rgba(37,99,235,0.08)]' 
+                        : 'bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent border-blue-400/35 text-blue-300 shadow-[0_2px_12px_rgba(59,130,246,0.18)]'
+                    }`}>
+                      <Brain className="w-3.5 h-3.5 drop-shadow-xs" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
-                      4. Defensive AI Asymmetry (AISP)
-                    </strong>
+                    <div className="relative flex-1 py-1.5 px-3 rounded-xl overflow-hidden bg-gradient-to-r from-sky-400 via-blue-700 to-[#020617] border border-blue-400/40 shadow-[0_4px_16px_rgba(10,25,47,0.3),inset_0_1px_1px_rgba(255,255,255,0.22)] text-white min-w-0">
+                      {/* Specular sheen overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/20 pointer-events-none" />
+                      {/* Ambient left tint shimmer */}
+                      <div className="absolute -top-3 -left-3 w-16 h-12 bg-sky-400/25 rounded-full blur-md pointer-events-none" />
+                      <strong className="relative z-10 text-[12px] sm:text-[12.5px] font-bold tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+                        <span className="text-sky-300 font-mono font-bold text-[11.5px] opacity-95">4.</span>
+                        <span className="leading-snug">Defensive AI Asymmetry (AISP)</span>
+                      </strong>
+                    </div>
                   </div>
                   <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Leverage machine intelligence to automate SOC containment and detect behavioral anomalies, while hardening enterprise LLM pipelines against prompt exfiltration.
@@ -863,18 +908,30 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   ? 'bg-gradient-to-br from-white via-indigo-50/40 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.12)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c24] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
-                {/* Executive luminous accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-600 via-indigo-400 to-violet-500 opacity-95" />
+                {/* Executive luminous accent line & ambient top tint glow */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-sky-400 via-blue-600 to-indigo-950 opacity-95" />
+                <div className="absolute top-0 left-0 w-36 h-8 bg-gradient-to-r from-blue-500/20 via-sky-400/10 to-transparent blur-md pointer-events-none" />
 
                 <div>
-                  {/* Heading with rich deep indigo color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-950 border border-indigo-600/70 shadow-md text-white mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-indigo-300" />
+                  {/* Top heading row: Icon excluded from dark background + Navy blue banner with luminous tint */}
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className={`w-7 h-7 rounded-xl border flex items-center justify-center shrink-0 transition-all ${
+                      isLight 
+                        ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50/50 border-blue-200 text-blue-700 shadow-[0_2px_8px_rgba(37,99,235,0.08)]' 
+                        : 'bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent border-blue-400/35 text-blue-300 shadow-[0_2px_12px_rgba(59,130,246,0.18)]'
+                    }`}>
+                      <CheckCircle2 className="w-3.5 h-3.5 drop-shadow-xs" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
-                      5. Guardrails Over Gates
-                    </strong>
+                    <div className="relative flex-1 py-1.5 px-3 rounded-xl overflow-hidden bg-gradient-to-r from-sky-400 via-blue-700 to-[#020617] border border-blue-400/40 shadow-[0_4px_16px_rgba(10,25,47,0.3),inset_0_1px_1px_rgba(255,255,255,0.22)] text-white min-w-0">
+                      {/* Specular sheen overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/20 pointer-events-none" />
+                      {/* Ambient left tint shimmer */}
+                      <div className="absolute -top-3 -left-3 w-16 h-12 bg-sky-400/25 rounded-full blur-md pointer-events-none" />
+                      <strong className="relative z-10 text-[12px] sm:text-[12.5px] font-bold tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+                        <span className="text-sky-300 font-mono font-bold text-[11.5px] opacity-95">5.</span>
+                        <span className="leading-snug">Guardrails Over Gates</span>
+                      </strong>
+                    </div>
                   </div>
                   <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Security leadership succeeds by empowering business velocity through intuitive developer guardrails and automated CI/CD security gates, paired with blameless post-mortems.
@@ -899,18 +956,30 @@ export const ExecutiveBio: React.FC<ExecutiveBioProps> = ({ theme = 'apple-light
                   ? 'bg-gradient-to-br from-white via-indigo-50/40 to-white border-indigo-300/90 hover:border-indigo-500 shadow-[0_4px_20px_rgba(99,102,241,0.12)]' 
                   : 'bg-gradient-to-br from-zinc-900/90 via-[#0a0c24] to-zinc-950 border-indigo-500/40 hover:border-indigo-400/80 shadow-[0_4px_28px_rgba(0,0,0,0.6)]'
               }`}>
-                {/* Executive luminous accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-indigo-600 via-indigo-400 to-violet-500 opacity-95" />
+                {/* Executive luminous accent line & ambient top tint glow */}
+                <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-sky-400 via-blue-600 to-indigo-950 opacity-95" />
+                <div className="absolute top-0 left-0 w-36 h-8 bg-gradient-to-r from-blue-500/20 via-sky-400/10 to-transparent blur-md pointer-events-none" />
 
                 <div>
-                  {/* Heading with rich deep indigo color gradient */}
-                  <div className="flex items-center space-x-2 py-1.5 px-2.5 rounded-xl bg-gradient-to-r from-indigo-950 via-indigo-900 to-slate-950 border border-indigo-600/70 shadow-md text-white mb-2">
-                    <div className="w-6 h-6 rounded-lg bg-indigo-500/25 border border-indigo-400/50 flex items-center justify-center shrink-0">
-                      <Key className="w-3.5 h-3.5 text-indigo-300" />
+                  {/* Top heading row: Icon excluded from dark background + Navy blue banner with luminous tint */}
+                  <div className="flex items-center space-x-2 mb-2">
+                    <div className={`w-7 h-7 rounded-xl border flex items-center justify-center shrink-0 transition-all ${
+                      isLight 
+                        ? 'bg-gradient-to-br from-blue-50 via-sky-50 to-indigo-50/50 border-blue-200 text-blue-700 shadow-[0_2px_8px_rgba(37,99,235,0.08)]' 
+                        : 'bg-gradient-to-br from-blue-500/20 via-indigo-500/10 to-transparent border-blue-400/35 text-blue-300 shadow-[0_2px_12px_rgba(59,130,246,0.18)]'
+                    }`}>
+                      <Key className="w-3.5 h-3.5 drop-shadow-xs" />
                     </div>
-                    <strong className="text-[12.5px] sm:text-[13px] font-bold tracking-tight text-white drop-shadow-xs">
-                      6. Post-Quantum Cryptographic Agility
-                    </strong>
+                    <div className="relative flex-1 py-1.5 px-3 rounded-xl overflow-hidden bg-gradient-to-r from-sky-400 via-blue-700 to-[#020617] border border-blue-400/40 shadow-[0_4px_16px_rgba(10,25,47,0.3),inset_0_1px_1px_rgba(255,255,255,0.22)] text-white min-w-0">
+                      {/* Specular sheen overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-b from-white/15 via-transparent to-black/20 pointer-events-none" />
+                      {/* Ambient left tint shimmer */}
+                      <div className="absolute -top-3 -left-3 w-16 h-12 bg-sky-400/25 rounded-full blur-md pointer-events-none" />
+                      <strong className="relative z-10 text-[12px] sm:text-[12.5px] font-bold tracking-tight text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)] flex items-center gap-1.5">
+                        <span className="text-sky-300 font-mono font-bold text-[11.5px] opacity-95">6.</span>
+                        <span className="leading-snug">Post-Quantum Cryptographic Agility</span>
+                      </strong>
+                    </div>
                   </div>
                   <p className={`text-[10.5px] sm:text-[11px] leading-relaxed ${isLight ? 'text-zinc-700' : 'text-zinc-300'}`}>
                     Future-proofing enterprise PKI and HSM key management against quantum decryption threats through algorithm agility, hybrid crypto transitions, and automated inventory.

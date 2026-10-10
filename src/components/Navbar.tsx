@@ -63,9 +63,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* Desktop Left Sidebar (Navigation Plane) */}
       <aside 
         style={{
-          width: isSidebarCollapsed ? '72px' : '295px',
-          paddingLeft: isSidebarCollapsed ? '12px' : '32px',
-          paddingRight: isSidebarCollapsed ? '12px' : '28px',
+          width: '295px',
+          paddingLeft: '34px',
+          paddingRight: '32px',
           paddingTop: '30px',
           paddingBottom: '20px',
           marginTop: '0px',
@@ -73,8 +73,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           marginRight: '0px'
         }}
         className={`hidden md:flex fixed top-0 left-0 bottom-0 z-50 flex-col border-r backdrop-blur-2xl transition-all duration-300 ease-in-out no-scrollbar ${
-          isSidebarCollapsed ? 'items-center' : ''
-        } ${
           isLight
             ? 'bg-white/90 border-zinc-200 text-zinc-900 shadow-sm'
             : 'bg-[#050507]/90 border-white/10 text-white shadow-2xl'
@@ -179,7 +177,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span>Navigation</span>
               </div>
             )}
-            <div className={`space-y-1 ${isSidebarCollapsed ? 'flex flex-col items-center w-full' : 'w-full'}`} role="menu">
+            <div className="space-y-1 w-full ml-[5%]" role="menu">
               {navLinks.map((link, index) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -238,64 +236,74 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </nav>
 
-          {/* Social Links placed just below nav links */}
-          <div className="mt-8 shrink-0 w-full">
-            <div className={`flex flex-col space-y-1 w-full ${isSidebarCollapsed ? 'items-center' : ''}`} aria-label="Connect & Contact">
+          {/* Social Links placed just below nav links (reduced space after Archives by 30%) */}
+          <div className="mt-[22px] shrink-0 w-full">
+            <div className={`flex flex-col space-y-1 w-full ml-[5%] ${isSidebarCollapsed ? 'items-center' : ''}`} aria-label="Connect & Contact">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(59,130,246,0.35)] border border-transparent hover:border-blue-400/40 ${
-                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%]'
+                className={`flex items-center rounded-xl text-xs sm:text-[12.5px] font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_14px_rgba(59,130,246,0.35)] border border-transparent hover:border-blue-400/40 ${
+                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'pl-3 pr-2.5 py-1.5 w-[80%]'
                 } ${
                   isLight ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90' : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06]'
                 }`}
                 title="GitHub Profile"
                 aria-label="Visit GitHub Profile"
               >
-                <Github className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
-                {!isSidebarCollapsed && <span className="whitespace-nowrap">GitHub</span>}
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <Github className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+                  {!isSidebarCollapsed && <span className="whitespace-nowrap tracking-tight truncate">GitHub</span>}
+                </div>
               </a>
               <a
                 href={PERSONAL_INFO.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(59,130,246,0.35)] border border-transparent hover:border-blue-400/40 ${
-                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%]'
+                className={`flex items-center rounded-xl text-xs sm:text-[12.5px] font-medium transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_14px_rgba(59,130,246,0.35)] border border-transparent hover:border-blue-400/40 ${
+                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'pl-3 pr-2.5 py-1.5 w-[80%]'
                 } ${
                   isLight ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90' : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06]'
                 }`}
                 title="LinkedIn Profile"
                 aria-label="Visit LinkedIn Profile"
               >
-                <Linkedin className="w-4 h-4 text-blue-500 flex-shrink-0" aria-hidden="true" />
-                {!isSidebarCollapsed && <span className="whitespace-nowrap">LinkedIn</span>}
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <Linkedin className="w-4 h-4 text-blue-500 flex-shrink-0" aria-hidden="true" />
+                  {!isSidebarCollapsed && <span className="whitespace-nowrap tracking-tight truncate">LinkedIn</span>}
+                </div>
               </a>
               <button
+                type="button"
                 onClick={onOpenContact}
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_16px_rgba(239,68,68,0.45)] hover:border-red-400/70 active:scale-95 active:shadow-[0_0_24px_rgba(239,68,68,0.7)] ${
-                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%] text-left'
+                className={`flex items-center rounded-xl text-xs sm:text-[12.5px] font-medium transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_16px_rgba(239,68,68,0.45)] hover:border-red-400/70 active:scale-95 active:shadow-[0_0_24px_rgba(239,68,68,0.7)] ${
+                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'pl-3 pr-2.5 py-1.5 w-[80%] text-left'
                 } ${
                   isLight ? 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100/90 focus-visible:bg-zinc-100/90 border border-transparent' : 'text-zinc-400 hover:text-white hover:bg-white/[0.06] focus-visible:bg-white/[0.06] border border-transparent'
                 }`}
                 title="Get in Touch via Email"
                 aria-label="Open contact form"
               >
-                <Mail className="w-4 h-4 text-red-500 flex-shrink-0" aria-hidden="true" />
-                {!isSidebarCollapsed && <span className="whitespace-nowrap">Get in Touch</span>}
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <Mail className="w-4 h-4 text-red-500 flex-shrink-0" aria-hidden="true" />
+                  {!isSidebarCollapsed && <span className="whitespace-nowrap tracking-tight truncate">Get in Touch</span>}
+                </div>
               </button>
               <button
+                type="button"
                 onClick={onOpenSuperAdmin}
-                className={`flex items-center rounded-xl text-xs font-medium transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_18px_rgba(59,130,246,0.5)] hover:border-blue-400/80 active:scale-95 active:shadow-[0_0_26px_rgba(59,130,246,0.8)] ${
-                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'space-x-2.5 py-1.5 pl-3.5 pr-2.5 w-[80%] text-left'
+                className={`flex items-center rounded-xl text-xs sm:text-[12.5px] font-medium transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 hover:scale-[1.02] hover:shadow-[0_0_18px_rgba(59,130,246,0.5)] hover:border-blue-400/80 active:scale-95 active:shadow-[0_0_26px_rgba(59,130,246,0.8)] ${
+                  isSidebarCollapsed ? 'justify-center p-2 w-10' : 'pl-3 pr-2.5 py-1.5 w-[80%] text-left'
                 } ${
                   isLight ? 'text-blue-700 hover:text-blue-900 bg-blue-50/80 hover:bg-blue-100/80 border border-blue-200' : 'text-blue-300 hover:text-white bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20'
                 }`}
                 title="Super Admin Console"
                 aria-label="Open Super Admin Console"
               >
-                <ShieldCheck className="w-4 h-4 text-blue-600 flex-shrink-0" aria-hidden="true" />
-                {!isSidebarCollapsed && <span className="whitespace-nowrap font-bold">Admin Console</span>}
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <ShieldCheck className="w-4 h-4 text-blue-600 flex-shrink-0" aria-hidden="true" />
+                  {!isSidebarCollapsed && <span className="whitespace-nowrap tracking-tight truncate font-bold">Admin Console</span>}
+                </div>
               </button>
             </div>
           </div>

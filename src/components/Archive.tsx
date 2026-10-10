@@ -465,7 +465,7 @@ export const Archive: React.FC<ArchiveProps> = ({
   return (
     <section 
       id="archive" 
-      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-8 sm:pt-12 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
+      className={`relative overflow-hidden min-h-screen lg:h-screen w-full flex flex-col justify-between pt-2 sm:pt-3.5 pb-3 sm:pb-4 lg:pb-5 px-7 sm:px-14 lg:px-18 max-w-5xl lg:max-w-[1400px] mx-auto overflow-hidden border-t ${
         isLight ? 'border-transparent bg-[#fcfcfd]' : 'border-transparent bg-[#000000]'
       }`}
     >

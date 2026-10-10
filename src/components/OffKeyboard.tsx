@@ -351,12 +351,12 @@ export const OffKeyboard: React.FC<OffKeyboardProps> = ({ theme = 'apple-dark' }
                     </div>
 
                     <div className="absolute top-1 left-1 flex items-center gap-1">
-                      <span className="px-1 py-0.2 rounded text-[7px] font-bold tracking-wider uppercase bg-black/70 text-blue-400 backdrop-blur-md border border-white/10">
+                      <span className="px-1 py-0.2 rounded text-[7px] font-bold tracking-wider uppercase bg-black text-white border border-white/20">
                         {video.institution}
                       </span>
                     </div>
                     <div className="absolute top-1 right-1">
-                      <span className="px-1 py-0.2 rounded text-[7px] font-semibold bg-white/10 text-white backdrop-blur-md border border-white/10">
+                      <span className="px-1 py-0.2 rounded text-[7px] font-semibold bg-black text-white border border-white/20">
                         {video.category}
                       </span>
                     </div>

@@ -136,36 +136,12 @@ export default function App() {
   const [activeSection, setActiveSection] = useState<SectionId>('overview');
   const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Persistent Sidebar Collapsed state with Ctrl+B shortcut support
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(() => {
-    try {
-      return localStorage.getItem('executive_sidebar_collapsed') === 'true';
-    } catch {
-      return false;
-    }
-  });
+  // Fixed navigation pane width (non-collapsible)
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
 
-  const toggleSidebar = useCallback(() => {
-    setIsSidebarCollapsed(prev => {
-      const next = !prev;
-      try {
-        localStorage.setItem('executive_sidebar_collapsed', String(next));
-      } catch {}
-      return next;
-    });
-  }, []);
+  const toggleSidebar = useCallback(() => {}, []);
 
-  // Keyboard shortcut Ctrl+B / Cmd+B to toggle navigation pane
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
-        e.preventDefault();
-        toggleSidebar();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [toggleSidebar]);
+  useEffect(() => {}, []);
 
   const [theme, setTheme] = useState<ThemeMode>('apple-light');
   const [accent, setAccent] = useState<AccentColor>('blue');

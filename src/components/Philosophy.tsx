@@ -68,8 +68,8 @@ export const Philosophy: React.FC<PhilosophyProps> = ({ theme = 'apple-dark' }) 
           <div className={`p-1.5 rounded-lg shrink-0 ${isLight ? 'bg-blue-500/10 text-blue-600' : 'bg-blue-500/15 text-blue-400'}`}>
             <Quote className="w-3.5 h-3.5" />
           </div>
-          <p className="text-xs sm:text-[12px] italic font-serif leading-relaxed tracking-wide">
-            "Self-discovery through selfless pursuit of knowledge is the way to illumination." — <span className="font-semibold not-italic text-blue-500">Buddha</span>
+          <p className="text-sm sm:text-[14px] italic font-serif leading-relaxed tracking-wide">
+            "Self-discovery through selfless pursuit of knowledge is the way to illumination." — <span className="font-semibold not-italic text-blue-500 inline-flex items-center gap-1">Buddha <svg className="w-4 h-4 inline-block text-amber-500 ml-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="5" r="2.5"/><path d="M12 7.5c-2.5 0-4.5 1-5.5 2.5-1 1.5-1.5 3.5-1.5 5.5h14c0-2-.5-4-1.5-5.5-1-1.5-3-2.5-5.5-2.5z"/><path d="M4 18c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2"/><path d="M8 15l4 3 4-3"/></svg></span>
           </p>
         </div>
 

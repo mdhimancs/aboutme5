@@ -1,16 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { X, Calendar, Clock, Eye, Heart, Share2, Terminal, Check, Printer, Lock, KeyRound, ShieldCheck, CheckCircle2, Info, Sparkles, BookOpen, Layers, Cpu, ArrowRight } from 'lucide-react';
+import { X, Calendar, Clock, Eye, Heart, Share2, Terminal, Check, Printer, Lock, KeyRound, ShieldCheck, CheckCircle2, Info, Sparkles, BookOpen, Layers, Cpu, ArrowRight, Award, GraduationCap, Star } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { BlogPost } from '../types';
 import { useAuth } from '../context/AuthContext';
 import { incrementStars } from '../lib/stars';
+import { SeniorResearcherReviewView } from './SeniorResearcherReviewView';
+import { getExpertReviewForPost } from '../data/expertReviews';
 
 interface BlogPostModalProps {
   post: BlogPost | null;
+  initialTab?: 'manuscript' | 'review';
   onClose: () => void;
 }
 
-export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) => {
+export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, initialTab = 'manuscript', onClose }) => {
+  const [activeTab, setActiveTab] = useState<'manuscript' | 'review'>(initialTab);
   const [likes, setLikes] = useState(post ? post.likes : 0);
   const [hasLiked, setHasLiked] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -18,6 +22,10 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const { canAccessItem, setGateModalOpen, setTargetResource, user, isAuthorized, isAdmin } = useAuth();
+
+  useEffect(() => {
+    setActiveTab(initialTab);
+  }, [initialTab, post?.id]);
 
   useEffect(() => {
     if (post) {
@@ -71,10 +79,11 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
 
   // Remove leading H1 title from content to prevent duplicate title repetition with modal header
   const sanitizedContent = post.content ? post.content.replace(/^#\s+[^\n]+\n+/, '') : '';
+  const expertReview = post.expertReview || getExpertReviewForPost(post);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-black/60 backdrop-blur-xl animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl bg-white border border-zinc-200 rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-zinc-900">
+      <div className="relative w-full max-w-[990px] bg-white border border-zinc-200 rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col text-zinc-900">
         {/* Top Slim Reading Progress Bar */}
         <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-zinc-200 z-30 overflow-hidden">
           <div 
@@ -87,7 +96,12 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
         <div className="flex items-center justify-between px-5 sm:px-6 py-3.5 border-b border-zinc-200 bg-zinc-50/90 backdrop-blur-md shrink-0">
           <div className="flex items-center space-x-2 text-xs font-medium text-zinc-600">
             <span className="text-[11px] font-bold text-blue-700">
-              {post.category}
+              {post.category === 'Peer-Reviewed Research' ? 'Peer-Reviewed' : post.category}
+            </span>
+            <span className="text-zinc-400" aria-hidden="true">·</span>
+            <span className="inline-flex items-center gap-1 text-[10.5px] font-bold text-amber-600 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full">
+              <Lock className="w-2.5 h-2.5 text-amber-500" />
+              <span>Locked Access</span>
             </span>
             <span className="text-zinc-400" aria-hidden="true">·</span>
             <span className="text-[11px] font-mono tabular-nums text-zinc-600">{post.readTime}</span>
@@ -113,58 +127,146 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
           </div>
         </div>
 
+        {/* Navigation Tabs: Whitepaper Manuscript vs Senior Researcher Peer Review */}
+        <div className="flex items-center justify-between px-5 sm:px-6 py-2.5 border-b border-zinc-200 bg-slate-50/80 backdrop-blur-xs shrink-0">
+          <div className="flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={() => setActiveTab('manuscript')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                activeTab === 'manuscript'
+                  ? 'bg-blue-600 text-white shadow-xs'
+                  : 'bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-100'
+              }`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Whitepaper Manuscript</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('review')}
+              className={`px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                activeTab === 'review'
+                  ? 'bg-indigo-700 text-white shadow-xs'
+                  : 'bg-white border border-indigo-200 text-indigo-700 hover:bg-indigo-50'
+              }`}
+            >
+              <Award className="w-3.5 h-3.5 text-indigo-500" />
+              <span>Senior Researcher Review</span>
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold ${
+                activeTab === 'review' ? 'bg-indigo-800 text-emerald-300' : 'bg-emerald-100 text-emerald-700'
+              }`}>
+                {expertReview.overallScore.toFixed(1)}/10 ★
+              </span>
+            </button>
+          </div>
+          <div className="hidden sm:flex items-center text-[11px] font-mono text-zinc-500">
+            {activeTab === 'review' ? (
+              <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                Double-Blind Peer Review Audit
+              </span>
+            ) : (
+              <span className="text-zinc-500">
+                Peer Review: <strong className="text-emerald-700">{expertReview.overallScore.toFixed(1)}/10</strong> ({expertReview.verdict.split(' ')[0]})
+              </span>
+            )}
+          </div>
+        </div>
+
         {/* Modal Scrollable Content */}
         <div 
           ref={scrollContainerRef}
           onScroll={handleScroll}
           className="p-5 sm:p-10 overflow-y-auto space-y-7 bg-white"
         >
-          <div className="space-y-4">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-900 tracking-tight leading-tight [text-wrap:balance]">
-              {post.title}
-            </h1>
-            <p className="text-sm sm:text-base text-zinc-600 font-normal leading-relaxed">
-              {post.excerpt}
-            </p>
+          {activeTab === 'review' ? (
+            <SeniorResearcherReviewView
+              post={post}
+              onSwitchToManuscript={() => setActiveTab('manuscript')}
+            />
+          ) : (
+            <>
+              <div className="space-y-4">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-900 tracking-tight leading-tight [text-wrap:balance]">
+                  {post.title}
+                </h1>
+                <p className="text-sm sm:text-base text-zinc-600 font-normal leading-relaxed">
+                  {post.excerpt}
+                </p>
 
-            {/* Author and Date Meta */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-zinc-200 text-xs text-zinc-600">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm tracking-wider shadow-md border border-white/30 shrink-0">
-                  MD
+                {/* Author and Date Meta */}
+                <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-zinc-200 text-xs text-zinc-600">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 flex items-center justify-center text-white font-bold text-sm tracking-wider shadow-md border border-white/30 shrink-0">
+                      MD
+                    </div>
+                    <div>
+                      <div className="text-sm font-semibold text-zinc-900">{post.author.name}</div>
+                      <div className="text-xs text-zinc-500">{post.author.role}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-4 text-xs text-zinc-500 tabular-nums">
+                    <div className="flex items-center space-x-1">
+                      <Calendar className="w-3.5 h-3.5 text-blue-600" />
+                      <span>{post.date}</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <Eye className="w-3.5 h-3.5 text-indigo-600" />
+                      <span>{post.views.toLocaleString()} views</span>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-sm font-semibold text-zinc-900">{post.author.name}</div>
-                  <div className="text-xs text-zinc-500">{post.author.role}</div>
+
+                {/* Executive Key Takeaway Callout Box */}
+                <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-900 text-xs sm:text-sm space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-blue-700 text-[11px]">
+                    <span>Executive Committee Key Takeaway</span>
+                  </div>
+                  <p className="leading-relaxed text-zinc-800">
+                    {post.id === 'bp-2026-fair-model' && "Empowers the CFO and Board Audit Committee to replace subjective red/amber/green heatmaps with actuarial loss probability distributions, optimizing cyber insurance premiums and capital reserve allocations."}
+                    {post.id === 'bp-2025-sec-disclosure' && "Establishes a 96-hour cross-functional materiality determination runbook connecting the CISO, General Counsel, and Investor Relations to prevent regulatory enforcement penalties."}
+                    {post.id === 'bp-2025-genai-sec' && "Provides governance for secure LLM enterprise integration, preventing prompt exfiltration and token leakage via real-time reverse proxy inspection."}
+                    {post.id === 'bp-2025-nhi-identities' && "Mitigates credential sprawl across multi-cloud service accounts by enforcing ephemeral workloads and Identity Federation cryptographic attestation."}
+                    {post.id !== 'bp-2026-fair-model' && post.id !== 'bp-2025-sec-disclosure' && post.id !== 'bp-2025-genai-sec' && post.id !== 'bp-2025-nhi-identities' && "Provides rigorous architectural patterns and governance frameworks for enterprise security transformation."}
+                  </p>
+                </div>
+
+                {/* Senior Researcher Review Callout Summary Banner */}
+                <div className="p-4.5 rounded-2xl bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 text-white border border-indigo-700/40 shadow-md space-y-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="p-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                        <GraduationCap className="w-3.5 h-3.5" />
+                      </span>
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-200">
+                        Senior Researcher Peer Review Verdict: {expertReview.verdict}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-400 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/40">
+                      <span>Score: {expertReview.overallScore.toFixed(1)} / 10.0</span>
+                      <span className="text-amber-400">★</span>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-200 leading-relaxed italic border-l-2 border-indigo-500 pl-2.5">
+                    &ldquo;{expertReview.theoreticalBreakthrough}&rdquo;
+                  </p>
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] border-t border-white/10">
+                    <span className="text-slate-400">
+                      Reviewer: <strong className="text-slate-200">{expertReview.reviewerName}</strong> ({expertReview.affiliation.split('&')[0].trim()})
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('review')}
+                      className="text-xs font-bold text-indigo-300 hover:text-white inline-flex items-center gap-1 transition-colors cursor-pointer"
+                    >
+                      <span>Read Senior Review Dossier</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              <div className="flex items-center space-x-4 text-xs text-zinc-500 tabular-nums">
-                <div className="flex items-center space-x-1">
-                  <Calendar className="w-3.5 h-3.5 text-blue-600" />
-                  <span>{post.date}</span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <Eye className="w-3.5 h-3.5 text-indigo-600" />
-                  <span>{post.views.toLocaleString()} views</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Executive Key Takeaway Callout Box */}
-            <div className="p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-900 text-xs sm:text-sm space-y-1">
-              <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-blue-700 text-[11px]">
-                <span>Executive Committee Key Takeaway</span>
-              </div>
-              <p className="leading-relaxed text-zinc-800">
-                {post.id === 'bp-2026-fair-model' && "Empowers the CFO and Board Audit Committee to replace subjective red/amber/green heatmaps with actuarial loss probability distributions, optimizing cyber insurance premiums and capital reserve allocations."}
-                {post.id === 'bp-2025-sec-disclosure' && "Establishes a 96-hour cross-functional materiality determination runbook connecting the CISO, General Counsel, and Investor Relations to prevent regulatory enforcement penalties."}
-                {post.id === 'bp-2025-genai-sec' && "Provides governance for secure LLM enterprise integration, preventing prompt exfiltration and token leakage via real-time reverse proxy inspection."}
-                {post.id === 'bp-2025-nhi-identities' && "Mitigates credential sprawl across multi-cloud service accounts by enforcing ephemeral workloads and Identity Federation cryptographic attestation."}
-                {post.id !== 'bp-2026-fair-model' && post.id !== 'bp-2025-sec-disclosure' && post.id !== 'bp-2025-genai-sec' && post.id !== 'bp-2025-nhi-identities' && "Provides rigorous architectural patterns and governance frameworks for enterprise security transformation."}
-              </p>
-            </div>
-          </div>
 
           {/* Markdown Content or Zero-Trust Protected Banner */}
           {isAllowed ? (
@@ -421,6 +523,8 @@ export const BlogPostModal: React.FC<BlogPostModalProps> = ({ post, onClose }) =
               <span>{copied ? 'Link Copied!' : 'Share Article'}</span>
             </button>
           </div>
+            </>
+          )}
         </div>
       </div>
     </div>

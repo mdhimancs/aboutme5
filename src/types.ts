@@ -29,6 +29,38 @@ export interface BlogPost {
   featured?: boolean;
   views: number;
   likes: number;
+  scholar?: {
+    venue?: string;
+    doi?: string;
+    citationCount?: number;
+    bibtex?: string;
+    pdfDownloadUrl?: string;
+    peerReviewed?: boolean;
+  };
+  expertReview?: SeniorResearcherReview;
+}
+
+export interface SeniorResearcherReview {
+  reviewerName: string;
+  reviewerTitle: string;
+  affiliation: string;
+  verdict: string;
+  overallScore: number;
+  maxScore: number;
+  dimensions: {
+    criterion: string;
+    score: number;
+    maxScore: number;
+    assessment: string;
+  }[];
+  theoreticalBreakthrough: string;
+  methodologyAndRigor: string;
+  threatModelValidation: string;
+  practicalFeasibility: string;
+  keyStrengths: string[];
+  seniorReviewerSummary: string;
+  reviewedDate: string;
+  recommendationLevel: 'High Distinction' | 'Top Tier Acceptance' | 'Standard Reference Pattern';
 }
 
 export interface ArchiveItem {
